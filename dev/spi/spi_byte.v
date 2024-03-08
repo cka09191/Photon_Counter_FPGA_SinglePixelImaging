@@ -60,3 +60,4 @@ module spi_byte( input wire clk50Mhz,     // external FPGA system clock (e.g. 50
   end
 			
 endmodule
+

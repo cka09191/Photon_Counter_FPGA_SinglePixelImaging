@@ -42,7 +42,10 @@ module spi_byte_tb3;  // MODE_3
    always #(Tsys/2) clk50Mhz = ~clk50Mhz;
 
 
-   always #30 sig = ~sig;
+   always begin
+    #200 sig = 1;
+    #20 sig = 0;
+end
 	// test script				 
 	initial
 		begin
@@ -53,7 +56,7 @@ module spi_byte_tb3;  // MODE_3
 			#100; SS = 1'b1;   // de-activate slave-select
 			MOSI = 1'bz;	
 			mosiData = 8'h55;
-			#10; rst=1'b0; #1000; rst=1'b1;
+			#10; rst=1'b0; #500; rst=1'b1;
 			#100; SS = 1'b0;  // activate slave-select
 			exchange_byte( mosiData, misoData );
 			#100; SS = 1'b1;   // de-activate slave-select
@@ -84,4 +87,5 @@ always @(posedge clk50Mhz) begin
     end
 
 endmodule
+
 
