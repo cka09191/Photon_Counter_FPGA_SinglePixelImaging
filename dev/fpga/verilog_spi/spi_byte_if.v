@@ -1,12 +1,4 @@
-// SPI Byte Interface, byte interface module
-// Platform: Altera Cyclone IV using Quartus 16.1
-// Documentation: http://www.coertvonk.com/technology/logic/connecting-fpga-and-arduino-using-spi-13067
-// Inspired by: http://fpga4fun.com/SPI2.html
-//
-// GNU GENERAL PUBLIC LICENSE Version 3, check the file LICENSE for more information
-// (c) Copyright 2015-2016, Coert Vonk
-// All rights reserved.  Use of copyright notice does not imply publication.
-// All text above must be included in any redistribution
+// 
 
 `timescale 1ns / 1ps
 `default_nettype none
