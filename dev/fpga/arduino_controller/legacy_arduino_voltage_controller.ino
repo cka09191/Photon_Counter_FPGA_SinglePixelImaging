@@ -1,22 +1,22 @@
 #define datatotal 768
-
+#define datatotaleach 1
+#define readfrom 0
+int analogIn = A1;
 int digitalIn = 13;
 bool before = false;
 bool countstart = false;
 bool countdata = false;
-
 void setup() {
   Serial.begin(500000,SERIAL_8E2);
 }
-
 int loopcount = 0;
 int comb = 0;
-int measuring_time = 1000;
-int misodata = 0;
+int last = 0;
+int looploopcount = 0;
+int looploopindex = 0;
 
 int data[datatotal];
-//TODO: Explain each command
-
+int eachdata[datatotaleach];
 void loop() {
   if(Serial.available()>0){
     int readValue = Serial.read();
@@ -41,36 +41,39 @@ void loop() {
         for (int i = 0; i < loopcount; i++)
           Serial.println(data[i]);
       }else if(readValue=='b'){
-        if(loopcount>0) {
-            if(Serial.available()>0){
-              measuring_time = Serial.parseInt();
-            }
-        }
+        comb = 0;
+        if(loopcount>0)
+          Serial.println(looploopcount);
         
       }
     }
   }
-  //digitalValue : DMD Change Signal(DCS)
-  //when DCS is positive, it means that DMD is flipping the mirror.
-  //when DCS is positive edge, 
-  //Pattern Cycle: period of time between DMD is flipping the mirror
-  //Flipping Time: period of time that DMD is flipping the mirror(58us)
-  //Ignore Time: ignore first fall time after flipping the mirror(not used in this code)
-
+  
   int digitalValue = digitalRead(digitalIn);
     if(digitalValue) {//digitalValue is true
       before = true;
-      if(countdata) {//stop measuring and record the data
-            //TODO: receive data from FPGA
-            
-
-            data[loopcount-1]=misodata;
-            countdata = false;
+      if(countdata) {
+          int sum=0;
+          for(int _ = readfrom; _<looploopcount; _++){
+            sum+=eachdata[_];
+          }
+          data[loopcount-1]=sum/(looploopcount-readfrom);
+          // Serial.print(looploopcount);
+          looploopcount = 0;
+          countdata = false;
         }
-    }else{
-      if(before) {// negedge digitalValue, start measuring
+    }else{ //measuring
+      if(before) {// negedge digitalValue
         if (loopcount<datatotal) {
           before = false;
+          
+          
+          // if(loopcount>0){
+          //   Serial.print(',');
+          //   Serial.println(data[loopcount-1]);
+          // }
+          // data[loopcount]= read;
+          last = loopcount;
           loopcount++;
           countstart=true;
         }
