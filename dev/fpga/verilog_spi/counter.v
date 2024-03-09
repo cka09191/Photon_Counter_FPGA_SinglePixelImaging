@@ -2,7 +2,7 @@ module counter_8bit(
   input wire clk50Mhz,
   input wire rst,
   input wire sig,
-  output reg [7:0] cnt
+  output reg [7:0] cnt=0
   );
    
 always@(posedge clk50Mhz or posedge rst)
