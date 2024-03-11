@@ -1,9 +1,9 @@
 #define datatotal 768
 
 int digitalIn = 13;
-bool before = false;
-bool countstart = false;
-bool countdata = false;
+bool before = false;// before: was the previous value of digitalIn true?
+bool countstart = false;// countstart: is the program currently counting data?
+bool countdata = false; // countdata: is the program currently has data counted?
 
 void setup() {
   Serial.begin(500000,SERIAL_8E2);
@@ -60,28 +60,23 @@ void loop() {
   int digitalValue = digitalRead(digitalIn);
     if(digitalValue) {//digitalValue is true
       before = true;
-      if(countdata) {//stop measuring and record the data
-            //TODO: receive data from FPGA
-            
+      if(countdata) {//stop counting
+            //TODO: stop counting
 
-            data[loopcount-1]=misodata;
             countdata = false;
+            
         }
     }else{
-      if(before) {// negedge digitalValue, start measuring
-        if (loopcount<datatotal) {
+      if(before) {// negedge digitalValue, start measuring, record previous data
+        if (loopcount<datatotal) {//if loopcount is less than datatotal, start measuring, else, do nothing
           before = false;
+          
+          //TODO: send start signal to FPGA
+
+          //TODO: record data
+
           loopcount++;
           countstart=true;
-        }
-      }else{
-        if(countstart) {
-          eachdata[looploopcount]=analogRead(analogIn);
-          looploopcount++;
-          if (looploopcount == datatotaleach) {
-            countstart=false;
-            countdata = true;
-          }
         }
       }
     }

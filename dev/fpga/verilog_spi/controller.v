@@ -8,7 +8,7 @@ basic FPGA Controller module
     COMMAND:
         signal from master, from SPI module
         0x00: idle(stop counting),
-		  0x01: start counting
+		0x01: start counting
     START_COUNT:
         signal to indicate start of counting
 
