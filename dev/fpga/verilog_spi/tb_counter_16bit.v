@@ -4,7 +4,7 @@ module tb_counter_16bit;
     wire [15:0] cnt;
     reg start_clk = 0;
     reg rst = 0;
-    wire sig;
+    reg sig;
 
     counter_16bit uut (
         .clk50Mhz(CLK), 
@@ -24,6 +24,7 @@ module tb_counter_16bit;
         $display("start");
         CLK = 0;
         start_clk = 0;
+        sig = 1;
         $display("0tick");
         #1;
         $display("1tick");
