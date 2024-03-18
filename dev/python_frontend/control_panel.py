@@ -131,6 +131,7 @@ class ControlPanel:
         pixels = self.entry_pixel.get().split(",")
         repetitions = [rep for rep in range(int(self.entry_repetitions.get()))]
         totallist = [(time, pixel, repetition) for time in times for pixel in pixels for repetition in repetitions]
+        
         for (time, pixel, repetition) in totallist:
             #if there is already a same item in the queue, repetition number will be added
             repetitions = self.queuelist.get(0, "end")
