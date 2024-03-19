@@ -55,7 +55,7 @@ void loop()
         //     (void)SPI.transfer(i);
         //     delay(100);
         // }
-        int received = SPI.transfer(0x01);
+        int received = SPI.transfer16(0x0001);
         SPI.endTransaction();
     digitalWrite(ssFPGA, 1);
     Serial.println(received);
@@ -68,7 +68,7 @@ void loop()
         //     (void)SPI.transfer(i);
         //     delay(100);
         // }
-        received = SPI.transfer(0x00);
+        received = SPI.transfer16(0x0000);
         SPI.endTransaction();
     digitalWrite(ssFPGA, 1);
     Serial.println(received);
