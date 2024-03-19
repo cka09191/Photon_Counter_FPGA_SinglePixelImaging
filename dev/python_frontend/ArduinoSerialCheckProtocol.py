@@ -24,8 +24,8 @@ class ArduinoSerialCheckProtocol:
         self.check_connection(check)
         self.ser.set_buffer_size(rx_size=12800, tx_size=12800)
 
-    def __exit__(self):
-        self.ser.__exit__()
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.ser.__exit__(exc_type, exc_val, exc_tb)
 
     def check_connection(self, times=5):
         """
