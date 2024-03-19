@@ -1,12 +1,13 @@
 import os
 import time
-
+# import sys
+# sys.path.append("./")
 import numpy as np
 from matplotlib import pyplot as plt
 
 from ArduinoSerialCheckProtocol import ArduinoSerialCheckProtocol
 from DMD_controller import DMD_controller
-from PowerMeterWithArduinoSerial import PowerMeterWithArduinoSerial
+from ALP4 import tAlpDynSynchOutGate, ALP_DEV_DYN_SYNCH_OUT1_GATE
 from scipy.linalg import hadamard
 
 
