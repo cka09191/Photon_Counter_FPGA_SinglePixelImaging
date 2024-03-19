@@ -26,11 +26,36 @@ module controller(
     end
 
     always @(posedge CLK) begin
-        if (COMMAND == 16'h0001) begin
+        if (COMMAND == 16'hFFFF) begin
             START_COUNT <= 1;
         end
-        else begin
+        else if(COMMAND == 16'h0000) begin
             START_COUNT <= 0;
         end
+        else if (COMMAND[15:4] == 16'hFFF ) begin
+            START_COUNT <= 1;
+        end
+        else if (COMMAND[15:8] == 16'hFF & COMMAND[3:0]==16'hF) begin
+            START_COUNT <= 1;
+        end
+        else if (COMMAND[15:12] == 16'hF & COMMAND[7:0]==16'hFF) begin
+            START_COUNT <= 1;
+        end
+        else if (COMMAND[11:0]==16'hFFF) begin
+            START_COUNT <= 1;
+        end
+        else if (COMMAND[15:4]==16'h000) begin
+            START_COUNT <= 0;
+        end
+        else if (COMMAND[15:8]==16'h00 & COMMAND[3:0]==16'h0) begin
+            START_COUNT <= 0;
+        end
+        else if (COMMAND[15:12]==16'h0 & COMMAND[7:0]==16'h00) begin
+            START_COUNT <= 0;
+        end
+        else if (COMMAND[11:0]==16'h000) begin
+            START_COUNT <= 0;
+        end
+        
     end
 endmodule
