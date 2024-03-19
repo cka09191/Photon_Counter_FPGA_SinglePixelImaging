@@ -36,7 +36,7 @@ basic FPGA SPI module
 `default_nettype none
 
 // for SPI MODE 3
-module spi_byte_module( input wire sysClk,      // internal FPGA clock
+module spi_short_module( input wire sysClk,      // internal FPGA clock
                     input wire SCLK,        // SPI clock
 						  input wire MOSI,        // SPI master out, slave in
 						  output wire MISO,       // SPI slave in, master out

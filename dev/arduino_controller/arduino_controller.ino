@@ -16,9 +16,9 @@ bool countdata = false; // countdata: is the program currently has data counted?
                         //            ~is the program currently not counting?
 
 void setup() {
-  Serial.begin(500000,SERIAL_8E2);
+  Serial.begin(115200,SERIAL_8E2);
   pinMode(ssFPGA, OUTPUT);
-  digitalWrite(ssFPGA, 0);
+  digitalWrite(ssFPGA, 1);
   SPI.begin();
   while (!Serial) {
 		    ; // wait
@@ -62,6 +62,27 @@ void loop() {
               measuring_time = Serial.parseInt();
             }
         }
+      }else if(readValue=='d'){
+        digitalWrite(ssFPGA, 0);
+        SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
+        int received = SPI.transfer16(0x0001);
+        SPI.endTransaction();
+        digitalWrite(ssFPGA, 1);
+        Serial.println(received);
+      }else if(readValue=='g'){
+        digitalWrite(ssFPGA, 0);
+        SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
+        int received = SPI.transfer16(0x0000);
+        SPI.endTransaction();
+        digitalWrite(ssFPGA, 1);
+        Serial.println(received);
+      }else if(readValue=='h'){
+        
+      }else if(readValue=='k'){
+        
+      }else if(readValue=='m'){
+        
+      }else if(readValue=='n'){
         
       }
     }
@@ -79,7 +100,7 @@ void loop() {
       if(!countdata) {//stop counting if not stopped
             digitalWrite(ssFPGA, 0);
             SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
-            int received = SPI.transfer(0x00);//stop counting, received data should 0
+            int received = SPI.transfer16(0x0000);//stop counting, received data should 0
             countdata = true;//because counting stopped, there is data ready to send in fpga
             digitalWrite(ssFPGA, 1);
         }
@@ -91,7 +112,7 @@ void loop() {
           //TODO: send start signal to FPGA
           digitalWrite(ssFPGA, 0);
           SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
-          int received = SPI.transfer(0x01);//start counting, received data is count
+          int received = SPI.transfer16(0x0001);//start counting, received data is count
           digitalWrite(ssFPGA, 1);
 
           countdata = false;

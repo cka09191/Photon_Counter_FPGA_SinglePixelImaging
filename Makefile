@@ -1,9 +1,12 @@
-
+CC = gcc
 phony:
-	make help
+	@make help
 
-help:## Show this help.
+help:## Show this help. if windows: findstr else mac: grep
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+
+	
 
 wave:## Run timing test must specify uut
 	@echo "Running timing test"
