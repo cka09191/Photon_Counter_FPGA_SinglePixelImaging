@@ -1,5 +1,4 @@
 CC = gcc
-
 phony:
 	@make help
 

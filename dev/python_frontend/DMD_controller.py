@@ -12,6 +12,7 @@ import os
 #dll directory
 os.add_dll_directory("C:/Users/CHAEGYEONGJUN/PycharmProjects/SinglePixelImagingWithDMD")
 
+
 class DMD_controller:
     def __init__(self):
         # Load the Vialux .dll

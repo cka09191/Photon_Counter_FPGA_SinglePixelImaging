@@ -78,3 +78,4 @@ ArduinoOutput/sketch/arduino_controller.ino.cpp
 ArduinoOutput/sketch/arduino_controller.ino.cpp.d
 ArduinoOutput/sketch/arduino_controller.ino.cpp.o
 dev/fpga/verilog_spi/test
+dev/python_frontend/.venv/*
