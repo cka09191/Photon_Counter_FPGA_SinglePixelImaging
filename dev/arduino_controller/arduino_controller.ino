@@ -7,13 +7,12 @@ arduino controller acquiring data from fpga by spi communication.
 
 #define datatotal 768
 #include <SPI.h>
+#include <Arduino.h>
 
 uint8_t const ssFPGA = 10;
 int digitalIn = 13;
 bool before = false;// before: was the previous value of digitalIn true?
 bool countstart = false;// countstart: is the program currently counting data?
-bool countdata = false; // countdata: is the program currently has data counted?
-                        //            ~is the program currently not counting?
 
 void setup() {
   Serial.begin(115200,SERIAL_8E2);
@@ -97,28 +96,28 @@ void loop() {
   int digitalValue = digitalRead(digitalIn);
     if(digitalValue) {//digitalValue is true
       before = true;
-      if(!countdata) {//stop counting if not stopped
+      if(countstart) {//stop counting if not stopped, and get the data
+
             digitalWrite(ssFPGA, 0);
             SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
-            int received = SPI.transfer16(0x0000);//stop counting, received data should 0
-            countdata = true;//because counting stopped, there is data ready to send in fpga
+            int received = SPI.transfer16(0x0000);//stop counting, received data is count
             digitalWrite(ssFPGA, 1);
+
+            data[loopcount]=received;
+            loopcount++;
+            countstart = false;//because reset is true, there is no data counted
         }
     }else{
-      if(before) {// negedge digitalValue, start measuring, record previous data
+      if(before) {// negedge digitalValue, start measuring
         if (loopcount<datatotal) {//if loopcount is less than datatotal, start measuring, else, do nothing
           before = false;
           
           //TODO: send start signal to FPGA
           digitalWrite(ssFPGA, 0);
           SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
-          int received = SPI.transfer16(0x0001);//start counting, received data is count
+          int received = SPI.transfer16(0xFFFFF);//start counting, received data should 0
           digitalWrite(ssFPGA, 1);
-
-          countdata = false;
           //TODO: record data
-          data[loopcount]=received;
-          loopcount++;
           countstart=true;
         }
       }
