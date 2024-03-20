@@ -9,7 +9,7 @@ always@(posedge clk50Mhz or posedge rst)
   
 begin
   
-  if(rst) cnt <= 1'b0; 
+  if(rst) cnt <= 0;
 
   else if(sig) cnt <= cnt + 1; 
 
