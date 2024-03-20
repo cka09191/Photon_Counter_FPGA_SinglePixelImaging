@@ -8,6 +8,9 @@ import os
 from tkinter import Entry, Text, Tk, Listbox, filedialog
 from tkinter.ttk import Frame, Label, Button
 
+import experiment
+
+
 class ControlPanel:
     def __init__(self):
         self.root = Tk()
@@ -68,6 +71,19 @@ class ControlPanel:
 
         self.sub_frame_settings.pack(padx=10, pady=10, fill='both', expand=False)
 
+        
+        # image size setting
+        self.sub_frame_imagesize = Frame(self.frame_settings)
+        self.label_imagesize = Label(self.sub_frame_imagesize, text="image size:")
+        self.entry_imagesize = Text(self.sub_frame_imagesize, height=1, width=10, font=("Arial", 16))
+        self.entry_imagesize.insert(1.0, "150")
+        self.label_imagesize.pack(side='left')
+        self.entry_imagesize.pack(side='left',fill='both', expand=True)
+        self.sub_frame_imagesize.pack(ipadx=40,side='left')
+
+
+
+
         # Experiment label setting
         self.sub_frame_label = Frame(self.frame_settings)
         self.label_explabel = Label(self.sub_frame_label, text="experiment label:")
@@ -101,15 +117,13 @@ class ControlPanel:
         # Control buttons
         self.frame_control_buttons = Frame(self.frame_queue)
         self.button_run = Button(self.frame_control_buttons, text="Run", command=self.run, width=3)
-        self.button_stop = Button(self.frame_control_buttons, text="Stop", command=self.stop, width=3)
         self.button_queue_delete = Button(self.frame_control_buttons, text="Delete", command=self.delete, width=3)
         self.button_run.pack(side='left', ipadx=10)
-        self.button_stop.pack(side='left', ipadx=10)
         self.button_queue_delete.pack(side='right', ipadx=10, anchor='e')
         self.frame_control_buttons.pack(side='bottom', ipadx=10, anchor='se', fill='both', expand=False)
 
 
-        self.frame_queue.pack(padx=10, pady=10, fill='both', expand=True) 
+        self.frame_queue.pack(padx=10, pady=10, fill='both', expand=True)
         
         # save directory setting
         self.sub_frame_savedir = Frame(self.frame_lists)
@@ -135,7 +149,6 @@ class ControlPanel:
 
         self.root.mainloop()
 
-        self.frame_queue = Frame(self.root)
     
 
     def filedialog_savedir(self):
@@ -145,12 +158,22 @@ class ControlPanel:
         self.entry_savedir.insert(1.0, filedialog.askdirectory(parent=self.root,initialdir=desktop_dir,title='Please select a directory'))
 
     def run(self):
-        """Run the experiment with the queue list."""
-        pass
-
-    def stop(self):
-        """Stop the experiment."""
-        pass
+        """Run the selected experiment with the queue list."""
+        list_run = self.queuelist.curselection()
+        try:
+            for item in list_run:
+                item_each = self.queuelist.get(item)
+                label, picturetime, pixel, size_im, repetition = item_each.split(" ")
+                filename = label + "_" + pixel + "_" + picturetime + "_"+ size_im + "_" + repetition + ".npy"
+                print(f"Running {filename}")
+                experiment(pixel, picturetime, filename, _length_seq=768, _size_im=size_im)
+                self.queuelist.delete(item)
+        except IndexError as e:
+            print("No item selected.")
+            print(e)
+        except Exception as e:
+            print(e)
+        
 
     def delete(self):
         """Delete the selected items in the queue list."""
@@ -160,19 +183,19 @@ class ControlPanel:
 
     def add_to_queue(self):
         """Add the settings to the queue list."""
-        label = self.entry_explabel.get("1.0", "end")
+        label = self.entry_explabel.get("1.0", "end").strip('\n')
         timestart, timeend, timeinterval = self.entry_time.get().split(":") 
         times = [time for time in range(int(timestart), int(timeend), int(timeinterval))]
         pixels = self.entry_pixel.get().split(",")
         repetitions = [rep for rep in range(int(self.entry_repetitions.get()))]
-        totallist = [(time, pixel, repetition) for time in times for pixel in pixels for repetition in repetitions]
-        
-        for (_time, pixel, repetition) in totallist:
+        size_im = self.entry_imagesize.get("1.0", "end").strip('\n')
+        totallist = [(time, pixel, repetition, size_im) for time in times for pixel in pixels for repetition in repetitions]
+        for (_time, pixel, repetition, size_im) in totallist:
             #if there is already a same item in the queue, repetition number will be added
             repetitions = self.queuelist.get(0, "end")
-            while (f"{label} {_time} {pixel} {repetition}") in repetitions:
+            while (f"{label} {_time} {pixel} {size_im} {repetition}") in repetitions:
                 repetition += 1
-            self.queuelist.insert("end", f"{label} {_time} {pixel} {repetition}")
+            self.queuelist.insert("end", f"{label} {_time} {pixel} {size_im} {repetition}")
 
 
 
