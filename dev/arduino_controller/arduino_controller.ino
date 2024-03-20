@@ -7,7 +7,6 @@ arduino controller acquiring data from fpga by spi communication.
 
 #define datatotal 768
 #include <SPI.h>
-#include <Arduino.h>
 
 uint8_t const ssFPGA = 10;
 int digitalIn = 13;
