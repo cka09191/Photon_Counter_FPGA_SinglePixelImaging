@@ -9,7 +9,7 @@ arduino controller acquiring data from fpga by spi communication.
 #include <SPI.h>
 
 uint8_t const ssFPGA = 10;
-int digitalIn = 8;
+int digitalIn = 13;
 bool before = false;// before: was the previous value of digitalIn true?
 bool countstart = false;// countstart: is the program currently counting data?
 
@@ -63,14 +63,14 @@ void loop() {
       }else if(readValue=='d'){//start the counting
         digitalWrite(ssFPGA, 0);
         SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
-        int received = SPI.transfer16(0xFFFF);
+        unsigned int received = SPI.transfer16(0xFFFF);
         SPI.endTransaction();
         digitalWrite(ssFPGA, 1);
         Serial.println(received);
       }else if(readValue=='g'){//stop the counting and get the data
         digitalWrite(ssFPGA, 0);
         SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
-        int received = SPI.transfer16(0x0000);
+        unsigned int received = SPI.transfer16(0x0000);
         SPI.endTransaction();
         digitalWrite(ssFPGA, 1);
         Serial.println(received);
@@ -99,7 +99,7 @@ void loop() {
 
             digitalWrite(ssFPGA, 0);
             SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
-            int received = SPI.transfer16(0x0000);//stop counting, received data is count
+            unsigned int received = SPI.transfer16(0x0000);//stop counting, received data is count
             digitalWrite(ssFPGA, 1);
 
             data[loopcount]=received;
@@ -114,7 +114,7 @@ void loop() {
           //TODO: send start signal to FPGA
           digitalWrite(ssFPGA, 0);
           SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
-          int received = SPI.transfer16(0xFFFFF);//start counting, received data should 0
+          unsigned int received = SPI.transfer16(0xFFFFF);//start counting, received data should 0
           digitalWrite(ssFPGA, 1);
           //TODO: record data
           countstart=true;
