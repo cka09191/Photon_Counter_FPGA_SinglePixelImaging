@@ -10,7 +10,7 @@ arduino controller acquiring data from fpga by spi communication.
 #include <Arduino.h>
 
 uint8_t const ssFPGA = 10;
-int digitalIn = 13;
+int digitalIn = 8;
 bool before = false;// before: was the previous value of digitalIn true?
 bool countstart = false;// countstart: is the program currently counting data?
 
