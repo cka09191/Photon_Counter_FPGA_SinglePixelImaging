@@ -37,13 +37,5 @@ always @ (posedge clk) begin
         data_out <= 8'b0; // Output zero when enable signal is low
 end
 
-// You need to initialize memory with your data
-// For example:
-// initial begin
-//    memory[0] = 8'hAA;
-//    memory[1] = 8'hBB;
-//    ...
-//    memory[254] = 8'hFF;
-// end
 
 endmodule
