@@ -1,7 +1,12 @@
+'''
+
+
+@author Gyeongjun Chae(https://github.com/cka09191)
+'''
 import datetime as time
 import os
 from tkinter import Entry, Text, Tk, Listbox, filedialog
-from tkinter.ttk import Frame, Label, Button, LabeledScale
+from tkinter.ttk import Frame, Label, Button
 
 class ControlPanel:
     def __init__(self):
@@ -162,12 +167,12 @@ class ControlPanel:
         repetitions = [rep for rep in range(int(self.entry_repetitions.get()))]
         totallist = [(time, pixel, repetition) for time in times for pixel in pixels for repetition in repetitions]
         
-        for (time, pixel, repetition) in totallist:
+        for (_time, pixel, repetition) in totallist:
             #if there is already a same item in the queue, repetition number will be added
             repetitions = self.queuelist.get(0, "end")
-            while (f"{label} {time} {pixel} {repetition}") in repetitions:
+            while (f"{label} {_time} {pixel} {repetition}") in repetitions:
                 repetition += 1
-            self.queuelist.insert("end", f"{label} {time} {pixel} {repetition}")
+            self.queuelist.insert("end", f"{label} {_time} {pixel} {repetition}")
 
 
 

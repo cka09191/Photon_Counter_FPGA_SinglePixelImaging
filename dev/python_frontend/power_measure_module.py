@@ -4,17 +4,15 @@ import time
 
 import numpy as np
 
-from ArduinoSerialCheckProtocol import ArduinoSerialCheckProtocol
-from PowermeterManager import PowermeterManager
-
-import serial
+from arduino_transaction_module import arduino_transaction_module
 
 
-class PowerMeterWithArduinoSerial(PowermeterManager):
-    def __init__(self, protocol: ArduinoSerialCheckProtocol):
+
+class power_measure_module:
+    def __init__(self, protocol: arduino_transaction_module):
         self.protocol = protocol
 
-    def mean(self, second=2, reps=10, wavelength=780):
+    def mean(self, second=2, reps=10):
         """
         :param second: 총 측정 시간
         :param reps: 측정 횟수
@@ -32,7 +30,7 @@ class PowerMeterWithArduinoSerial(PowermeterManager):
 
         return np.mean(power_measurements)
 
-    def measure(self, wavelength=780):
+    def measure(self):
         while (True):
             meas = self.protocol.receive()
             if meas is not None:
@@ -43,8 +41,8 @@ class PowerMeterWithArduinoSerial(PowermeterManager):
 
 
 if __name__ == "__main__":
-    arduinoprotocol = ArduinoSerialCheckProtocol("COM7", 115200, 'E', 5, 2, 1)
-    powermeter = PowerMeterWithArduinoSerial(arduinoprotocol)
+    arduinoprotocol = arduino_transaction_module("COM7", 115200, 'E', 5, 2, 1)
+    powermeter = power_measure_module(arduinoprotocol)
     timestart = time.time()
     print(powermeter.mean(second = 3,reps=40))
     print(f"경과시간{time.time() - timestart}")

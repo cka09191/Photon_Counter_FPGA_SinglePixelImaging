@@ -5,9 +5,9 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from ALP4 import tAlpDynSynchOutGate, ALP_DEV_DYN_SYNCH_OUT1_GATE, ALP_LEVEL_HIGH
-from ArduinoSerialCheckProtocol import ArduinoSerialCheckProtocol
-from DMD_controller import DMD_controller
-from PowerMeterWithArduinoSerial import PowerMeterWithArduinoSerial
+from arduino_transaction_module import arduino_transaction_module
+from DMD_controller import dmd_controller
+from power_measure_module import power_measure_module
 from scipy.linalg import hadamard
 
 
@@ -26,7 +26,7 @@ def hadamard_remastered_image_data(pixel: int, size_im: int, reversed=False):
         hadamard_array *= _
         pixel_sqrt_is_length = int(np.sqrt(pixel))
         print(hadamard_array)
-        imgData = DMD_controller.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
+        imgData = dmd_controller.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
         # np.save(directory + filename, imgData)
         return np.array(imgData)
 
@@ -43,12 +43,12 @@ def hadamard_image_data(pixel: int, size_im: int, reversed=False):
             _ = -1
         hadamard_array = np.array(hadamard(pixel),np.int8) * _
         pixel_sqrt_is_length = int(np.sqrt(pixel))
-        imgData = DMD_controller.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
+        imgData = dmd_controller.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
         # np.save(directory + filename, imgData)
         return np.array(imgData)
 
 
-def voltage_read(arduino: ArduinoSerialCheckProtocol, start: int, end: int):
+def voltage_read(arduino: arduino_transaction_module, start: int, end: int):
     datalist = []
 
     # for i in range(start,end):
@@ -58,12 +58,12 @@ def voltage_read(arduino: ArduinoSerialCheckProtocol, start: int, end: int):
 
 
 def experiment(pixel: int, picturetime: int, file: str, im_size=150, seq_length=64):
-    DMD = DMD_controller()
+    DMD = dmd_controller()
     Gate = tAlpDynSynchOutGate()
     Gate.Period = 1
     Gate.Polarity =0
     Gate.Gate[0] = 1
-    DMD.DMD.DevControlEx(ALP_DEV_DYN_SYNCH_OUT1_GATE, Gate)
+    DMD.dmd.DevControlEx(ALP_DEV_DYN_SYNCH_OUT1_GATE, Gate)
     start_time = time.perf_counter()
     length_pattern = int(np.sqrt(pixel))
     hadamard_image_data_set = np.zeros((pixel*2, 768, 1024),np.uint8)
@@ -91,7 +91,7 @@ def experiment(pixel: int, picturetime: int, file: str, im_size=150, seq_length=
     slides = DMD.upload(hadamard_image_data_set, hadamard_image_data_set.shape[0], 1, seq_length)
     print(f"uploading time:{time.perf_counter() - start_time}")
     while (True):
-        arduino_protocol = ArduinoSerialCheckProtocol("COM7", 500000, 'E', 5, 2, 1)
+        arduino_protocol = arduino_transaction_module("COM7", 500000, 'E', 5, 2, 1)
         picturetime = int(input("timing(us)"))
         total = np.array([])
         for st in ['calibrating']:
@@ -108,16 +108,16 @@ def experiment(pixel: int, picturetime: int, file: str, im_size=150, seq_length=
                 if int(slide == slides[-1]):
                     _seq_length = (pixel * 2) % seq_length
                 while (index != _seq_length):
-                    arduino_protocol.send(ArduinoSerialCheckProtocol.resetindex)
+                    arduino_protocol.send(arduino_transaction_module.resetindex)
                     measure_start_time = time.perf_counter()
                     DMD.slideshow(picturetime, slide, False)
                     DMD.wait()
                     measure_time_total.append( time.perf_counter() - measure_start_time)
                     arduino_protocol.flush()
-                    index = arduino_protocol.transaction(ArduinoSerialCheckProtocol.index)
+                    index = arduino_protocol.transaction(arduino_transaction_module.index)
                     end = slide.value * _seq_length
                     start = end - _seq_length
-                arduino_protocol.send(ArduinoSerialCheckProtocol.readfirst)
+                arduino_protocol.send(arduino_transaction_module.readfirst)
                 total = np.append(total, voltage_read(arduino_protocol, start, end))
 
             print('measure time: ', np.sum(measure_time_total))
@@ -149,8 +149,8 @@ def experiment(pixel: int, picturetime: int, file: str, im_size=150, seq_length=
 
 
 def experiment2(pixel: int, picturetime: int, file: str, im_size=150, seq_length=64):
-    arduino_protocol = ArduinoSerialCheckProtocol("COM7", 115200, 'E', 5, 2, 1)
-    DMD = DMD_controller()
+    arduino_protocol = arduino_transaction_module("COM7", 115200, 'E', 5, 2, 1)
+    DMD = dmd_controller()
 
     start_time = time.perf_counter()
     length_pattern = int(np.sqrt(pixel))
@@ -162,13 +162,13 @@ def experiment2(pixel: int, picturetime: int, file: str, im_size=150, seq_length
             array = [0, 0, 0, 0]
         index = 0
         while (index != 2):
-            arduino_protocol.send(ArduinoSerialCheckProtocol.resetindex)
-            DMD.simpletest(array=array, pic=picturetime, pattern_size=pattern_size, size_im=im_size, repeat=False)
+            arduino_protocol.send(arduino_transaction_module.resetindex)
+            DMD.simple_test(array=array, pic=picturetime, pattern_size=pattern_size, size_im=im_size, repeat=False)
             DMD.wait()
             arduino_protocol.flush()
-            index = arduino_protocol.transaction(ArduinoSerialCheckProtocol.index)
-        arduino_protocol.send(ArduinoSerialCheckProtocol.readfirst)
-        return arduino_protocol.transaction(ArduinoSerialCheckProtocol.readnext)
+            index = arduino_protocol.transaction(arduino_transaction_module.index)
+        arduino_protocol.send(arduino_transaction_module.readfirst)
+        return arduino_protocol.transaction(arduino_transaction_module.readnext)
 
     zero_light = one_pattern_measure([0, 0, 0, 0])
     full_light = one_pattern_measure([1, 1, 1, 1])
@@ -206,15 +206,15 @@ def experiment2(pixel: int, picturetime: int, file: str, im_size=150, seq_length
                 if int(slide == slides[-1]):
                     _seq_length = (pixel) % seq_length
                 while (index != _seq_length):
-                    arduino_protocol.send(ArduinoSerialCheckProtocol.resetindex)
+                    arduino_protocol.send(arduino_transaction_module.resetindex)
                     DMD.slideshow(picturetime, slide, False)
                     DMD.wait()
                     measure_time_total.append( time.perf_counter() - measure_start_time)
                     arduino_protocol.flush()
-                    index = arduino_protocol.transaction(ArduinoSerialCheckProtocol.index)
+                    index = arduino_protocol.transaction(arduino_transaction_module.index)
                     end = slide.value * _seq_length
                     start = end - _seq_length
-                arduino_protocol.send(ArduinoSerialCheckProtocol.readfirst)
+                arduino_protocol.send(arduino_transaction_module.readfirst)
                 total = np.append(total, voltage_read(arduino_protocol, start, end))
             measure = total[0:pixel]
             if (st == 'calibrating'):

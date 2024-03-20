@@ -1,156 +1,179 @@
+
+
+"""
+This module contains functions for running an experiment with a DMD controller and Arduino.
+
+Functions:
+- _hadamard_image_data(pixel, size_im, reversed=False): Generate Hadamard image data.
+- voltage_read(arduino, start, end): Read voltage from Arduino.
+- experiment(pixel, picturetime, file, im_size=150, seq_length=64): Run the experiment.
+
+@author Gyeongjun Chae(https://github.com/cka09191)
+"""
+
+
 import os
 import time
-# import sys
-# sys.path.append("./")
 import numpy as np
 from matplotlib import pyplot as plt
-
-from ArduinoSerialCheckProtocol import ArduinoSerialCheckProtocol
-from DMD_controller import DMD_controller
-from ALP4 import tAlpDynSynchOutGate, ALP_DEV_DYN_SYNCH_OUT1_GATE
 from scipy.linalg import hadamard
 
-
-def hadamard_remastered_image_data(pixel: int, size_im: int, reversed=False):
-    directory = 'C:\\Users\\CHAEGYEONGJUN\\iCloudDrive\\Desktop\\Test\\hadamard_remaster\\'
-    os.makedirs(directory, exist_ok=True)
-    filename = f'{pixel}{size_im}.npy'
-    if filename in os.listdir(directory):
-        return np.load(directory + filename)
-    else:
-        _ = 1
-        if reversed == True:
-            _ = -1
-        hadamard_array = np.array(hadamard(pixel))
-        hadamard_array[0, pixel // 2:0] = -1
-        hadamard_array *= _
-        pixel_sqrt_is_length = int(np.sqrt(pixel))
-        print(hadamard_array)
-        imgData = DMD_controller.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
-        # np.save(directory + filename, imgData)
-        return np.array(imgData)
+from ALP4 import tAlpDynSynchOutGate, ALP_DEV_DYN_SYNCH_OUT1_GATE
+from arduino_transaction_module import arduino_transaction_module
+from dmd_controller import dmd_controller
 
 
-def hadamard_image_data(pixel: int, size_im: int, reversed=False):
-    directory = f'C:\\Users\\CHAEGYEONGJUN\\iCloudDrive\\Desktop\\Test\\hadamard_original\\'
-    os.makedirs(directory, exist_ok=True)
-    filename = f'{pixel}{size_im}_{reversed}.npy'
-    if filename in os.listdir(directory):
-        return np.load(directory + filename)
-    else:
-        _ = 1
-        if reversed == True:
-            _ = -1
-        hadamard_array = np.array(hadamard(pixel),np.int8) * _
-        pixel_sqrt_is_length = int(np.sqrt(pixel))
-        imgData = DMD_controller.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
-        # np.save(directory + filename, imgData)
-        return np.array(imgData)
+def _hadamard_image_data(_pixel: int, size_im: int, _reversed=False):
+    """
+    Generate Hadamard image as a numpy array.
+
+    Args:
+        pixel (int): Number of pixels.
+        size_im (int): Size of the image.
+        reversed (bool, optional): Whether to reverse the Hadamard pattern. Defaults to False.
+
+    Returns:
+        numpy.ndarray: Hadamard image data.
+    """
+    _ = 1
+    if _reversed is True:
+        _ = -1
+    hadamard_array = np.array(hadamard(_pixel),np.int8) * _
+    pixel_sqrt_is_length = int(np.sqrt(_pixel))
+    image_data = dmd_controller.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
+    return np.array(image_data)
 
 
-def voltage_read(arduino: ArduinoSerialCheckProtocol, start: int, end: int):
-    datalist = []
+def voltage_read(arduino: arduino_transaction_module):
+    """
+    Read voltage data and return as a numpy array.
 
-    # for i in range(start,end):
-    #     voltage = arduino.transaction(arduino.readnext)
-    #     datalist.append([voltage, i])
+    Args:
+        arduino (ArduinoSerialCheckProtocol): Arduino protocol object.
+        start (int): Start index.
+        end (int): End index.
+
+    Returns:
+        numpy.ndarray: Voltage data.
+    """
     return np.array(arduino.transaction(arduino.total), dtype=np.int32)
 
 
-def experiment(pixel: int, picturetime: int, file: str, im_size=150, seq_length=64):
-    DMD = DMD_controller()
-    Gate = tAlpDynSynchOutGate()
-    Gate.Period = 1
-    Gate.Polarity =0
-    Gate.Gate[0] = 1
-    DMD.DMD.DevControlEx(ALP_DEV_DYN_SYNCH_OUT1_GATE, Gate)
+def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _length_seq=64):
+    """
+    Run the experiment.
+
+    Args:
+        _pixel (int): Number of pixels.
+        _picture_time (int): Time for each picture.
+        _file_name (str): File to save the data.
+        _size_im (int, optional): Size of the image. Defaults to 150.
+        _length_seq (int, optional): Length of the sequence. Defaults to 64.
+    """
+
+    print('DMD initializing', end='')
+    dmd = dmd_controller()
+    gate = tAlpDynSynchOutGate()
+    gate.Period = 1
+    gate.Polarity =0
+    gate.Gate[0] = 1
+    dmd.dmd.DevControlEx(ALP_DEV_DYN_SYNCH_OUT1_GATE, gate)
+    print('...done')
+
+    print('arduino initializing', end='')
+    arduino_protocol = arduino_transaction_module("COM7", 500000, 'E', 5, 2, 1)
+    arduino_protocol.flush()
+    print('...done')
+
+    print('Pattern and key generating', end='')
+    print(f"pixel:{_pixel}, picturetime:{_picture_time}, im_size:{_size_im}")
     start_time = time.perf_counter()
-    length_pattern = int(np.sqrt(pixel))
-    hadamard_image_data_set = np.zeros((pixel*2, 768, 1024),np.uint8)
-    hadamard_image_data_set[0::2,:,:] = hadamard_image_data(pixel, im_size)
-    hadamard_image_data_set[1::2,:,:] = hadamard_image_data(pixel, im_size, True)
-    # hadamard_image_data_set = hadamard_image_data(pixel, im_size)
+    length_pattern = int(np.sqrt(_pixel))
 
-    # dot_size = (length_pattern//2)
-    #
-    # arrayset = [[0] * x + ([1]*dot_size + [0]*(length_pattern-dot_size))*dot_size+[0]*(pixel - x -dot_size*length_pattern) for x in range(pixel)]
-    # hadamard_image_data_set = DMD.array_set_to_imagedata(
-    #     arrayset, length_pattern, 150)
+    # hadamard_image_data_set is a set of hadamard images in two polarities
+    hadamard_image_data_set = np.zeros((_pixel*2, 768, 1024),np.uint8)
+    hadamard_image_data_set[0::2,:,:] = _hadamard_image_data(_pixel, _size_im)
+    hadamard_image_data_set[1::2,:,:] = _hadamard_image_data(_pixel, _size_im, True)
+    
+    # key is inverse of hadamard_array which is used to decode the image
+    hadamard_array = np.array(hadamard(_pixel))
+    key = np.linalg.inv(hadamard_array.reshape(_pixel, _pixel))
+    print('...done')
+    print(f"processing time:{time.perf_counter() - start_time}")
 
-    # hadamard_image_data_set = DMD.array_set_to_imagedata(
-    #          arrayset, length_pattern, 150)
-    # arrayset = [np.array(hadamard(pixel))==1, np.array(hadamard(pixel))==-1]
-    # arrayset[0::2, 0] = -1
-    # arrayset[0, 0::2] = -1
-    hadamard_array = np.array(hadamard(pixel))
-    key = np.linalg.inv(hadamard_array.reshape(pixel, pixel))
-    print(f"image processing time:{time.perf_counter() - start_time}")
-    print(f"image shape:{hadamard_image_data_set[0].shape}")
-
+    print('uploading', end='')
     start_time = time.perf_counter()
-    slides = DMD.upload(hadamard_image_data_set, hadamard_image_data_set.shape[0], 1, seq_length)
+    slides = dmd.upload(hadamard_image_data_set, hadamard_image_data_set.shape[0], 1, _length_seq)
+    print('...done')
     print(f"uploading time:{time.perf_counter() - start_time}")
-    while (True):
-        arduino_protocol = ArduinoSerialCheckProtocol("COM7", 500000, 'E', 5, 2, 1)
-        picturetime = int(input("timing(us)"))
-        total = np.array([])
-        for st in ['calibrating']:
-            if (st == 'calibrating'):
-                key = np.linalg.inv(hadamard_array.reshape(pixel, pixel))
-                print('calibrating')
-            start_time = time.perf_counter()
+
+    
+    print('experiment and aquisition start', end='')
+    total_data = np.array([])
+
+    # start_time is used to measure the time for the whole aquisition and communication
+    start_time = time.perf_counter()
+    # measure_time_total is the time for each measurement of the sequence
+    measure_time_total = []
+    for slide in slides:
+        length_acquired_data_arduino = 0
+        _length_seq_now = _length_seq
+
+        # if the last slide is not a full sequence, the length of the sequence is changed
+        if int(slide == slides[-1]):#??
+            _length_seq_now = (_pixel * 2) % _length_seq
+
+        # repeat until the length of the acquired data is the same as the length of the sequence
+        while (length_acquired_data_arduino != _length_seq_now):
+            arduino_protocol.send(arduino_transaction_module.resetindex)
+            measure_start_time = time.perf_counter()
+            dmd.slideshow(_picture_time, slide, False)
+            dmd.wait()
+            measure_time_total.append( time.perf_counter() - measure_start_time)
             arduino_protocol.flush()
-            total=np.array([])
-            measure_time_total = []
-            for slide in slides:
-                index = 0
-                _seq_length = seq_length
-                if int(slide == slides[-1]):
-                    _seq_length = (pixel * 2) % seq_length
-                while (index != _seq_length):
-                    arduino_protocol.send(ArduinoSerialCheckProtocol.resetindex)
-                    measure_start_time = time.perf_counter()
-                    DMD.slideshow(picturetime, slide, False)
-                    DMD.wait()
-                    measure_time_total.append( time.perf_counter() - measure_start_time)
-                    arduino_protocol.flush()
-                    index = arduino_protocol.transaction(ArduinoSerialCheckProtocol.index)
-                    end = slide.value * _seq_length
-                    start = end - _seq_length
-                arduino_protocol.send(ArduinoSerialCheckProtocol.readfirst)
-                total = np.append(total, voltage_read(arduino_protocol, start, end))
+            length_acquired_data_arduino = arduino_protocol.transaction(arduino_transaction_module.index)
 
-            print('measure time: ', np.sum(measure_time_total))
-            print('total imaging time: ', time.perf_counter() - start_time)
-            measure = total[0::2] - total[1::2]
-            plt.imshow(measure.reshape((length_pattern, length_pattern)))
-            plt.show()
-            plt.pause(0.1)
-            imarr = np.matmul(key, measure)
-            im = imarr
-            plt.imshow(np.transpose(im.reshape((length_pattern, length_pattern))))
-            plt.show()
-            plt.pause(0.1)
-            if (st == 'calibrating'):
-                hadamard_array_calibration = np.matmul((key), (np.identity(pixel) * im))
-                try:
-                    key = np.linalg.inv(hadamard_array_calibration.reshape(pixel, pixel))
-                except:
-                    print('please calibrate again')
-                    break
-        arduino_protocol.__exit__()
+        arduino_protocol.send(arduino_transaction_module.readfirst)
+        total_data = np.append(total_data, voltage_read(arduino_protocol))
+        print('.', end='')
 
-    np.save(file, total.reshape((pixel, 2)))
-    DMD.__exit__()
+    print('done')
+    print('total aquisition time: ', np.sum(measure_time_total))
+    print('total aquisition and communication time: ', time.perf_counter() - start_time)
+
+    # measure is the difference between two patterns in opposite polarities of hadamard pattern
+    measure = total_data[0::2] - total_data[1::2]
+
+    plt.imshow(measure.reshape((length_pattern, length_pattern)))
+    plt.show()
+    plt.pause(0.1)
+    imarr = np.matmul(key, measure)
+    im = imarr
+    plt.imshow(np.transpose(im.reshape((length_pattern, length_pattern))))
+    plt.show()
+    plt.pause(0.1)
+
+    print('experiment and aquisition end, disconnect Arduino and DMD', end='')
+    arduino_protocol.__exit__()
+    dmd.__exit__()
+    print('...done')
+
+    print('saving data', end='')
+    start_time = time.perf_counter()
+    np.save(_name_file, total_data.reshape((_pixel, 2)))
+    print('...done')
+    print(f"saving time:{time.perf_counter() - start_time}")
 
 
 
-
+# Example usage
 if __name__ == '__main__':
-    directory = 'C:\\Users\\CHAEGYEONGJUN\\iCloudDrive\\Desktop\\test\\new0204n\\'
-    filename = 'notfiber'
-    os.makedirs(directory, exist_ok=True)
-    explist = [[directory + f"{filename}_{pixel}_{rptime}", pixel, rptime] for rptime in [10000] for pixel in [256]]
-    for (filename, pixel, picturetime) in explist:
-        start_time = time.time_ns()
-        experiment(pixel, picturetime, filename, seq_length=768, im_size=300)
+    DIRECTORY = 'C:\\Users\\CHAEGYEONGJUN\\iCloudDrive\\Desktop\\test\\new0204n\\'
+    FILENAME = 'test'
+    PIXEL = [256]
+    PICTURETIME = [1000]
+    os.makedirs(DIRECTORY, exist_ok=True)
+
+    explist = [[DIRECTORY + f"{FILENAME}_{pixel}_{rptime}", pixel, rptime] for rptime in PICTURETIME for pixel in PIXEL]
+    for (FILENAME, pixel, picturetime) in explist:
+        experiment(pixel, picturetime, FILENAME, _length_seq=768, _size_im=300)

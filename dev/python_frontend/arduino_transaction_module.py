@@ -1,9 +1,13 @@
-import time
+"""
 
+
+@author Gyeongjun Chae(https://github.com/cka09191)
+"""
+import time
 import serial
 
 
-class ArduinoSerialCheckProtocol:
+class arduino_transaction_module:
     readnext = '1'.encode('utf-8')
     readbefore = '2'.encode('utf-8')
     readfirst = '4'.encode('utf-8')
@@ -24,7 +28,7 @@ class ArduinoSerialCheckProtocol:
         self.check_connection(check)
         self.ser.set_buffer_size(rx_size=12800, tx_size=12800)
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type=None, exc_val=None, exc_tb=None):
         self.ser.__exit__(exc_type, exc_val, exc_tb)
 
     def check_connection(self, times=5):
@@ -102,17 +106,17 @@ class ArduinoSerialCheckProtocol:
 
 
 if __name__ == "__main__":
-    a = ArduinoSerialCheckProtocol("COM7", 115200, check=0, stopbits=2, parity=serial.PARITY_EVEN)
+    a = arduino_transaction_module("COM7", 115200, check=0, stopbits=2, parity=serial.PARITY_EVEN)
     time.sleep(5)
     print("checkcomplete")
     for i in range(5):
-        a.send(ArduinoSerialCheckProtocol.readfirst)
+        a.send(arduino_transaction_module.readfirst)
         print(a.receive_wait())
         a.send('1'.encode('utf-8'))
         print(a.receive_wait())
         print(a.receive_wait())
-        a.send(ArduinoSerialCheckProtocol.readfirst)
+        a.send(arduino_transaction_module.readfirst)
         print(a.receive_wait())
         a.send('7'.encode('utf-8'))
-        a.send(ArduinoSerialCheckProtocol.resetindex)
+        a.send(arduino_transaction_module.resetindex)
         print(a.receive_wait())

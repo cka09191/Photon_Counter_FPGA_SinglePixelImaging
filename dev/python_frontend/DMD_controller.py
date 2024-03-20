@@ -1,45 +1,64 @@
-import time
+"""
 
-import cv2
-from scipy.linalg import hadamard
 
-import ALP4
-from ALP4 import *
-from image_process import rotation, pattern_to_image
+@author Gyeongjun Chae(https://github.com/cka09191)
+"""
 import os
+import time
+import cv2
+import numpy as np
+from scipy.linalg import hadamard
+from image_process import rotation, pattern_to_image
+
+from ALP4 import ALP4, tAlpDynSynchOutGate, ALP_DEV_DYN_SYNCH_OUT1_GATE
 
 
 #dll directory
 os.add_dll_directory("C:/Users/CHAEGYEONGJUN/PycharmProjects/SinglePixelImagingWithDMD")
 
 
-class DMD_controller:
+class dmd_controller:
+    """
+    dmd controller
+    """
     def __init__(self):
         # Load the Vialux .dll
-        self.DMD = ALP4(version='4.3')
-        self.DMD.Initialize()
-        self.bitDepth = 1
-        self.setSync()
+        self.dmd = ALP4(version='4.3')
+        self.dmd.Initialize()
+        self.bit_depth = 1
+        self.set_sync()
 
 
-    def __exit__(self):
-        self.DMD.Halt()
-        self.DMD.Free()
+    def __exit__(self, exc_type=None, exc_val=None, exc_tb=None):
+        self.dmd.Halt()
+        self.dmd.Free()
 
-    def setSync(self):
-        Gate = tAlpDynSynchOutGate()
-        Gate.Period = 1
-        Gate.Polarity = 0
-        Gate.Gate[0] = 1
-        self.DMD.DevControlEx(ALP_DEV_DYN_SYNCH_OUT1_GATE, Gate)
 
-    def setimage(self, array, bitDepth = 1, pic=1000,pattern_size=2,size_im=543,repeat=True):
-        #DMD display size
-        imgData = self.array_set_to_imagedata([array,array],pattern_size,size_im=size_im)
-        self.this_slide_show(imgData, 16, bitDepth, pic, repeat)
 
-    def simpletest(self, array: list=[1,0,0,1],pic = 1000,pattern_size=2,size_im=543,repeat=True):
-        self.setimage(array, pic=pic, pattern_size=pattern_size,size_im=size_im,repeat=repeat)
+    def set_sync(self):
+        """
+        set the sync signal
+        """
+        gate = tAlpDynSynchOutGate()
+        gate.Period = 1
+        gate.Polarity = 0
+        gate.Gate[0] = 1
+        self.dmd.DevControlEx(ALP_DEV_DYN_SYNCH_OUT1_GATE, gate)
+
+    def set_image(self, array, _bit_depth = 1, pic=1000,pattern_size=2,size_im=543,repeat=True):
+        """
+        display the image
+        """
+        img_data = self.array_set_to_imagedata([array,array],pattern_size,size_im=size_im)
+        self.this_slide_show(img_data, 16, _bit_depth, pic, repeat)
+
+    def simple_test(self, array = None,pic = 1000,pattern_size=2,size_im=543,repeat=True):
+        """
+        test
+        """
+        if array is None:
+            array = [1,0,1,0]
+        self.set_image(array, pic=pic, pattern_size=pattern_size,size_im=size_im,repeat=repeat)
 
     def this_slide_show(self, imgData, nbImg, bitDepth, pictureTime, loop):
         if nbImg>100:
@@ -47,36 +66,36 @@ class DMD_controller:
         buff = (np.array(imgData==0)*255)
 
         # Allocate the onboard memory for the image sequence
-        self.DMD.SeqAlloc(nbImg=len(buff), bitDepth=bitDepth)
+        self.dmd.SeqAlloc(nbImg=len(buff), bitDepth=bitDepth)
         # Send the image sequence as a 1D list/array/numpy array
-        self.DMD.SeqPut(imgData=buff)
+        self.dmd.SeqPut(imgData=buff)
 
-        self.DMD.SetTiming(pictureTime=pictureTime)
+        self.dmd.SetTiming(pictureTime=pictureTime)
         # Run the sequence in an infinite loop
 
         # self.DMD.ProjControl(ALP_PROJ_STEP, ALP_EDGE_FALLING)
-        self.DMD.Run(loop=loop)
+        self.dmd.Run(loop=loop)
 
         # self.DMD.FreeSeq()
 
     def Freeseq(self, SequenceIds):
         for sequenceId in SequenceIds:
-            self.DMD.FreeSeq(SequenceId=sequenceId)
+            self.dmd.FreeSeq(SequenceId=sequenceId)
 
     def slideshow(self, pictureTime, SequenceId, loop):
-        self.DMD.SetTiming(SequenceId=SequenceId, pictureTime=pictureTime)
+        self.dmd.SetTiming(SequenceId=SequenceId, pictureTime=pictureTime)
         # Run the sequence in an infinite loop
-        self.DMD.Run(loop=loop, SequenceId=SequenceId)
+        self.dmd.Run(loop=loop, SequenceId=SequenceId)
     def upload(self, imgData, nbImg, bitDepth,seq_length=100):
-        last = len(self.DMD.Seqs)
+        last = len(self.dmd.Seqs)
         for nb in range(0, nbImg, seq_length):
             imgsmallbuff = (imgData[nb:nb + seq_length,:,:]<128)*255
             # Allocate the onboard memory for the image sequence
             # print(f"state{imgsmallbuff.shape}")
-            self.DMD.SeqAlloc(nbImg=len(imgsmallbuff), bitDepth=bitDepth)
+            self.dmd.SeqAlloc(nbImg=len(imgsmallbuff), bitDepth=bitDepth)
             # Send the image sequence as a 1D list/array/numpy array
-            self.DMD.SeqPut(imgData=imgsmallbuff)
-        return (self.DMD.Seqs[last:])
+            self.dmd.SeqPut(imgData=imgsmallbuff)
+        return (self.dmd.Seqs[last:])
 
 
     @classmethod
@@ -119,7 +138,7 @@ class DMD_controller:
              for array_each in array_set]
         return np.array(imgData)
     def wait(self):
-        self.DMD.Wait()
+        self.dmd.Wait()
 
 def new_array_image_data(pixel:int):
     directory = 'C:\\Users\\CHAEGYEONGJUN\\iCloudDrive\\Desktop\\Test\\new_array\\'
@@ -132,19 +151,19 @@ def new_array_image_data(pixel:int):
         new_array[0::2,0] = False
         hadamard_array = np.array(new_array,dtype=np.int32)
         pixel_sqrt_is_length = int(np.sqrt(pixel))
-        imgData = DMD_controller.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=200)
+        imgData = dmd_controller.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=200)
         np.save(directory+filename,imgData)
         return np.array(imgData)
 
 if __name__ == "__main__":
-    DMD = DMD_controller()
+    DMD = dmd_controller()
     # DMD.simpletest(array=[int(9000>x>8000) for x in range(16384)], pattern_size=128, pic=10000000)
-    import itertools
+    from ALP4 import ALP_DDC_FPGA_TEMPERATURE
     # DMD.simpletest(array=[int(y%256<128)for x in range(1024) for y in range(1024)], pattern_size=1024, pic=10000000)
     print('temp')
-    print(    DMD.DMD.DevInquire(ALP_DDC_FPGA_TEMPERATURE)/256)
+    print(    DMD.dmd.DevInquire(ALP_DDC_FPGA_TEMPERATURE)/256)
     # DMD.DMD.ProjControl(ALP_PROJ_INVERSION, ALP_PROJ_INVERSIONnot ALP_DEFAULT)
-    DMD.simpletest(array=[1,1,1,1], pattern_size=2, pic=1000)
+    DMD.simple_test(array=[1,1,1,1], pattern_size=2, pic=1000)
     pixel = 2
     # new_array = DMD.array_set_to_imagedata([[[0]*50+[1]+[0]*50]*50+[[1]*101]+[[0]*50+[1]+[0]*50]*50],101,543)
     # new_array = DMD.array_set_to_imagedata([[[0]*pp+[1]+[0]*pp]*pp+[[1]*(2*pp+1)]+[[0]*pp+[1]+[0]*pp]*pp,[[0]*pp+[1]+[0]*pp]*pp+[[1]*(2*pp+1)]+[[0]*pp+[1]+[0]*pp]*pp],(2*pp+1),300,rot=135)
@@ -156,7 +175,7 @@ if __name__ == "__main__":
     Gate.Period = 1
     Gate.Polarity = 1
     Gate.Gate[0] = 1
-    DMD.DMD.DevControlEx(ALP_DEV_DYN_SYNCH_OUT1_GATE, Gate)
+    DMD.dmd.DevControlEx(ALP_DEV_DYN_SYNCH_OUT1_GATE, Gate)
     print('res')
     # DMD.this_slide_show(new_array, pixel, 4, 8000000, True)
     # DMD.simpletest()

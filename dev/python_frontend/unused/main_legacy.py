@@ -9,8 +9,8 @@ import time
 from scipy.linalg import hadamard
 import cv2
 import PowermeterManager
-from ArduinoSerialCheckProtocol import ArduinoSerialCheckProtocol
-from PowerMeterWithArduinoSerial import PowerMeterWithArduinoSerial
+from arduino_transaction_module import arduino_transaction_module
+from power_measure_module import power_measure_module
 from image_process import measured_pattern_to_image
 
 os.add_dll_directory("C:/Users/CHAEGYEONGJUN/PycharmProjects/SinglePixelImagingWithDMD")
@@ -87,8 +87,8 @@ time_measure = 0
 rep_measure = 400
 wavelength_measure = 780.0
 
-arduinoprotocol = ArduinoSerialCheckProtocol("COM7", 115200, 'E', 5, 2, 1)
-powermeter = PowerMeterWithArduinoSerial(arduinoprotocol)
+arduinoprotocol = arduino_transaction_module("COM7", 115200, 'E', 5, 2, 1)
+powermeter = power_measure_module(arduinoprotocol)
 
 # slm 설정
 display_size = [1024, 768]
