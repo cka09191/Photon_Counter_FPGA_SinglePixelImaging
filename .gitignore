@@ -65,17 +65,6 @@ timing
 *example*
 *sopc_*
 PLLJ_PLLSPE_INFO.txt # The generated PLL specification file
-ArduinoOutput/.last-used
-ArduinoOutput/arduino_controller.ino.eep
-ArduinoOutput/arduino_controller.ino.elf
-ArduinoOutput/arduino_controller.ino.with_bootloader.bin
-ArduinoOutput/includes.cache
-ArduinoOutput/libraries.cache
-ArduinoOutput/libraries/SPI/SPI.cpp.d
-ArduinoOutput/libraries/SPI/SPI.cpp.o
-ArduinoOutput/preproc/ctags_target_for_gcc_minus_e.cpp
-ArduinoOutput/sketch/arduino_controller.ino.cpp
-ArduinoOutput/sketch/arduino_controller.ino.cpp.d
-ArduinoOutput/sketch/arduino_controller.ino.cpp.o
+ArduinoOutput/*
 dev/fpga/verilog_spi/test
 dev/python_frontend/.venv/*

@@ -62,14 +62,14 @@ void loop() {
               measuring_time = Serial.parseInt();
             }
         }
-      }else if(readValue=='d'){
+      }else if(readValue=='d'){//start the counting
         digitalWrite(ssFPGA, 0);
         SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
-        int received = SPI.transfer16(0x0001);
+        int received = SPI.transfer16(0xFFFF);
         SPI.endTransaction();
         digitalWrite(ssFPGA, 1);
         Serial.println(received);
-      }else if(readValue=='g'){
+      }else if(readValue=='g'){//stop the counting and get the data
         digitalWrite(ssFPGA, 0);
         SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
         int received = SPI.transfer16(0x0000);

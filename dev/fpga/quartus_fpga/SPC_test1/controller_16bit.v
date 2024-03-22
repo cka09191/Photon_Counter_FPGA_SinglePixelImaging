@@ -17,21 +17,24 @@ basic FPGA Controller module in 16bit
 
 module controller(
     input wire CLK,
-    input wire DMD,
+    input wire DMD_Signal,
     output reg START_COUNT
     );  // BYTE received is valid
+	
+	reg [2:0] DMD_Signal_r;  always @(posedge sysClk) DMD_Signal_r <= { DMD_Signal_r[1:0], DMD_Siganl };
+	wire DMD_Signal_rising  = ( DMD_Signal_r[2:1] == 2'b01 );
+	wire DMD_Siganl_falling = ( DMD_Siganl_r[2:1] == 2'b10 );
 
-	reg [2:0] DMD_r;  always @(posedge CLK) DMD_r <= { DMD_r[1:0], DMD };
-	wire DMD_rising  = ( DMD_r[2:1] == 2'b01 );
-	wire DMD_falling = ( DMD_r[2:1] == 2'b10 );
-	 
+    initial begin
+        START_COUNT <= 0;
+    end
+
     always @(posedge CLK) begin
-        if (DMD_rising) begin
+        if (DMD_Signal_rising) begin
+            START_COUNT <= 0;
+        else begin
             START_COUNT <= 1;
         end
-        if (DMD_falling) begin
-            START_COUNT <= 0;
-        end
+        
     end
-	 
 endmodule

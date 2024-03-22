@@ -62,7 +62,7 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 	// - on SCLK_rising, MOSI_sync is shifted in as bit [0]
 	// see http://www.coertvonk.com/technology/logic/connecting-fpga-and-arduino-using-spi-13067/3#operation
 
-	reg [15:0] buffer = 8'dxxxx;
+	reg [15:0] buffer = 8'hxxxx;
 
 	// current state logic
 

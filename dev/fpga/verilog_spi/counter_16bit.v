@@ -4,15 +4,14 @@ module counter_16bit(
   input wire sig,
   output reg [15:0] cnt=0
   );
-   
-always@(posedge clk50Mhz or posedge rst)
   
-begin
-  
-  if(rst) cnt <= 1'b0; 
+ 
+always@(posedge rst) cnt <= 0;
+ 
+always@(posedge clk50Mhz) begin 
+	if(sig) cnt <= cnt + 1;
+end	
 
-  else if(sig) cnt <= cnt + 1; 
 
-  end
 
  endmodule

@@ -1,6 +1,12 @@
+'''
+
+
+@author Gyeongjun Chae(https://github.com/cka09191)
+'''
 import datetime as time
-from tkinter import Entry, Text, Tk, Listbox
-from tkinter.ttk import Frame, Label, Button, LabeledScale
+import os
+from tkinter import Entry, Text, Tk, Listbox, filedialog
+from tkinter.ttk import Frame, Label, Button
 
 class ControlPanel:
     def __init__(self):
@@ -71,11 +77,17 @@ class ControlPanel:
         self.entry_explabel.insert(1.0, f"{time.datetime.now().strftime('%y%m%d_%H')}")
         self.sub_frame_label.pack(ipadx=40,side='left')
 
+
         # Add to queue button
         self.button_frame = Frame(self.frame_settings)
         self.addbutton = Button(self.button_frame, text="Add to Queue", command=self.add_to_queue)
         self.addbutton.pack(side='right', anchor='se')  # Set the button to the right side
         self.button_frame.pack(ipadx=50,side='right', anchor='se')
+
+        
+
+        
+        
         self.frame_settings.pack(padx=10, pady=10, ipadx=30, expand=False)
 
         # Queue list
@@ -84,7 +96,7 @@ class ControlPanel:
         self.queue_label = Label(self.frame_queue, text="Queue", font=("Arial", 16))
         self.queue_label.pack(side='top', pady=10)
         self.queuelist = Listbox(self.frame_queue, height=2, width=70,selectmode="extended")
-        self.queuelist.pack(expand=True, fill='both')
+        
 
         # Control buttons
         self.frame_control_buttons = Frame(self.frame_queue)
@@ -98,6 +110,18 @@ class ControlPanel:
 
 
         self.frame_queue.pack(padx=10, pady=10, fill='both', expand=True) 
+        
+        # save directory setting
+        self.sub_frame_savedir = Frame(self.frame_lists)
+        self.label_savedir = Label(self.sub_frame_savedir, text="save directory:")
+        self.label_savedir.pack(side='left')
+        self.entry_savedir = Text(self.sub_frame_savedir, height=1, width=25, font=("Arial", 16))
+        self.button_savedir = Button(self.sub_frame_savedir, text="...", command=self.filedialog_savedir)
+        self.entry_savedir.pack(side='left', fill='both',expand=True, ipadx=10)
+        self.button_savedir.pack(side='right',fill='both', expand=True)
+        self.entry_savedir.insert(1.0, f"{time.datetime.now().strftime('%y%m%d_%H')}")
+        self.sub_frame_savedir.pack(expand=False)
+        self.queuelist.pack(expand=True, fill='both')
 
         # Done list
         self.frame_done = Frame(self.frame_lists) 
@@ -113,18 +137,29 @@ class ControlPanel:
 
         self.frame_queue = Frame(self.root)
     
+
+    def filedialog_savedir(self):
+        """Open a file dialog to select a directory and insert the path to the entry widget."""
+        self.entry_savedir.delete(1.0, "end")
+        desktop_dir = os.path.join(os.path.expanduser("~"), "Desktop")
+        self.entry_savedir.insert(1.0, filedialog.askdirectory(parent=self.root,initialdir=desktop_dir,title='Please select a directory'))
+
     def run(self):
+        """Run the experiment with the queue list."""
         pass
 
     def stop(self):
+        """Stop the experiment."""
         pass
 
     def delete(self):
+        """Delete the selected items in the queue list."""
         delete_list = self.queuelist.curselection()
         for item in delete_list[::-1]:
             self.queuelist.delete(item)
 
     def add_to_queue(self):
+        """Add the settings to the queue list."""
         label = self.entry_explabel.get("1.0", "end")
         timestart, timeend, timeinterval = self.entry_time.get().split(":") 
         times = [time for time in range(int(timestart), int(timeend), int(timeinterval))]
@@ -132,12 +167,12 @@ class ControlPanel:
         repetitions = [rep for rep in range(int(self.entry_repetitions.get()))]
         totallist = [(time, pixel, repetition) for time in times for pixel in pixels for repetition in repetitions]
         
-        for (time, pixel, repetition) in totallist:
+        for (_time, pixel, repetition) in totallist:
             #if there is already a same item in the queue, repetition number will be added
             repetitions = self.queuelist.get(0, "end")
-            while (f"{label} {time} {pixel} {repetition}") in repetitions:
+            while (f"{label} {_time} {pixel} {repetition}") in repetitions:
                 repetition += 1
-            self.queuelist.insert("end", f"{label} {time} {pixel} {repetition}")
+            self.queuelist.insert("end", f"{label} {_time} {pixel} {repetition}")
 
 
 

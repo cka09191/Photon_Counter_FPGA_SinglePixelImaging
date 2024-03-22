@@ -47,15 +47,15 @@ applicable agreement for further details.
 	(port
 		(pt 0 80)
 		(input)
-		(text "data_in[7..0]" (rect 0 0 48 12)(font "Arial" ))
-		(text "data_in[7..0]" (rect 21 75 69 87)(font "Arial" ))
+		(text "data_in[15..0]" (rect 0 0 51 12)(font "Arial" ))
+		(text "data_in[15..0]" (rect 21 75 72 87)(font "Arial" ))
 		(line (pt 0 80)(pt 16 80)(line_width 3))
 	)
 	(port
 		(pt 208 32)
 		(output)
-		(text "data_out[7..0]" (rect 0 0 54 12)(font "Arial" ))
-		(text "data_out[7..0]" (rect 133 27 187 39)(font "Arial" ))
+		(text "data_out[15..0]" (rect 0 0 57 12)(font "Arial" ))
+		(text "data_out[15..0]" (rect 130 27 187 39)(font "Arial" ))
 		(line (pt 208 32)(pt 192 32)(line_width 3))
 	)
 	(drawing
