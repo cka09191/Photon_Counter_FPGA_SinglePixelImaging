@@ -33,15 +33,15 @@ applicable agreement for further details.
 	(port
 		(pt 0 48)
 		(input)
-		(text "rst" (rect 0 0 10 12)(font "Arial" ))
-		(text "rst" (rect 21 43 31 55)(font "Arial" ))
+		(text "RD" (rect 0 0 15 12)(font "Arial" ))
+		(text "RD" (rect 21 43 36 55)(font "Arial" ))
 		(line (pt 0 48)(pt 16 48)(line_width 1))
 	)
 	(port
 		(pt 0 64)
 		(input)
-		(text "enable" (rect 0 0 24 12)(font "Arial" ))
-		(text "enable" (rect 21 59 45 71)(font "Arial" ))
+		(text "DMD_sig" (rect 0 0 38 12)(font "Arial" ))
+		(text "DMD_sig" (rect 21 59 59 71)(font "Arial" ))
 		(line (pt 0 64)(pt 16 64)(line_width 1))
 	)
 	(port

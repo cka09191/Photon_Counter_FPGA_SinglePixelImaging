@@ -44,6 +44,13 @@ applicable agreement for further details.
 		(text "START_COUNT" (rect 161 27 235 39)(font "Arial" ))
 		(line (pt 256 32)(pt 240 32)(line_width 1))
 	)
+	(port
+		(pt 256 48)
+		(output)
+		(text "READ_DATA" (rect 0 0 66 12)(font "Arial" ))
+		(text "READ_DATA" (rect 169 43 235 55)(font "Arial" ))
+		(line (pt 256 48)(pt 240 48)(line_width 1))
+	)
 	(drawing
 		(rectangle (rect 16 16 240 64)(line_width 1))
 	)

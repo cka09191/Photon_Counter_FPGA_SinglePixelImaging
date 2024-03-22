@@ -1,6 +1,6 @@
 
 /*
-basic FPGA Controller module in 16bit
+basic FPGA Controller module
     CLK:
         clock signal to synchronize
         at rising edge of CLK, COMMAND signal is valid
@@ -17,23 +17,20 @@ basic FPGA Controller module in 16bit
 
 module controller(
     input wire CLK,
-    input wire  [15:0] COMMAND,
-    output reg START_COUNT,
-	 output reg READ_DATA
+    input wire [7:0] COMMAND,
+    output reg START_COUNT
     );  // BYTE received is valid
-	
-	 
-	 always @(posedge CLK) begin
-		case(COMMAND)
-				1'd0:	START_COUNT <=1; // rx=0 start
-				1'd1:	START_COUNT <=0; // rx=1 finish
-				1'd2:	READ_DATA <= 1; // rx
-				1'd3: READ_DATA <= 0;
-		default : begin 
-						READ_DATA <= 0; 
-						START_COUNT <= 0;
-					 end	
-		endcase
-	 end
-	 
+
+    initial begin
+        START_COUNT <= 0;
+    end
+
+    always @(posedge CLK) begin
+        if (COMMAND == 8'h01) begin
+            START_COUNT <= 1;
+        end
+        else begin
+            START_COUNT <= 0;
+        end
+    end
 endmodule
