@@ -94,7 +94,7 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 						buffer <= rx;
 								
 				if( SCLK_falling)         // OUTPUT on falling SPI clock edge
-					if ( state == 3'b000 )
+					if ( state == 4'b0000 )
 						begin 
 							MISO_r <= tx[15];    //   start by sending the MSb
 							buffer <= tx;       //   remaining bits are send from buffer
