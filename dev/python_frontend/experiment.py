@@ -81,7 +81,7 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
     print('...done')
 
     print('arduino initializing', end='')
-    arduino_protocol = arduino_transaction_module("COM7", 500000, 'E', 5, 2, 1)
+    arduino_protocol = arduino_transaction_module("COM7", 115200, 'E', 5, 2, 1)
     arduino_protocol.flush()
     print('...done')
 
@@ -132,6 +132,7 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
             measure_time_total.append( time.perf_counter() - measure_start_time)
             arduino_protocol.flush()
             length_acquired_data_arduino = arduino_protocol.transaction(arduino_transaction_module.index)
+            print(f'length_acquired_data_arduino:{length_acquired_data_arduino}, _length_seq_now:{_length_seq_now} ')
 
         arduino_protocol.send(arduino_transaction_module.readfirst)
         total_data = np.append(total_data, voltage_read(arduino_protocol))
@@ -143,7 +144,11 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
 
     # measure is the difference between two patterns in opposite polarities of hadamard pattern
     measure = total_data[0::2] - total_data[1::2]
-
+    print(measure.shape)
+    print(measure)
+    print(length_pattern)
+    time.sleep(100)
+    
     plt.imshow(measure.reshape((length_pattern, length_pattern)))
     plt.show()
     plt.pause(0.1)
@@ -171,7 +176,7 @@ if __name__ == '__main__':
     DIRECTORY = 'C:\\Users\\CHAEGYEONGJUN\\iCloudDrive\\Desktop\\test\\new0204n\\'
     FILENAME = 'test'
     PIXEL = [256]
-    PICTURETIME = [1000]
+    PICTURETIME = [10000]
     os.makedirs(DIRECTORY, exist_ok=True)
 
     explist = [[DIRECTORY + f"{FILENAME}_{pixel}_{rptime}", pixel, rptime] for rptime in PICTURETIME for pixel in PIXEL]
