@@ -9,7 +9,7 @@ arduino controller acquiring data from fpga by spi communication.
 #include <SPI.h>
 
 uint8_t const ssFPGA = 10;
-int digitalIn = 13;
+int digitalIn = 8;
 bool before = false;// before: was the previous value of digitalIn true?
 bool countstart = false;// countstart: is the program currently counting data?
 
@@ -67,22 +67,43 @@ void loop() {
         SPI.endTransaction();
         digitalWrite(ssFPGA, 1);
         Serial.println(received);
-      }else if(readValue=='g'){//stop the counting and get the data
+      }else if(readValue=='g'){//one:get the data and stop the counting
         digitalWrite(ssFPGA, 0);
         SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
         unsigned int received = SPI.transfer16(0x0000);
         SPI.endTransaction();
         digitalWrite(ssFPGA, 1);
         Serial.println(received);
-      }else if(readValue=='h'){
-        
+      }else if(readValue=='h'){//two:get the data first and then stop the counting
+        digitalWrite(ssFPGA, 0);
+        SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
+        unsigned int received = SPI.transfer16(0xFFFF);//start counting == get the data
+        SPI.endTransaction();
+        digitalWrite(ssFPGA, 1);
+        Serial.println(received);
+        digitalWrite(ssFPGA, 0);
+        SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
+        received = SPI.transfer16(0x0000);//stop counting
+        SPI.endTransaction();
+        digitalWrite(ssFPGA, 1);
       }else if(readValue=='k'){
-        
-      }else if(readValue=='m'){
-        
-      }else if(readValue=='n'){
-        
+        digitalWrite(ssFPGA, 0);
+        SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
+        unsigned int received = SPI.transfer16(0xFFFF);
+        SPI.endTransaction();
+        digitalWrite(ssFPGA, 1);
+        Serial.println(received);
+        digitalWrite(ssFPGA, 0);
+        SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
+        received = SPI.transfer16(0x0000);
+        SPI.endTransaction();
+        digitalWrite(ssFPGA, 1);
       }
+      // else if(readValue=='m'){
+        
+      // }else if(readValue=='n'){
+        
+      // }
     }
   }
   //digitalValue : DMD Change Signal(DCS)
@@ -96,14 +117,19 @@ void loop() {
     if(digitalValue) {//digitalValue is true
       before = true;
       if(countstart) {//stop counting if not stopped, and get the data
-
             digitalWrite(ssFPGA, 0);
             SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
-            unsigned int received = SPI.transfer16(0x0000);//stop counting, received data is count
+            unsigned int received = SPI.transfer16(0xFFFF);//start counting == get the data
+            SPI.endTransaction();
             digitalWrite(ssFPGA, 1);
-
             data[loopcount]=received;
             loopcount++;
+            
+            digitalWrite(ssFPGA, 0);
+            SPI.beginTransaction( SPISettings( 4000000, MSBFIRST, SPI_MODE3 ) );
+            received = SPI.transfer16(0x0000);//stop counting
+            SPI.endTransaction();
+            digitalWrite(ssFPGA, 1);
             countstart = false;//because reset is true, there is no data counted
         }
     }else{

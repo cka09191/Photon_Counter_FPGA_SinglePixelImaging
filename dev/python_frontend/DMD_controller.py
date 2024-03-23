@@ -163,7 +163,7 @@ if __name__ == "__main__":
     print('temp')
     print(    DMD.dmd.DevInquire(ALP_DDC_FPGA_TEMPERATURE)/256)
     # DMD.DMD.ProjControl(ALP_PROJ_INVERSION, ALP_PROJ_INVERSIONnot ALP_DEFAULT)
-    DMD.simple_test(array=[1,1,1,1], pattern_size=2, pic=1000)
+    DMD.simple_test(array=[1,0,1,1], pattern_size=2, pic=1000, size_im=50)
     pixel = 2
     # new_array = DMD.array_set_to_imagedata([[[0]*50+[1]+[0]*50]*50+[[1]*101]+[[0]*50+[1]+[0]*50]*50],101,543)
     # new_array = DMD.array_set_to_imagedata([[[0]*pp+[1]+[0]*pp]*pp+[[1]*(2*pp+1)]+[[0]*pp+[1]+[0]*pp]*pp,[[0]*pp+[1]+[0]*pp]*pp+[[1]*(2*pp+1)]+[[0]*pp+[1]+[0]*pp]*pp],(2*pp+1),300,rot=135)

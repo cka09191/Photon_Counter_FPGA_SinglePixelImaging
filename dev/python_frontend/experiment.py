@@ -22,6 +22,7 @@ from ALP4 import tAlpDynSynchOutGate, ALP_DEV_DYN_SYNCH_OUT1_GATE
 from arduino_transaction_module import arduino_transaction_module
 from dmd_controller import dmd_controller
 
+image_data = {}
 
 def _hadamard_image_data(_pixel: int, size_im: int, _reversed=False):
     """
@@ -38,10 +39,13 @@ def _hadamard_image_data(_pixel: int, size_im: int, _reversed=False):
     _ = 1
     if _reversed is True:
         _ = -1
-    hadamard_array = np.array(hadamard(_pixel),np.int8) * _
-    pixel_sqrt_is_length = int(np.sqrt(_pixel))
-    image_data = dmd_controller.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
-    return np.array(image_data)
+
+    if _pixel*_ not in image_data:
+        hadamard_array = hadamard(_pixel)*_
+        pixel_sqrt_is_length = int(np.sqrt(_pixel))
+        image_data[_pixel*_] = dmd_controller.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
+    return np.array(image_data[_pixel*_])
+    
 
 
 def voltage_read(arduino: arduino_transaction_module):
@@ -141,13 +145,12 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
     print('done')
     print('total aquisition time: ', np.sum(measure_time_total))
     print('total aquisition and communication time: ', time.perf_counter() - start_time)
-
+    print(total_data)
     # measure is the difference between two patterns in opposite polarities of hadamard pattern
     measure = total_data[0::2] - total_data[1::2]
     print(measure.shape)
     print(measure)
     print(length_pattern)
-    time.sleep(100)
     
     plt.imshow(measure.reshape((length_pattern, length_pattern)))
     plt.show()
@@ -163,6 +166,7 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
     dmd.__exit__()
     print('...done')
 
+    print(f"file:{_name_file}")
     print('saving data', end='')
     start_time = time.perf_counter()
     np.save(_name_file, total_data.reshape((_pixel, 2)))

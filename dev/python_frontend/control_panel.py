@@ -5,6 +5,8 @@
 '''
 import datetime as time
 import os
+from pathlib import Path
+import threading
 from tkinter import Entry, Text, Tk, Listbox, filedialog
 from tkinter.ttk import Frame, Label, Button
 
@@ -12,10 +14,12 @@ import experiment
 
 
 class ControlPanel:
-    def __init__(self):
+    def __init__(self,geometry="450x700"):
+        self.threads = []
+        self._stop_event = threading.Event()
         self.root = Tk()
         self.root.title("Experiment Control Panel")
-        self.root.geometry("450x700")
+        self.root.geometry(geometry)
         self.root.minsize(400, 600)
         self.frame_settings = Frame(self.root)
 
@@ -76,11 +80,10 @@ class ControlPanel:
         self.sub_frame_imagesize = Frame(self.frame_settings)
         self.label_imagesize = Label(self.sub_frame_imagesize, text="image size:")
         self.entry_imagesize = Text(self.sub_frame_imagesize, height=1, width=10, font=("Arial", 16))
-        self.entry_imagesize.insert(1.0, "150")
+        self.entry_imagesize.insert(1.0, "300")
         self.label_imagesize.pack(side='left')
         self.entry_imagesize.pack(side='left',fill='both', expand=True)
-        self.sub_frame_imagesize.pack(ipadx=40,side='left')
-
+        self.sub_frame_imagesize.pack(side='top')
 
 
 
@@ -117,8 +120,10 @@ class ControlPanel:
         # Control buttons
         self.frame_control_buttons = Frame(self.frame_queue)
         self.button_run = Button(self.frame_control_buttons, text="Run", command=self.run, width=3)
+        self.button_repeat = Button(self.frame_control_buttons, text="Repeat", command=self.repeat, width=3)
         self.button_queue_delete = Button(self.frame_control_buttons, text="Delete", command=self.delete, width=3)
         self.button_run.pack(side='left', ipadx=10)
+        self.button_repeat.pack(side='left', ipadx=10)
         self.button_queue_delete.pack(side='right', ipadx=10, anchor='e')
         self.frame_control_buttons.pack(side='bottom', ipadx=10, anchor='se', fill='both', expand=False)
 
@@ -149,7 +154,31 @@ class ControlPanel:
 
         self.root.mainloop()
 
-    
+    def target_repeat(self):
+        """Repeat the selected items in the queue list."""
+        list_repeat = self.queuelist.curselection()
+        while(self._stop_event.is_set() == False and len(list_repeat) > 0):
+            print(1)
+            import time
+            time.sleep(1)
+            # item_each = self.queuelist.get(item)
+            # label, picturetime, pixel, size_im, repetition = item_each.split(" ")
+            # directory = Path(self.entry_savedir.get("1.0", "end").strip('\n'))
+            # filename = directory / f"{label}_{pixel}_{picturetime}_{repetition}"
+            # print(f"Running {filename}")
+            # experiment.experiment(int(pixel), int(picturetime), filename, _length_seq=768, _size_im=int(size_im))
+            # self.queuelist.delete(item)
+
+    def repeat(self):
+        if len(self.threads) > 0:
+            self._stop_event.set()
+            for thread in self.threads:
+                thread.join()
+            self._stop_event.clear()
+            self.threads = []
+            return
+        self.threads.append(threading.Thread(target=self.target_repeat))
+        self.threads[-1].start()
 
     def filedialog_savedir(self):
         """Open a file dialog to select a directory and insert the path to the entry widget."""
@@ -160,19 +189,15 @@ class ControlPanel:
     def run(self):
         """Run the selected experiment with the queue list."""
         list_run = self.queuelist.curselection()
-        try:
-            for item in list_run:
-                item_each = self.queuelist.get(item)
-                label, picturetime, pixel, size_im, repetition = item_each.split(" ")
-                filename = label + "_" + pixel + "_" + picturetime + "_"+ size_im + "_" + repetition + ".npy"
-                print(f"Running {filename}")
-                experiment(pixel, picturetime, filename, _length_seq=768, _size_im=size_im)
-                self.queuelist.delete(item)
-        except IndexError as e:
-            print("No item selected.")
-            print(e)
-        except Exception as e:
-            print(e)
+        for item in list_run:
+            item_each = self.queuelist.get(item)
+            label, picturetime, pixel, size_im, repetition = item_each.split(" ")
+            directory = Path(self.entry_savedir.get("1.0", "end").strip('\n'))
+            filename = directory / f"{label}_{pixel}_{picturetime}_{repetition}"
+            print(f"Running {filename}")
+            experiment.experiment(int(pixel), int(picturetime), filename, _length_seq=768, _size_im=int(size_im))
+            self.queuelist.delete(item)
+
         
 
     def delete(self):

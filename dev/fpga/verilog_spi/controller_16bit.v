@@ -21,19 +21,42 @@ module controller(
     output reg START_COUNT,
 	 output reg READ_DATA
     );  // BYTE received is valid
-	
-	 
-	 always @(posedge CLK) begin
-		case(COMMAND)
-				1'd0:	START_COUNT <=1; // rx=0 start
-				1'd1:	START_COUNT <=0; // rx=1 finish
-				1'd2:	READ_DATA <= 1; // rx
-				1'd3: READ_DATA <= 0;
-		default : begin 
-						READ_DATA <= 0; 
-						START_COUNT <= 0;
-					 end	
-		endcase
-	 end
-	 
+
+    initial begin
+        START_COUNT <= 0;
+    end
+
+    always @(negedge CLK) begin
+        if (COMMAND == 16'hFFFF) begin
+            START_COUNT <= 1;
+        end
+        else if(COMMAND == 16'h0000) begin
+            START_COUNT <= 0;
+        end
+        else if (COMMAND[15:4] == 16'hFFF ) begin
+            START_COUNT <= 1;
+        end
+        else if (COMMAND[15:8] == 16'hFF & COMMAND[3:0]==16'hF) begin
+            START_COUNT <= 1;
+        end
+        else if (COMMAND[15:12] == 16'hF & COMMAND[7:0]==16'hFF) begin
+            START_COUNT <= 1;
+        end
+        else if (COMMAND[11:0]==16'hFFF) begin
+            START_COUNT <= 1;
+        end
+        else if (COMMAND[15:4]==16'h000) begin
+            START_COUNT <= 0;
+        end
+        else if (COMMAND[15:8]==16'h00 & COMMAND[3:0]==16'h0) begin
+            START_COUNT <= 0;
+        end
+        else if (COMMAND[15:12]==16'h0 & COMMAND[7:0]==16'h00) begin
+            START_COUNT <= 0;
+        end
+        else if (COMMAND[11:0]==16'h000) begin
+            START_COUNT <= 0;
+        end
+        
+    end
 endmodule

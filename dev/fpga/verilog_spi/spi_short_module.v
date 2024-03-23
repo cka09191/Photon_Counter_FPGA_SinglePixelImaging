@@ -90,7 +90,7 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 			begin
 			
 				if( SCLK_rising )         // INPUT on rising SPI clock edge
-					if( state != 3'd15 ) 
+					if( state != 4'd15 ) 
 						buffer <= rx;
 								
 				if( SCLK_falling)         // OUTPUT on falling SPI clock edge
