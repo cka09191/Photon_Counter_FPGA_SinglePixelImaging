@@ -17,10 +17,11 @@ import time
 import numpy as np
 from matplotlib import pyplot as plt
 from scipy.linalg import hadamard
+import pickle
 
 from ALP4 import tAlpDynSynchOutGate, ALP_DEV_DYN_SYNCH_OUT1_GATE
 from arduino_transaction_module import arduino_transaction_module
-from dmd_controller import dmd_controller
+from controller_dmd import controller_dmd
 
 image_data = {}
 
@@ -43,7 +44,7 @@ def _hadamard_image_data(_pixel: int, size_im: int, _reversed=False):
     if _pixel*_ not in image_data:
         hadamard_array = hadamard(_pixel)*_
         pixel_sqrt_is_length = int(np.sqrt(_pixel))
-        image_data[_pixel*_] = dmd_controller.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
+        image_data[_pixel*_] = controller_dmd.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
     return np.array(image_data[_pixel*_])
     
 
@@ -76,7 +77,8 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
     """
 
     print('DMD initializing', end='')
-    dmd = dmd_controller()
+    times = {}
+    dmd = controller_dmd()
     gate = tAlpDynSynchOutGate()
     gate.Period = 1
     gate.Polarity =0
@@ -103,13 +105,18 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
     hadamard_array = np.array(hadamard(_pixel))
     key = np.linalg.inv(hadamard_array.reshape(_pixel, _pixel))
     print('...done')
-    print(f"processing time:{time.perf_counter() - start_time}")
+    processing_time = time.perf_counter() - start_time
+    print(f"processing time:{processing_time}")
+    times['processing'] = processing_time
+
 
     print('uploading', end='')
     start_time = time.perf_counter()
     slides = dmd.upload(hadamard_image_data_set, hadamard_image_data_set.shape[0], 1, _length_seq)
     print('...done')
-    print(f"uploading time:{time.perf_counter() - start_time}")
+    upload_time = time.perf_counter() - start_time
+    print(f"uploading time:{upload_time}")
+    times['uploading'] = upload_time
 
     
     print('experiment and aquisition start', end='')
@@ -118,7 +125,8 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
     # start_time is used to measure the time for the whole aquisition and communication
     start_time = time.perf_counter()
     # measure_time_total is the time for each measurement of the sequence
-    measure_time_total = []
+    list_measure_time = []
+    list_communication_time = []
     for slide in slides:
         length_acquired_data_arduino = 0
         _length_seq_now = _length_seq
@@ -133,9 +141,11 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
             measure_start_time = time.perf_counter()
             dmd.slideshow(_picture_time, slide, False)
             dmd.wait()
-            measure_time_total.append( time.perf_counter() - measure_start_time)
+            list_measure_time.append( time.perf_counter() - measure_start_time)
+            comm_start_time = time.perf_counter()
             arduino_protocol.flush()
             length_acquired_data_arduino = arduino_protocol.transaction(arduino_transaction_module.index)
+            list_communication_time.append(time.perf_counter() - comm_start_time)
             print(f'length_acquired_data_arduino:{length_acquired_data_arduino}, _length_seq_now:{_length_seq_now} ')
 
         arduino_protocol.send(arduino_transaction_module.readfirst)
@@ -143,46 +153,97 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
         print('.', end='')
 
     print('done')
-    print('total aquisition time: ', np.sum(measure_time_total))
+    
+    print('total aquisition time: ', np.sum(list_measure_time))
     print('total aquisition and communication time: ', time.perf_counter() - start_time)
-    print(total_data)
     # measure is the difference between two patterns in opposite polarities of hadamard pattern
     measure = total_data[0::2] - total_data[1::2]
     print(measure.shape)
     print(measure)
     print(length_pattern)
-    
-    plt.imshow(measure.reshape((length_pattern, length_pattern)))
-    plt.show()
-    plt.pause(0.1)
-    imarr = np.matmul(key, measure)
-    im = imarr
-    plt.imshow(np.transpose(im.reshape((length_pattern, length_pattern))))
-    plt.show()
-    plt.pause(0.1)
+    if _name_file == None:
+        plt.imshow(measure.reshape((length_pattern, length_pattern)))
+        plt.show()
+        plt.pause(0.1)
+        imarr = np.matmul(key, measure)
+        im = imarr
+        plt.imshow(np.transpose(im.reshape((length_pattern, length_pattern))))
+        plt.show()
+        plt.pause(0.1)
 
     print('experiment and aquisition end, disconnect Arduino and DMD', end='')
     arduino_protocol.__exit__()
     dmd.__exit__()
     print('...done')
+    if _name_file is not None:
+        if os.path.exists(_name_file):
+            os.remove(_name_file)
+        print(f"file:{_name_file}")
+        print('saving data', end='')
+        start_time = time.perf_counter()
+        np.save(_name_file, total_data)
+        pickle_time_location =str(_name_file)+"_exp"
+        #make file
+        times['measure_time'] = list_measure_time
+        times['communication_time'] = list_communication_time
+        with open(pickle_time_location, 'xb') as f:
+            pickle.dump(times, f)
+        print('...done')
+        print(f"saving time:{time.perf_counter() - start_time}")
+    else:
+        return total_data
 
-    print(f"file:{_name_file}")
-    print('saving data', end='')
-    start_time = time.perf_counter()
-    np.save(_name_file, total_data.reshape((_pixel, 2)))
-    print('...done')
-    print(f"saving time:{time.perf_counter() - start_time}")
+
+def display_exp_data_file(_name_file: str):
+    """
+    Display the data from the experiment.
+
+    Args:
+        _name_file (str): File to load the data.
+    """
+    data = np.load(_name_file)
+    display_exp_data(data)
+
+def display_exp_data(data):
+    """
+    Display the data from the experiment.
+
+    Args:
+        data (numpy.ndarray): Data to display.
+    """
+    im = image_exp_data(data)
+    plt.imshow(im)
+    plt.show()
+
+def image_exp_data(total_data):
+    """
+    make data into image
+    Args:
+        data (numpy.ndarray): Data
+    Return:
+        numpy.ndarray: Image data
+    """
+    length_pattern = int(np.sqrt(total_data.shape[0]//2))
+    measure = total_data[0::2] - total_data[1::2]
+    _pixel = length_pattern**2
+    hadamard_array = np.array(hadamard(_pixel))
+    key = np.linalg.inv(hadamard_array.reshape(_pixel, _pixel))
+    imarr = np.matmul(key, measure)
+    
+    return np.transpose(imarr.reshape((length_pattern, length_pattern)))
+
 
 
 
 # Example usage
 if __name__ == '__main__':
-    DIRECTORY = 'C:\\Users\\CHAEGYEONGJUN\\iCloudDrive\\Desktop\\test\\new0204n\\'
-    FILENAME = 'test'
-    PIXEL = [256]
-    PICTURETIME = [10000]
-    os.makedirs(DIRECTORY, exist_ok=True)
+    # DIRECTORY = 'C:\\Users\\CHAEGYEONGJUN\\iCloudDrive\\Desktop\\test\\new0204n\\'
+    # FILENAME = 'test'
+    # PIXEL = [256]
+    # PICTURETIME = [10000]
+    # os.makedirs(DIRECTORY, exist_ok=True)
 
-    explist = [[DIRECTORY + f"{FILENAME}_{pixel}_{rptime}", pixel, rptime] for rptime in PICTURETIME for pixel in PIXEL]
-    for (FILENAME, pixel, picturetime) in explist:
-        experiment(pixel, picturetime, FILENAME, _length_seq=768, _size_im=300)
+    # explist = [[DIRECTORY + f"{FILENAME}_{pixel}_{rptime}", pixel, rptime] for rptime in PICTURETIME for pixel in PIXEL]
+    # for (FILENAME, pixel, picturetime) in explist:
+    #     experiment(pixel, picturetime, FILENAME, _length_seq=768, _size_im=300)
+    display_exp_data_file('240324_12_1024_10000_0.npy')

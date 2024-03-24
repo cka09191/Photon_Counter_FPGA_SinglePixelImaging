@@ -11,9 +11,10 @@ from tkinter import Entry, Text, Tk, Listbox, filedialog
 from tkinter.ttk import Frame, Label, Button
 
 import experiment
+from window_image import window_image
 
 
-class ControlPanel:
+class window_control:
     def __init__(self,geometry="450x700"):
         self.threads = []
         self._stop_event = threading.Event()
@@ -52,7 +53,7 @@ class ControlPanel:
 
         self.frame_entry_pixel = Frame(self.sub_sub_frame_settings_pixel)
         self.entry_pixel = Entry(self.frame_entry_pixel, width=9)
-        self.entry_pixel.insert(0, "256,1024,4096")
+        self.entry_pixel.insert(0, "64,256,1024")
         self.entry_pixel.pack(side='top',fill='both', expand=True)
         self.frame_entry_pixel.pack(side='top',fill='both', expand=True)
 
@@ -158,9 +159,25 @@ class ControlPanel:
         """Repeat the selected items in the queue list."""
         list_repeat = self.queuelist.curselection()
         while(self._stop_event.is_set() == False and len(list_repeat) > 0):
-            print(1)
+            for item in list_repeat:
+                item_each = self.queuelist.get(item)
+                label, picturetime, pixel, size_im, repetition = item_each.split(" ")
+                # experiment.experiment(int(pixel), int(picturetime), filename=None, _length_seq=768, _size_im=int(size_im))
+                import numpy as np
+
+            image = np.random.randint(0, 255, (450, 450))
+            window = window_image()
+
             import time
-            time.sleep(1)
+            def target_close_window(window):
+                time.sleep(5)
+                window.__exit__()
+            threading.Thread(target=target_close_window, args=(window,)).start()
+            window.mainloop()
+            
+
+            time.sleep(5)
+
             # item_each = self.queuelist.get(item)
             # label, picturetime, pixel, size_im, repetition = item_each.split(" ")
             # directory = Path(self.entry_savedir.get("1.0", "end").strip('\n'))
@@ -189,14 +206,25 @@ class ControlPanel:
     def run(self):
         """Run the selected experiment with the queue list."""
         list_run = self.queuelist.curselection()
+        done_list = []
         for item in list_run:
             item_each = self.queuelist.get(item)
             label, picturetime, pixel, size_im, repetition = item_each.split(" ")
-            directory = Path(self.entry_savedir.get("1.0", "end").strip('\n'))
-            filename = directory / f"{label}_{pixel}_{picturetime}_{repetition}"
-            print(f"Running {filename}")
-            experiment.experiment(int(pixel), int(picturetime), filename, _length_seq=768, _size_im=int(size_im))
+            try:
+                #if directory is valid
+                if not os.path.exists(self.entry_savedir.get("1.0", "end").strip('\n')):
+                    raise Exception("Invalid directory")
+                directory = Path(self.entry_savedir.get("1.0", "end").strip('\n'))
+                filename = directory / f"{label}_{pixel}_{picturetime}_{repetition}"
+                experiment.experiment(int(pixel), int(picturetime), filename, _length_seq=768, _size_im=int(size_im))
+                done_list.append(item)
+            except Exception as e:
+                print(self.entry_savedir.get("1.0", "end").strip('\n'))
+        
+        for item in done_list[::-1]:
+            self.done_list.insert("end", self.queuelist.get(item))
             self.queuelist.delete(item)
+                
 
         
 

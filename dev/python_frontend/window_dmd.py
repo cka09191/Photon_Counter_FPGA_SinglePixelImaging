@@ -1,7 +1,7 @@
 import tkinter as tk
 import numpy as np
 
-from dmd_controller import dmd_controller
+from controller_dmd import controller_dmd
 
 class Sketchpad(tk.Canvas):
     def __init__(self, parent, resolution=50, size=200, width=300, height=300, **kwargs):
@@ -58,7 +58,7 @@ class Sketchpad(tk.Canvas):
                 array[y, x] = 1
         return array
 
-class DMD_Panel:
+class window_dmd:
     def __init__(self,geometry="400x550+800+100"):
         self.root = tk.Tk()
         self.root.title("DMD Panel")
@@ -101,7 +101,7 @@ class DMD_Panel:
     def display(self):
         if self.DMD:
             self.DMD.__exit__()
-        self.DMD = dmd_controller()
+        self.DMD = controller_dmd()
         size_im = self.scale_imsize.get()
         array = self.sketchpad.get_array()
         print(array)
@@ -112,7 +112,7 @@ class DMD_Panel:
             self.DMD.__exit__()
 
 if __name__ == "__main__":
-    DMD_Panel()
+    window_dmd()
 
 
 # if __name__ == "__main__":
