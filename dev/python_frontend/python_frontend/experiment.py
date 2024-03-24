@@ -20,8 +20,8 @@ from scipy.linalg import hadamard
 import pickle
 
 from ALP4 import tAlpDynSynchOutGate, ALP_DEV_DYN_SYNCH_OUT1_GATE
-from arduino_transaction_module import arduino_transaction_module
-from controller_dmd import controller_dmd
+from python_frontend.arduino_transaction_module import arduino_transaction_module
+from python_frontend.controller_dmd import controller_dmd
 
 image_data = {}
 

@@ -1,13 +1,12 @@
 
 import os
-from tkinter import Checkbutton, IntVar, Label, Tk, PhotoImage, Listbox, Entry, Button, filedialog, Frame
+from tkinter import Checkbutton, IntVar, Label, Tk, Listbox, Entry, Button, filedialog, Frame
 from matplotlib import pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 import pickle
 
-import experiment
-
+from python_frontend.experiment import experiment, image_exp_data
 class window_image:
     def __init__(self ,geometry="250x750+10+10", image=None):
         self.width, self.height = map(int, geometry.split("+").pop(0).split("x"))
@@ -81,7 +80,7 @@ class window_image:
 
     def show_image(self):
         if self.image_original is not None:
-            imadge_calculated = experiment.image_exp_data(self.image_original)
+            imadge_calculated = image_exp_data(self.image_original)
             zoomrate = self.width//int(np.sqrt((self.image_original.shape[0]//2)))
             self.figure.clear()
             ax = self.figure.add_subplot(3,1,(1,2))

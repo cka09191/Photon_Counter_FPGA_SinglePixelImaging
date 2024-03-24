@@ -10,8 +10,8 @@ import threading
 from tkinter import Entry, Text, Tk, Listbox, filedialog
 from tkinter.ttk import Frame, Label, Button
 
-import experiment
-from window_image import window_image
+from  python_frontend.experiment import experiment
+from python_frontend.window_image import window_image
 
 
 class window_control:
@@ -187,22 +187,46 @@ class window_control:
             # self.queuelist.delete(item)
 
     def repeat(self):
-        if len(self.threads) > 0:
-            self._stop_event.set()
-            for thread in self.threads:
-                thread.join()
-            self._stop_event.clear()
-            self.threads = []
-            return
-        self.threads.append(threading.Thread(target=self.target_repeat))
-        self.threads[-1].start()
+        """Repeat the selected items in the queue list."""
+        item = self.queuelist.curselection()[0]
+        item_each = self.queuelist.get(item)
+        label, picturetime, pixel, size_im, repetition = item_each.split(" ")
+        experiment(int(pixel), int(picturetime), None, _length_seq=768, _size_im=int(size_im))
+
+
 
     def filedialog_savedir(self):
         """Open a file dialog to select a directory and insert the path to the entry widget."""
         self.entry_savedir.delete(1.0, "end")
         desktop_dir = os.path.join(os.path.expanduser("~"), "Desktop")
         self.entry_savedir.insert(1.0, filedialog.askdirectory(parent=self.root,initialdir=desktop_dir,title='Please select a directory'))
-
+        
+        # find files from the directory
+        self.done_list.delete(0, "end")
+        for file in os.listdir(self.entry_savedir.get("1.0", "end").strip('\n')):
+            if file.endswith(".npy"):
+                each = file.split("_")
+                label, pixel, picturetime, size_im, repetition = "_".join(each[0:-4]), each[-4], each[-3], each[-2], each[-1].split(".")[0]
+                total_label = f"{label} {pixel} {picturetime} {size_im} {repetition}"
+                self.done_list.insert("end", total_label)
+        
+        #if there is same item in the queue, repetition number will be added
+        if self.queuelist.size() > 0:
+           i = 0
+           while True:
+                left_list = []
+                left_list.extend(self.queuelist.get(i+1, "end"))
+                left_list.extend(self.done_list.get(0, "end"))
+                if self.queuelist.get(i) in left_list:
+                    left_list = []
+                    label, pixel, picturetime, size_im, repetition = self.queuelist.get(i).split(" ")
+                    self.queuelist.delete(i)
+                    self.queuelist.insert(i, f"{label} {pixel} {picturetime} {size_im} {int(repetition)+1}")
+                else:
+                    i += 1
+                    if i == self.queuelist.size():
+                        break
+            
     def run(self):
         """Run the selected experiment with the queue list."""
         list_run = self.queuelist.curselection()
@@ -215,10 +239,11 @@ class window_control:
                 if not os.path.exists(self.entry_savedir.get("1.0", "end").strip('\n')):
                     raise Exception("Invalid directory")
                 directory = Path(self.entry_savedir.get("1.0", "end").strip('\n'))
-                filename = directory / f"{label}_{pixel}_{picturetime}_{repetition}"
-                experiment.experiment(int(pixel), int(picturetime), filename, _length_seq=768, _size_im=int(size_im))
+                filename = directory / f"{label}_{picturetime}_{pixel}_{size_im}_{repetition}"
+                experiment(int(pixel), int(picturetime), filename, _length_seq=768, _size_im=int(size_im))
                 done_list.append(item)
             except Exception as e:
+                print(e)
                 print(self.entry_savedir.get("1.0", "end").strip('\n'))
         
         for item in done_list[::-1]:
@@ -245,7 +270,9 @@ class window_control:
         totallist = [(time, pixel, repetition, size_im) for time in times for pixel in pixels for repetition in repetitions]
         for (_time, pixel, repetition, size_im) in totallist:
             #if there is already a same item in the queue, repetition number will be added
-            repetitions = self.queuelist.get(0, "end")
+            repetitions = []
+            repetitions.extend(self.queuelist.get(0, "end"))
+            repetitions.extend(self.done_list.get(0, "end"))
             while (f"{label} {_time} {pixel} {size_im} {repetition}") in repetitions:
                 repetition += 1
             self.queuelist.insert("end", f"{label} {_time} {pixel} {size_im} {repetition}")

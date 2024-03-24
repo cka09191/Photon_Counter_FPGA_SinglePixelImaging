@@ -8,7 +8,7 @@ import time
 import cv2
 import numpy as np
 from scipy.linalg import hadamard
-from image_process import rotation, pattern_to_image
+from python_frontend.image_process import rotation, pattern_to_image
 
 from ALP4 import ALP4, tAlpDynSynchOutGate, ALP_DEV_DYN_SYNCH_OUT1_GATE
 

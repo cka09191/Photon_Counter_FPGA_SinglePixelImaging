@@ -68,3 +68,12 @@ PLLJ_PLLSPE_INFO.txt # The generated PLL specification file
 ArduinoOutput/*
 dev/fpga/verilog_spi/test
 dev/python_frontend/.venv/*
+dev/python_frontend/dist/*
+dev/python_frontend/test/*
+dev/python_frontend/test/*/*
+dev/python_frontend/__pycache__/*
+dev/python_frontend/__pycache__/*/*
+dev/python_frontend/*.npy
+dev/python_frontend/build/*/*/*
+dev/python_frontend/build/*/*
+dev/python_frontend/build/*

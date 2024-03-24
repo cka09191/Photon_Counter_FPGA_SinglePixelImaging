@@ -1,7 +1,7 @@
 import tkinter as tk
 import numpy as np
 
-from controller_dmd import controller_dmd
+from python_frontend.controller_dmd import controller_dmd
 
 class Sketchpad(tk.Canvas):
     def __init__(self, parent, resolution=50, size=200, width=300, height=300, **kwargs):
@@ -110,6 +110,7 @@ class window_dmd:
     def stop(self):
         if self.DMD:
             self.DMD.__exit__()
+            self.DMD = None
 
 if __name__ == "__main__":
     window_dmd()

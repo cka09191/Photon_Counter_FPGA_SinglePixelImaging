@@ -4,7 +4,7 @@ import time
 import numpy as np
 from matplotlib import pyplot as plt
 
-from ALP4 import tAlpDynSynchOutGate, ALP_DEV_DYN_SYNCH_OUT1_GATE, ALP_LEVEL_HIGH
+from python_frontend.ALP4 import tAlpDynSynchOutGate, ALP_DEV_DYN_SYNCH_OUT1_GATE, ALP_LEVEL_HIGH
 from arduino_transaction_module import arduino_transaction_module
 from DMD_controller import dmd_controller
 from power_measure_module import power_measure_module

@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 import time
-from ALP4 import *
+from python_frontend.ALP4 import *
 import imutils
 
 import time
