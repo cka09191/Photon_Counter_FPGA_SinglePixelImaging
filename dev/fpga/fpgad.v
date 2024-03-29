@@ -1,12 +1,33 @@
 module tb_counter();
   
 reg clk;
+reg SCLK;
 reg RD;
 reg DMD_sig;
 reg rst;
 reg sig;
+reg MOSI;
+reg MISO;
+reg SS;
+reg [15:0] rx;
 wire [15:0] cnt;
 wire [15:0] data_out;
+
+spi_short_module SPI( .clk(clk),  
+                      .SCLK(SCLK),        
+						          .MOSI(MOSI),        
+						          .MISO(MISO),      
+						          .SS(SS),         
+						          .tx(data_out),    
+						          .rx(rx)  
+						  );
+
+controller controller1(
+                      .clk(clk),
+                      .COMMAND(rx),
+                      .END_COUNT(rst),
+	                    .READ_DATA(RD)
+    );
 
 DataMemory Memory1(
   .clk(clk),

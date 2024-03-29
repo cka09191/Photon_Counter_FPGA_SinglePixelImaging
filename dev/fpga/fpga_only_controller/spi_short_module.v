@@ -42,8 +42,8 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 						  output wire MISO,       // SPI slave in, master out
 						  input wire SS,          // SPI slave select
 						  input wire [15:0] tx,    // BYTE to transmit
-						  output wire [15:0] rx   // BYTE received
-						  /*output wire rxValid*/ );  // BYTE received is valid
+						  output wire [15:0] rx,   // BYTE received
+						  output wire rxValid );  // BYTE received is valid
 
 	// Synchronize SCLK to FPGA domain clock using a two-stage shift-register,
 	//   where bit [0] takes the hit of timing errors.
@@ -80,7 +80,7 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 	// input/output logic
 	
 	assign rx      = {buffer[14:0], MOSI_sync};       // bits received so far
-	/*assign rxValid = (state == 4'd15) && SCLK_rising;*/ // short received is valid
+	assign rxValid = (state == 4'd15) && SCLK_rising; // short received is valid
 
 	reg MISO_r = 1'bx;	
 	assign MISO = SS_active ? MISO_r : 1'bz;

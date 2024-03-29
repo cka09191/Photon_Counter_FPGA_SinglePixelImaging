@@ -25,8 +25,8 @@ module controller(
 	 
 	 always @(posedge CLK) begin
 		case(COMMAND)
-				1'd0:	END_COUNT <= 1; // rx=0 start
-				1'd1:	READ_DATA <= 1; // rx
+				1'd0:	END_COUNT <= 1; 
+				1'd1:	READ_DATA <= 1; 
 				1'd2: READ_DATA <= 0;
 		endcase
 	 end

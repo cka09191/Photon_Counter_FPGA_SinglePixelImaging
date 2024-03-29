@@ -29,11 +29,14 @@ initial begin
 end
 
 always@(posedge clk) begin
+	
 	if(DMD_sig_rising) memory[addr] <= data_in ;
 	else if(DMD_sig_falling) addr = addr + 1;
 	
-	if(RD_rising) data_out <= memory[addr];
-	else if(RD_falling) addr = addr - 1;
+	if(RD) begin 
+		if(rxValid) data_out <= memory[addr];
+		else addr = addr - 1;
+	end
 end
 
 
