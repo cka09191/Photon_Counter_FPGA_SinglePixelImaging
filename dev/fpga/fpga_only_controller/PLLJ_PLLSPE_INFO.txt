@@ -1,0 +1,5 @@
+PLL_Name	pll_50MHz:inst2|altpll:altpll_component|pll_50MHz_altpll:auto_generated|pll1
+PLLJITTER	30
+PLLSPEmax	84
+PLLSPEmin	-53
+

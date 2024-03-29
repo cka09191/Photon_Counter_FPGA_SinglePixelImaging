@@ -1,0 +1,22 @@
+C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/spi_short_module.v {0 {vlog -work work C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/spi_short_module.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module spi_short_module
+** Error: C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/spi_short_module.v(66): near "x": X and Z values not allowed in decimal constants.
+** Warning: C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/spi_short_module.v(94): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+
+} {4.0 5.0} {}} C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpgad.v {1 {vlog -work work C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpgad.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module tb_counter
+
+Top level modules:
+	tb_counter
+
+} {} {}} C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/counter_16bit.v {1 {vlog -work work C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/counter_16bit.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module counter_16bit
+
+Top level modules:
+	counter_16bit
+
+} {} {}}

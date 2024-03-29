@@ -1,0 +1,12 @@
+# **************************************************
+# Quartus Prime Version 23.4.0
+# Process ID 29776
+# Start logging TCL commands
+# ¸ñ 3 28 15:54:40 2024
+# **************************************************
+project_open "C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/quartus_fpga/counter_fpga_image.qpf" -revision counter_fpga_image
+project_close
+# **************************************************
+# ¸ñ 3 28 15:55:00 2024
+# End of logging TCL commands
+# **************************************************
