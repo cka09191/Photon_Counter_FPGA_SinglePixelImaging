@@ -41,7 +41,7 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 						  input wire MOSI,        // SPI master out, slave in
 						  output wire MISO,       // SPI slave in, master out
 						  input wire SS,          // SPI slave select
-						  input wire [15:0] tx,    // BYTE to transmit
+						  output wire [15:0] tx,    // BYTE to transmit
 						  output wire [15:0] rx,   // BYTE received
 						  output wire rxValid );  // BYTE received is valid
 
@@ -62,7 +62,7 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 	// - on SCLK_rising, MOSI_sync is shifted in as bit [0]
 	// see http://www.coertvonk.com/technology/logic/connecting-fpga-and-arduino-using-spi-13067/3#operation
 
-	reg [15:0] buffer = 8'dxxxx;
+	reg [15:0] buffer = 8'bxxxxxxxx;
 
 	// current state logic
 

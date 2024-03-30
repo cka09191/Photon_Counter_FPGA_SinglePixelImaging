@@ -3,6 +3,7 @@ module DataMemory (
     input wire RD,      // Reset signal
 	 input wire DMD_sig,
 	 input wire [15:0] data_in,
+	 input wire rxValid,
     output reg [15:0] data_out // Output data
 );
 
@@ -41,3 +42,4 @@ end
 
 
 endmodule
+

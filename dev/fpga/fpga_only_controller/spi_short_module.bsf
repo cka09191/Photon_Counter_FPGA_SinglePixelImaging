@@ -72,6 +72,13 @@ applicable agreement for further details.
 		(text "rx[15..0]" (rect 108 43 139 55)(font "Arial" ))
 		(line (pt 160 48)(pt 144 48)(line_width 3))
 	)
+	(port
+		(pt 160 64)
+		(output)
+		(text "rxValid" (rect 0 0 28 12)(font "Arial" ))
+		(text "rxValid" (rect 111 59 139 71)(font "Arial" ))
+		(line (pt 160 64)(pt 144 64)(line_width 1))
+	)
 	(drawing
 		(rectangle (rect 16 16 144 128)(line_width 1))
 	)
