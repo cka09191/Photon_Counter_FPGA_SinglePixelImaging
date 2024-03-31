@@ -1,0 +1,101 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\Photon_Counter_FPGA\Photon_Counter_FPGA\dev\fpga\tb_fpga
+vcontroller
+Z1 IjNn9c;;doF4K_^z7`J1oN2
+Z2 Vn><J?E@LTaNaicBm2Xie80
+Z3 dC:\Photon_Counter_FPGA\Photon_Counter_FPGA\dev\fpga\tb_fpga
+Z4 w1711885050
+Z5 8C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/controller_16bit.v
+Z6 FC:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/controller_16bit.v
+L0 18
+Z7 OV;L;10.1d;51
+r1
+31
+Z8 !s90 -reportprogress|300|-work|work|C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/controller_16bit.v|
+Z9 o-work work -O0
+Z10 !s100 lkc;iH=82z^@=`^miPbSc1
+Z11 !s108 1711885050.914000
+Z12 !s107 C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/controller_16bit.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vcounter_16bit
+Z13 !s100 zSlX`YGN>N5ogRA:1i]?V3
+Z14 IgRE=Ul<WgaR<5o1bjbLVT0
+Z15 V?LBDiW`5zkR977]>]2NAC1
+R3
+Z16 w1711867446
+Z17 8C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/counter_16bit.v
+Z18 FC:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/counter_16bit.v
+L0 1
+R7
+r1
+31
+Z19 !s90 -reportprogress|300|-work|work|C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/counter_16bit.v|
+R9
+Z20 !s108 1711885050.961000
+Z21 !s107 C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/counter_16bit.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vDataMemory
+Z22 !s100 IB7?YjN5>Y6GcXkCniWI<2
+Z23 Ioc;zPTEIafhWF34>WV31g3
+Z24 VYdM_P6dQfP]zaNSdg;:7d3
+R3
+Z25 w1711880243
+Z26 8C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/Memory.v
+Z27 FC:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/Memory.v
+L0 1
+R7
+r1
+31
+Z28 !s90 -reportprogress|300|-work|work|C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/Memory.v|
+R9
+Z29 n@data@memory
+!i10b 1
+!s85 0
+Z30 !s108 1711885051.918000
+Z31 !s107 C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/Memory.v|
+!s101 -O0
+vspi_short_module
+!i10b 1
+Z32 !s100 AghGXokjmF3c8KX:6lSb<2
+Z33 IVk>lZWjnm8=bC;W=nha9G0
+Z34 Vj:3489mQ22E<c^<fTdK@O2
+R3
+Z35 w1711880876
+Z36 8C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/spi_short_module.v
+Z37 FC:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/spi_short_module.v
+L0 39
+R7
+r1
+!s85 0
+31
+!s108 1711885051.950000
+!s107 C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/spi_short_module.v|
+Z38 !s90 -reportprogress|300|-work|work|C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/spi_short_module.v|
+!s101 -O0
+R9
+vtb_counter
+Z39 I3Z0K90B3>9lReC<RH8R3;2
+Z40 VPe>hc8P2Zj0nd^A9H2M030
+R3
+Z41 w1711885051
+Z42 8C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/fpgad.v
+Z43 FC:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/fpgad.v
+L0 1
+R7
+r1
+31
+Z44 !s90 -reportprogress|300|-work|work|C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/fpgad.v|
+R9
+Z45 !s100 dRO@k?`j[OX>i`^?L72O50
+Z46 !s108 1711885051.874000
+Z47 !s107 C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/fpgad.v|
+!i10b 1
+!s85 0
+!s101 -O0
