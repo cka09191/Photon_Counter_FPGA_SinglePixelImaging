@@ -13,8 +13,8 @@ wire [15:0] rx;
 wire [15:0] cnt;
 wire [15:0] data_out;
 wire rxValid;
-reg [7:0] misoData;
-reg [7:0] mosiData;
+reg [15:0] misoData;
+reg [15:0] mosiData;
 
 localparam T = 250;   // SPI clock period (4 MHz)
 localparam Tsys = 20; // external FPGA clock period (50 MHz)
@@ -31,7 +31,7 @@ spi_short_module SPI( .sysClk(clk),
 
 controller controller1(
                       .CLK(clk),
-                      .COMMAND(rx),
+                      .rx(rx),
                       .END_COUNT(rst),
 	                    .READ_DATA(RD)
     );
@@ -68,11 +68,13 @@ always
 always #10 sig = ~sig;
  
 
-always@(posedge DMD_sig) begin
-  $display("%b",data_out);
+always@(posedge clk) begin
+  $display("rising:%b, falling:%b, rxValid:%b, state:%d,SS_falling:%b, data_in:%d, COMMAND:%d, addres:%d RD:%b, memory[0]:%d, memory[1]:%d, memory[999]:%d, memory[1000]:%d,",
+  SPI.SCLK_rising,SPI.SCLK_falling,rxValid, SPI.state,SPI.SS_falling,Memory1.data_in,controller1.COMMAND,Memory1.addr,RD,Memory1.memory[0], Memory1.memory[1], Memory1.memory[999], Memory1.memory[1000]);
 end
 
 initial begin
+  SS = 1'b1;
   repeat(1000) begin
     #250 DMD_sig =~DMD_sig;
     #10 DMD_sig=~DMD_sig;
@@ -80,34 +82,34 @@ initial begin
   
   //rx = 1;
   SS = 1'b0;  // activate slave-select
-  mosiData =  8'h01;
+  mosiData =  16'b01;
 	exchange_byte( mosiData, misoData );
 	SS = 1'b1;   // de-activate slave-select
-	MOSI = 1'bz;
+	//MOSI = 16'bz;
   
-  while(misoData!==2) #1;
+  //while(misoData!==2) #1;
   
   //rx = 2;
   while(misoData!==0) begin
   SS = 1'b0;  // activate slave-select
-  mosiData =  8'h02;
+  mosiData =  16'b11;
 	exchange_byte( mosiData, misoData );
 	SS = 1'b1;   // de-activate slave-select
-	MOSI = 1'bz;
+	//MOSI = 16'bz;
   end
   
   //rx = 0;
   SS = 1'b0;  // activate slave-select
-  mosiData =  8'h00;
+  mosiData =  16'h00;
 	exchange_byte( mosiData, misoData );
 	SS = 1'b1;   // de-activate slave-select
-	MOSI = 1'bz;
+	//MOSI = 16'bz;
 	
 	$finish;
 end
 
-task exchange_byte ( input [7:0] mosiData,
-								output [7:0] misoData );
+task exchange_byte ( input [15:0] mosiData,
+								output [15:0] misoData );
 		integer jj;
 		begin
 		  

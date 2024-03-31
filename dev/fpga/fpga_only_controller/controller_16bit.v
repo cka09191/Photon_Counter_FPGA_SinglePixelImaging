@@ -17,7 +17,7 @@ basic FPGA Controller module in 16bit
 
 module controller(
     input wire CLK,
-    input wire  [15:0] COMMAND,
+    input wire  [15:0] rx,
     output reg END_COUNT,
 	 output reg READ_DATA
     );  // BYTE received is valid
@@ -27,11 +27,21 @@ module controller(
       READ_DATA = 0; 	 
 	 end 
 	 
+	 reg [1:0] COMMAND;
+	 
 	 always @(posedge CLK) begin
 		case(COMMAND)
-				1'd1:	END_COUNT <= 1; // rx=0 start
-				1'd2:	READ_DATA <= 1; // rx
-				1'd0: READ_DATA <= 0;
+				2'b01:	END_COUNT <= 1; // rx=0 start
+				2'b11:	READ_DATA <= 1; // rx
+				2'b00: READ_DATA <= 0;
+		endcase
+	 end
+	 
+	 always @(posedge CLK) begin
+		case(rx)
+				2'b01:	COMMAND <= rx; // rx=0 start
+				2'b11:	COMMAND <= rx; // rx
+				2'b00: COMMAND <= rx;
 		endcase
 	 end
 	 

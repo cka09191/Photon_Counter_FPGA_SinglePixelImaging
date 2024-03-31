@@ -4,7 +4,7 @@ module DataMemory (
 	 input wire DMD_sig,
 	 input wire [15:0] data_in,
 	 input wire rxValid,
-    output reg [15:0] data_out // Output data
+  output reg [15:0] data_out = 1 // Output data
 );
 
 // Define memory to store 255 pieces of data
@@ -31,12 +31,14 @@ end
 
 always@(posedge clk) begin
 	
-	if(DMD_sig_rising) memory[addr] <= data_in ;
+	if(DMD_sig) memory[addr] <= data_in ;
 	else if(DMD_sig_falling) addr = addr + 1;
 	
 	if(RD) begin 
-		if(rxValid) data_out <= memory[addr];
-		else addr = addr - 1;
+		if(rxValid) begin 
+		  data_out <= memory[addr];
+		  addr = addr -1;
+		  end
 	end
 end
 

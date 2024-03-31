@@ -41,7 +41,7 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 						  input wire MOSI,        // SPI master out, slave in
 						  output wire MISO,       // SPI slave in, master out
 						  input wire SS,          // SPI slave select
-						  output wire [15:0] tx,    // BYTE to transmit
+						  input wire [15:0] tx,    // BYTE to transmit
 						  output wire [15:0] rx,   // BYTE received
 						  output wire rxValid );  // BYTE received is valid
 
@@ -62,7 +62,7 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 	// - on SCLK_rising, MOSI_sync is shifted in as bit [0]
 	// see http://www.coertvonk.com/technology/logic/connecting-fpga-and-arduino-using-spi-13067/3#operation
 
-	reg [15:0] buffer = 8'bxxxxxxxx;
+	reg [15:0] buffer = 15'bxxxxxxxx;
 
 	// current state logic
 
@@ -80,7 +80,7 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 	// input/output logic
 	
 	assign rx      = {buffer[14:0], MOSI_sync};       // bits received so far
-	assign rxValid = (state == 4'd15) && SCLK_rising; // short received is valid
+	assign rxValid = (state == 4'b1111) && SCLK_rising; // short received is valid
 
 	reg MISO_r = 1'bx;	
 	assign MISO = SS_active ? MISO_r : 1'bz;
@@ -90,11 +90,11 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 			begin
 			
 				if( SCLK_rising )         // INPUT on rising SPI clock edge
-					if( state != 3'd15 ) 
+					if( state != 4'b1111 ) 
 						buffer <= rx;
 								
 				if( SCLK_falling)         // OUTPUT on falling SPI clock edge
-					if ( state == 3'b000 )
+					if ( state == 4'b000 )
 						begin 
 							MISO_r <= tx[15];    //   start by sending the MSb
 							buffer <= tx;       //   remaining bits are send from buffer

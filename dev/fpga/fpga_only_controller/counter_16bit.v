@@ -12,9 +12,10 @@ module counter_16bit(
 always@(posedge clk50Mhz) begin
 	if(~rst)	
 		if(DMD_sig) cnt <= 0;
-		else begin 
+		else  begin
 		  if(sig) cnt <= cnt + 1;
-		end
+		end 
+	else cnt <= 0;
 end	
 
 
