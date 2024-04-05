@@ -30,11 +30,11 @@ class usb_transaction_module:
         return Data
 
     def Start_Read(self):
-        Data = self._port.exchange([0x00,0x11],2)
+        Data = int(self._port.exchange([0x00,0x11],2))
         return Data
 
     def End_Read(self):
-        Data = self._port.exchange([0x00,0x00],2)
+        Data = int(self._port.exchange([0x00,0x00],2))
         return Data
 
     def close(self):
