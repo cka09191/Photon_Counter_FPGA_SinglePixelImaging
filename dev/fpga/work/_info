@@ -1,0 +1,82 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\altera\13.1
+vcontroller
+Z1 IJfeN`F[i:GEB6`[MnTaX32
+Z2 V0EAlS_PAE00c:<:V2Xf7O0
+Z3 dC:\Photon_Counter_FPGA\Photon_Counter_FPGA\dev\fpga
+Z4 w1711612755
+Z5 8C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/controller_16bit.v
+Z6 FC:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/controller_16bit.v
+L0 18
+Z7 OV;L;10.1d;51
+r1
+31
+Z8 o-work work -O0
+Z9 !s100 Y3SaF55ekziP<D4FlQ8og3
+Z10 !s108 1711616407.215000
+Z11 !s107 C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/controller_16bit.v|
+Z12 !s90 -reportprogress|300|-work|work|C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/controller_16bit.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vcounter_16bit
+Z13 IFd^2N<z2n1ofA>`dJB0=n1
+Z14 V?LBDiW`5zkR977]>]2NAC1
+R3
+Z15 w1711618027
+Z16 8C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/counter_16bit.v
+Z17 FC:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/counter_16bit.v
+L0 1
+R7
+r1
+31
+Z18 !s90 -reportprogress|300|-work|work|C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/counter_16bit.v|
+R8
+Z19 !s100 XUe>kkDFR^9QEV:AC5bjb1
+Z20 !s108 1711618027.187000
+Z21 !s107 C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpga_only_controller/counter_16bit.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vDataMemory
+Z22 I=BgP6GBClDD;`WFMe27oF3
+Z23 VCDId`bY<Czi[2E7>>zf8=0
+R3
+Z24 w1711618434
+Z25 8C:\Photon_Counter_FPGA\Photon_Counter_FPGA\dev\fpga\fpga_only_controller\Memory.v
+Z26 FC:\Photon_Counter_FPGA\Photon_Counter_FPGA\dev\fpga\fpga_only_controller\Memory.v
+L0 1
+R7
+r1
+31
+Z27 !s90 -reportprogress|300|-work|work|C:\Photon_Counter_FPGA\Photon_Counter_FPGA\dev\fpga\fpga_only_controller\Memory.v|
+R8
+Z28 n@data@memory
+Z29 !s100 VYD3@:[n?Zj;7MS28On>n2
+Z30 !s108 1711618434.146000
+Z31 !s107 C:\Photon_Counter_FPGA\Photon_Counter_FPGA\dev\fpga\fpga_only_controller\Memory.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vtb_counter
+!i10b 1
+!s100 Pl8>HbI>]SEf^CGT@fba:2
+IXm@kc0GD6jl]9=I9Gza;A3
+Z32 VPe>hc8P2Zj0nd^A9H2M030
+R3
+w1711618533
+Z33 8C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpgad.v
+Z34 FC:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpgad.v
+L0 1
+R7
+r1
+!s85 0
+31
+!s108 1711618533.210000
+!s107 C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpgad.v|
+Z35 !s90 -reportprogress|300|-work|work|C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/fpgad.v|
+!s101 -O0
+R8

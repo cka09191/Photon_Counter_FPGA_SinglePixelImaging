@@ -1,0 +1,15 @@
+# **************************************************
+# Quartus Prime Version 23.4.0
+# Process ID 29776
+# Start logging UI actions
+# ¸ñ 3 28 15:54:40 2024
+# **************************************************
+[Thu Mar 28 15:54:42 2024] Window title: 'Quartus Prime' | QPushButton '&Yes' pressed!
+[Thu Mar 28 15:54:43 2024] Window title: 'Quartus Prime' | QPushButton '&Yes' pressed!
+[Thu Mar 28 15:54:45 2024] Window title: 'Quartus Prime' | QPushButton '&Yes' pressed!
+[Thu Mar 28 15:54:45 2024] [Action triggered] Window title: 'Quartus Prime Pro Edition - C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/quartus_fpga/counter_fpga_image - counter_fpga_image [*]' | P&rocessing > 'Compilation Dashboard' was pressed
+[Thu Mar 28 15:54:58 2024] Window title: 'Quartus Prime' | QPushButton 'OK' pressed!
+# **************************************************
+# ¸ñ 3 28 15:55:00 2024
+# End of logging UI actions
+# **************************************************

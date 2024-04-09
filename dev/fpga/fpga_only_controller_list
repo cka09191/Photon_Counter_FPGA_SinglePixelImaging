@@ -1,0 +1,11 @@
+tb_counter:tb_counter
+	Task exchange_byte
+	SPI:spi_short_module
+	controller1:controller
+	Memory1:DataMemory
+	count1:counter_16bit
+	Process #ALWAYS#63
+	Process #ALWAYS#68
+	Process #ALWAYS#71
+	Process #INITIAL#76
+Capacity #vsim_capacity#

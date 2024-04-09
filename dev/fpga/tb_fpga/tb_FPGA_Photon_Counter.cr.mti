@@ -1,0 +1,36 @@
+C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/Memory.v {1 {vlog -work work C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/Memory.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module DataMemory
+
+Top level modules:
+	DataMemory
+
+} {} {}} C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/counter_16bit.v {1 {vlog -work work C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/counter_16bit.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module counter_16bit
+
+Top level modules:
+	counter_16bit
+
+} {} {}} C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/controller_16bit.v {1 {vlog -work work C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/controller_16bit.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module controller
+
+Top level modules:
+	controller
+
+} {} {}} C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/fpgad.v {1 {vlog -work work C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/fpgad.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module tb_counter
+
+Top level modules:
+	tb_counter
+
+} {} {}} C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/spi_short_module.v {1 {vlog -work work C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/tb_fpga/spi_short_module.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module spi_short_module
+
+Top level modules:
+	spi_short_module
+
+} {} {}}
