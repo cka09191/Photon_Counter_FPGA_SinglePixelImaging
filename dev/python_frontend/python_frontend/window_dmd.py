@@ -101,6 +101,7 @@ class window_dmd:
     def display(self):
         if self.DMD:
             self.DMD.__exit__()
+            self.DMD = None
         self.DMD = controller_dmd()
         size_im = self.scale_imsize.get()
         array = self.sketchpad.get_array()
