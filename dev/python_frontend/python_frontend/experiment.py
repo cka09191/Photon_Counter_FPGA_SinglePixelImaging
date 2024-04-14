@@ -147,9 +147,10 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
             length_acquired_data_arduino = arduino_protocol.transaction(arduino_transaction_module.index)
             list_communication_time.append(time.perf_counter() - comm_start_time)
             print(f'length_acquired_data_arduino:{length_acquired_data_arduino}, _length_seq_now:{_length_seq_now} ')
-
+        comm_start_time = time.perf_counter()
         arduino_protocol.send(arduino_transaction_module.readfirst)
         total_data = np.append(total_data, voltage_read(arduino_protocol))
+        list_communication_time.append(time.perf_counter() - comm_start_time)
         print('.', end='')
 
     print('done')
