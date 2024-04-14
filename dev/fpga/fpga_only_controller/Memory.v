@@ -10,6 +10,7 @@ module DataMemory (
 // Define memory to store 255 pieces of data
 reg [15:0] memory [0:1023];
 
+
 // Address register to read data from memory
 reg [9:0] addr = 1;
 

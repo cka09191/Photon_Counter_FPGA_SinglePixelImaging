@@ -7,8 +7,8 @@ module SPI(
 	input wire MOSI,
 	output wire	MISO,
 	input wire SS,
-	input wire [15:0] tx,
-	output wire [15:0] rx
+	input wire [8191:0] tx,
+	output wire [8191:0] rx
 );
 
 reg [2:0] SCLK_r;  always @(posedge sysClk) SCLK_r <= { SCLK_r[1:0], SCLK };
@@ -25,24 +25,24 @@ reg [2:0] SCLK_r;  always @(posedge sysClk) SCLK_r <= { SCLK_r[1:0], SCLK };
 	// - on SCLK_rising, MOSI_sync is shifted in as bit [0]
 	// see http://www.coertvonk.com/technology/logic/connecting-fpga-and-arduino-using-spi-13067/3#operation
 
-	reg [15:0] buffer = 15'bxxxxxxxx;
+	reg [8191:0] buffer = 8192'bxxxxxxxx;
 
 	// current state logic
 
-	reg [3:0] state = 4'bxxxx; // state corresponds to bit count
+	reg [13:0] state = 14'bxxxx; // state corresponds to bit count
 	
 	always @(posedge sysClk)
 		if ( SS_active )
 			begin
 				if ( SS_falling )   // start of 1st byte
-					state <= 3'd0;
+					state <= 14'd0;
 				if ( SCLK_rising )  // input bit available
-					state <= state + 3'd1;
+					state <= state + 14'd1;
 			end
 
 	// input/output logic
 	
-	assign rx      = {buffer[14:0], MOSI_sync};       // bits received so far
+	assign rx      = {buffer[8190:0], MOSI_sync};       // bits received so far
 
 	reg MISO_r = 1'bx;	
 	assign MISO = SS_active ? MISO_r : 1'bz;
@@ -52,17 +52,17 @@ reg [2:0] SCLK_r;  always @(posedge sysClk) SCLK_r <= { SCLK_r[1:0], SCLK };
 			begin
 			
 				if( SCLK_rising )         // INPUT on rising SPI clock edge
-					if( state != 4'b1111 ) 
+					if( state != 14'b11_1111_1111_1111 ) 
 						buffer <= rx;
 								
 				if( SCLK_falling)         // OUTPUT on falling SPI clock edge
-					if ( state == 4'b000 )
+					if ( state == 14'b00_0000_0000_0000 )
 						begin 
-							MISO_r <= tx[15];    //   start by sending the MSb
+							MISO_r <= tx[8191];    //   start by sending the MSb
 							buffer <= tx;       //   remaining bits are send from buffer
 						end
 					else
-						MISO_r <= buffer[15];  //   send next bit
+						MISO_r <= buffer[8191];  //   send next bit
 
 			end
 						
