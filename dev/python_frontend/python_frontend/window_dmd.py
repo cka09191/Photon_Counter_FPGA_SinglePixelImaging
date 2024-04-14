@@ -91,6 +91,7 @@ class window_dmd:
         self.button_display.pack(side=tk.LEFT)
         self.button_stop.pack(side=tk.LEFT)
         self.root.mainloop()
+        
     def set_resolution(self, event=None):
         self.sketchpad.set_resolution(self.scale_resolution.get())
         self.sketchpad.redraw()
@@ -98,6 +99,7 @@ class window_dmd:
     def clear_sketchpad(self, event=None):
         self.sketchpad.delete("all")
         self.sketchpad.size=int(self.scale_imsize.get())
+
     def display(self):
         if self.DMD:
             self.DMD.__exit__()

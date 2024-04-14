@@ -45,11 +45,11 @@ class controller_dmd:
         gate.Gate[0] = 1
         self.dmd.DevControlEx(ALP_DEV_DYN_SYNCH_OUT1_GATE, gate)
 
-    def set_image(self, array, _bit_depth = 1, pic=1000,pattern_size=2,size_im=543,repeat=True):
+    def set_image(self, array, _bit_depth = 1, pic=1000,pattern_size=2,size_im=543,repeat=True, rot=0):
         """
         display the image
         """
-        img_data = self.array_set_to_imagedata([array,array],pattern_size,size_im=size_im)
+        img_data = self.array_set_to_imagedata([array,array],pattern_size,size_im=size_im,rot=rot)
         self.this_slide_show(img_data, 16, _bit_depth, pic, repeat)
 
     def simple_test(self, array = None,pic = 1000,pattern_size=2,size_im=543,repeat=True):

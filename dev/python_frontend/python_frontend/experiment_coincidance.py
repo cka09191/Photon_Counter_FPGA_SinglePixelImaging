@@ -20,8 +20,9 @@ from scipy.linalg import hadamard
 import pickle
 
 from ALP4 import tAlpDynSynchOutGate, ALP_DEV_DYN_SYNCH_OUT1_GATE
-from python_frontend.arduino_transaction_module import arduino_transaction_module
 from python_frontend.controller_dmd import controller_dmd
+
+from python_frontend.FtdiController import FtdiController
 
 image_data = {}
 
@@ -46,22 +47,31 @@ def _hadamard_image_data(_pixel: int, size_im: int, _reversed=False):
         pixel_sqrt_is_length = int(np.sqrt(_pixel))
         image_data[_pixel*_] = controller_dmd.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
     return np.array(image_data[_pixel*_])
+
+
+def count_read_coincidance(ftdi: FtdiController, reset=False):
+    histogram = count_read_histogram(ftdi, reset)
+    return histogram[histogram.argmax()-1:histogram.argmax()+2].sum()
     
-
-
-def count_read(arduino: arduino_transaction_module):
+def count_read_histogram(ftdi: FtdiController, reset=False):
     """
-    Read voltage data and return as a numpy array.
+    Read count data from the Ftdi controller and return as a numpy array.
 
     Args:
-        arduino (ArduinoSerialCheckProtocol): Arduino protocol object.
-        start (int): Start index.
-        end (int): End index.
+        ftdi (FtdiController): Ftdi controller object.
 
     Returns:
-        numpy.ndarray: Voltage data.
+        numpy.ndarray: all count data(histogram -256ns to 254ns, bin is 2ns)
+          from the Ftdi controller.
+
     """
-    return np.array(arduino.transaction(arduino.total), dtype=np.int32)
+    if reset:
+        read_data = ftdi.write([0xFF]*1024, 1024)
+    else:
+        read_data = ftdi.write([0x00]*1024, 1024)
+
+    int_data = [int.from_bytes(read_data[i:i+4], 'big') for i in range(0, 1024, 4)]
+    return np.array(int_data, dtype=np.int32)
     
 
 
@@ -88,9 +98,8 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
     dmd.dmd.DevControlEx(ALP_DEV_DYN_SYNCH_OUT1_GATE, gate)
     print('...done')
 
-    print('arduino initializing', end='')
-    arduino_protocol = arduino_transaction_module("COM7", 115200, 'E', 5, 2, 1)
-    arduino_protocol.flush()
+    print('fgpa initializing', end='')
+    fpga_controller = FtdiController()
     print('...done')
 
     print('Pattern and key generating', end='')
@@ -139,19 +148,20 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
 
         # repeat until the length of the acquired data is the same as the length of the sequence
         while (length_acquired_data_arduino != _length_seq_now):
-            arduino_protocol.send(arduino_transaction_module.resetindex)
+            count_read_histogram(fpga_controller, True)
             measure_start_time = time.perf_counter()
             dmd.slideshow(_picture_time, slide, False)
+            dmd.
             dmd.wait()
             list_measure_time.append( time.perf_counter() - measure_start_time)
             comm_start_time = time.perf_counter()
-            arduino_protocol.flush()
-            length_acquired_data_arduino = arduino_protocol.transaction(arduino_transaction_module.index)
+            fpga_controller.flush()
+            length_acquired_data_arduino = fpga_controller.transaction(arduino_transaction_module.index)
             list_communication_time.append(time.perf_counter() - comm_start_time)
             print(f'length_acquired_data_arduino:{length_acquired_data_arduino}, _length_seq_now:{_length_seq_now} ')
         comm_start_time = time.perf_counter()
-        arduino_protocol.send(arduino_transaction_module.readfirst)
-        total_data = np.append(total_data, count_read(arduino_protocol))
+        fpga_controller.send(arduino_transaction_module.readfirst)
+        total_data = np.append(total_data, count_read_coincidance(fpga_controller))
         list_communication_time.append(time.perf_counter() - comm_start_time)
         print('.', end='')
 
@@ -175,7 +185,7 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
         plt.pause(0.1)
 
     print('experiment and aquisition end, disconnect Arduino and DMD', end='')
-    arduino_protocol.__exit__()
+    fpga_controller.__exit__()
     dmd.__exit__()
     print('...done')
     if _name_file is not None:
