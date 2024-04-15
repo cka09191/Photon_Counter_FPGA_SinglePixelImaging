@@ -484,12 +484,12 @@ applicable agreement for further details.
 	(pt 840 128)
 )
 (connector
-	(text "clk500" (rect 584 112 615 124)(font "Arial" ))
+	(text "clk500" (rect 568 112 599 124)(font "Arial" ))
 	(pt 608 128)
 	(pt 584 128)
 )
 (connector
-	(text "clk500" (rect 584 208 615 220)(font "Arial" ))
+	(text "clk500" (rect 568 208 599 220)(font "Arial" ))
 	(pt 608 224)
 	(pt 584 224)
 )
