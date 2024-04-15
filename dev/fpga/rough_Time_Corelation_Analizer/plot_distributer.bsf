@@ -20,7 +20,7 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 232 160)
+	(rect 16 16 248 160)
 	(text "plot_distributer" (rect 5 0 61 12)(font "Arial" ))
 	(text "inst" (rect 8 128 20 140)(font "Arial" ))
 	(port
@@ -59,13 +59,26 @@ applicable agreement for further details.
 		(line (pt 0 96)(pt 16 96)(line_width 1))
 	)
 	(port
-		(pt 216 32)
+		(pt 232 32)
 		(output)
 		(text "Addr[6..0]" (rect 0 0 41 12)(font "Arial" ))
-		(text "Addr[6..0]" (rect 154 27 195 39)(font "Arial" ))
-		(line (pt 216 32)(pt 200 32)(line_width 3))
+		(text "Addr[6..0]" (rect 170 27 211 39)(font "Arial" ))
+		(line (pt 232 32)(pt 216 32)(line_width 3))
 	)
+	(port
+		(pt 232 48)
+		(output)
+		(text "Memory_add" (rect 0 0 55 12)(font "Arial" ))
+		(text "Memory_add" (rect 156 43 211 55)(font "Arial" ))
+		(line (pt 232 48)(pt 216 48)(line_width 1))
+	)
+	(parameter
+		"address_0"
+		"128"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 200 128)(line_width 1))
+		(rectangle (rect 16 16 216 128)(line_width 1))
 	)
+	(annotation_block (parameter)(rect 248 -64 348 16))
 )
