@@ -379,42 +379,6 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 1536 64 1768 176)
-	(text "DataMemory" (rect 5 0 68 12)(font "Arial" ))
-	(text "inst6" (rect 8 96 31 108)(font "Arial" ))
-	(port
-		(pt 0 32)
-		(input)
-		(text "clk" (rect 0 0 14 12)(font "Arial" ))
-		(text "clk" (rect 21 27 35 39)(font "Arial" ))
-		(line (pt 0 32)(pt 16 32))
-	)
-	(port
-		(pt 0 48)
-		(input)
-		(text "addr[6..0]" (rect 0 0 47 12)(font "Arial" ))
-		(text "addr[6..0]" (rect 21 43 68 55)(font "Arial" ))
-		(line (pt 0 48)(pt 16 48)(line_width 3))
-	)
-	(port
-		(pt 0 64)
-		(input)
-		(text "Command[1..0]" (rect 0 0 76 12)(font "Arial" ))
-		(text "Command[1..0]" (rect 21 59 97 71)(font "Arial" ))
-		(line (pt 0 64)(pt 16 64)(line_width 3))
-	)
-	(port
-		(pt 232 32)
-		(output)
-		(text "data_out[8191..0]" (rect 0 0 86 12)(font "Arial" ))
-		(text "data_out[8191..0]" (rect 139 27 211 39)(font "Arial" ))
-		(line (pt 232 32)(pt 216 32)(line_width 3))
-	)
-	(drawing
-		(rectangle (rect 16 16 216 96))
-	)
-)
-(symbol
 	(rect 1088 80 1320 224)
 	(text "plot_distributer" (rect 5 0 76 12)(font "Arial" ))
 	(text "inst3" (rect 8 128 31 140)(font "Arial" ))
@@ -475,7 +439,56 @@ applicable agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 216 128))
 	)
-	(annotation_block (parameter)(rect 880 -8 1064 24))
+	(annotation_block (parameter)(rect 1088 0 1272 32))
+)
+(symbol
+	(rect 1536 72 1832 184)
+	(text "DataMemory" (rect 5 0 68 12)(font "Arial" ))
+	(text "inst6" (rect 8 96 31 108)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "addr[7..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "addr[7..0]" (rect 21 43 68 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "Command[1..0]" (rect 0 0 76 12)(font "Arial" ))
+		(text "Command[1..0]" (rect 21 59 97 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "Memory_add" (rect 0 0 63 12)(font "Arial" ))
+		(text "Memory_add" (rect 21 75 84 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80))
+	)
+	(port
+		(pt 296 32)
+		(output)
+		(text "data_out[Memory_WIDTH-1..0]" (rect 0 0 154 12)(font "Arial" ))
+		(text "data_out[Memory_WIDTH-1..0]" (rect 145 27 275 39)(font "Arial" ))
+		(line (pt 296 32)(pt 280 32)(line_width 3))
+	)
+	(parameter
+		"Memory_WIDTH"
+		"8192"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 280 96))
+	)
+	(annotation_block (parameter)(rect 1320 0 1536 32))
 )
 (connector
 	(pt 760 128)
@@ -526,11 +539,6 @@ applicable agreement for further details.
 	(pt 792 -96)
 )
 (connector
-	(text "clk500" (rect 1504 80 1535 92)(font "Arial" ))
-	(pt 1536 96)
-	(pt 1512 96)
-)
-(connector
 	(text "miso" (rect 1808 -216 1831 -204)(font "Arial" ))
 	(pt 1808 -200)
 	(pt 1816 -200)
@@ -550,12 +558,6 @@ applicable agreement for further details.
 	(text "dataout[8191..0]" (rect 1528 -128 1608 -116)(font "Arial" ))
 	(pt 1624 -136)
 	(pt 1600 -136)
-	(bus)
-)
-(connector
-	(text "dataout[8191..0]" (rect 1768 80 1848 92)(font "Arial" ))
-	(pt 1768 96)
-	(pt 1776 96)
 	(bus)
 )
 (connector
@@ -581,28 +583,60 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "command[1..0]" (rect 1456 136 1530 148)(font "Arial" ))
-	(pt 1536 128)
-	(pt 1512 128)
-	(bus)
-)
-(connector
 	(text "rxValid" (rect 1600 -24 1633 -12)(font "Arial" ))
 	(pt 1616 -8)
 	(pt 1600 -8)
 )
 (connector
-	(pt 1536 112)
-	(pt 1320 112)
+	(text "clk500" (rect 1504 88 1535 100)(font "Arial" ))
+	(pt 1536 104)
+	(pt 1512 104)
+)
+(connector
+	(text "command[1..0]" (rect 1456 144 1530 156)(font "Arial" ))
+	(pt 1536 136)
+	(pt 1512 136)
+	(bus)
+)
+(connector
+	(pt 1528 112)
+	(pt 1528 120)
+	(bus)
+)
+(connector
+	(pt 1528 120)
+	(pt 1536 120)
 	(bus)
 )
 (connector
 	(pt 1320 112)
-	(pt 1304 112)
+	(pt 1528 112)
 	(bus)
 )
+(connector
+	(text "dataout[8191..0]" (rect 1832 80 1912 92)(font "Arial" ))
+	(pt 1848 104)
+	(pt 1832 104)
+	(bus)
+)
+(connector
+	(text "clk500" (rect 1592 -216 1623 -204)(font "Arial" ))
+	(pt 1600 -200)
+	(pt 1624 -200)
+)
+(connector
+	(pt 1320 128)
+	(pt 1392 128)
+)
+(connector
+	(pt 1392 128)
+	(pt 1392 152)
+)
+(connector
+	(pt 1392 152)
+	(pt 1536 152)
+)
 (junction (pt 792 224))
-(junction (pt 1320 112))
 (rectangle (rect 336 -184 856 32))
 (rectangle (rect 392 80 800 304))
 (rectangle (rect 1448 -256 1944 40))
