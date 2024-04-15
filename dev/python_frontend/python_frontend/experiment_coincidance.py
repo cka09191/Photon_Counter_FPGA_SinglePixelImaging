@@ -26,7 +26,7 @@ from python_frontend.FtdiController import FtdiController
 
 image_data = {}
 
-def _hadamard_image_data(_pixel: int, size_im: int, _reversed=False):
+def _hadamard_image_data(_pixel: int, _reversed=False):
     """
     Generate Hadamard image as a numpy array.
 
@@ -36,7 +36,7 @@ def _hadamard_image_data(_pixel: int, size_im: int, _reversed=False):
         reversed (bool, optional): Whether to reverse the Hadamard pattern. Defaults to False.
 
     Returns:
-        numpy.ndarray: Hadamard image data.
+        numpy.ndarray: Hadamard image array(not image)
     """
     _ = 1
     if _reversed is True:
@@ -44,9 +44,7 @@ def _hadamard_image_data(_pixel: int, size_im: int, _reversed=False):
 
     if _pixel*_ not in image_data:
         hadamard_array = hadamard(_pixel)*_
-        pixel_sqrt_is_length = int(np.sqrt(_pixel))
-        image_data[_pixel*_] = controller_dmd.array_set_to_imagedata(hadamard_array, pixel_sqrt_is_length, size_im=size_im)
-    return np.array(image_data[_pixel*_])
+    return hadamard_array
 
 
 def count_read_coincidance(ftdi: FtdiController, reset=False):
@@ -72,7 +70,15 @@ def count_read_histogram(ftdi: FtdiController, reset=False):
 
     int_data = [int.from_bytes(read_data[i:i+4], 'big') for i in range(0, 1024, 4)]
     return np.array(int_data, dtype=np.int32)
-    
+
+def reset_histogram(ftdi: FtdiController):
+    """
+    Reset the histogram in the Ftdi controller.
+
+    Args:
+        ftdi (FtdiController): Ftdi controller object.
+    """
+    ftdi.write([0xFF]*1024, 1024)
 
 
 
@@ -109,8 +115,8 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
 
     # hadamard_image_data_set is a set of hadamard images in two polarities
     hadamard_image_data_set = np.zeros((_pixel*2, 768, 1024),np.uint8)
-    hadamard_image_data_set[0::2,:,:] = _hadamard_image_data(_pixel, _size_im)
-    hadamard_image_data_set[1::2,:,:] = _hadamard_image_data(_pixel, _size_im, True)
+    hadamard_image_data_set[0::2,:,:] = _hadamard_image_data(_pixel, )
+    hadamard_image_data_set[1::2,:,:] = _hadamard_image_data(_pixel, True)
     
     # key is inverse of hadamard_array which is used to decode the image
     hadamard_array = np.array(hadamard(_pixel))
@@ -119,15 +125,6 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
     processing_time = time.perf_counter() - start_time
     print(f"processing time:{processing_time}")
     times['processing'] = processing_time
-
-
-    print('uploading', end='')
-    start_time = time.perf_counter()
-    slides = dmd.upload(hadamard_image_data_set, hadamard_image_data_set.shape[0], 1, _length_seq)
-    print('...done')
-    upload_time = time.perf_counter() - start_time
-    print(f"uploading time:{upload_time}")
-    times['uploading'] = upload_time
 
     
     print('experiment and aquisition start', end='')
@@ -138,32 +135,18 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
     # measure_time_total is the time for each measurement of the sequence
     list_measure_time = []
     list_communication_time = []
-    for slide in slides:
-        length_acquired_data_arduino = 0
-        _length_seq_now = _length_seq
-
-        # if the last slide is not a full sequence, the length of the sequence is changed
-        if int(slide == slides[-1]):#??
-            _length_seq_now = (_pixel * 2) % _length_seq
-
-        # repeat until the length of the acquired data is the same as the length of the sequence
-        while (length_acquired_data_arduino != _length_seq_now):
-            count_read_histogram(fpga_controller, True)
-            measure_start_time = time.perf_counter()
-            dmd.slideshow(_picture_time, slide, False)
-            dmd.
-            dmd.wait()
-            list_measure_time.append( time.perf_counter() - measure_start_time)
-            comm_start_time = time.perf_counter()
-            fpga_controller.flush()
-            length_acquired_data_arduino = fpga_controller.transaction(arduino_transaction_module.index)
-            list_communication_time.append(time.perf_counter() - comm_start_time)
-            print(f'length_acquired_data_arduino:{length_acquired_data_arduino}, _length_seq_now:{_length_seq_now} ')
+    # repeat until the length of the acquired data is the same as the length of the sequence
+    for i in range(_pixel*2):
+        measure_start_time = time.perf_counter()
+        dmd.set_image(hadamard_image_data_set[i], size_im=_size_im, pattern_size=length_pattern)
+        reset_histogram(fpga_controller)
+        time.sleep(_picture_time/1_000_000)
+        coincidance_count = count_read_coincidance(fpga_controller)
+        list_measure_time.append(time.perf_counter() - measure_start_time)
         comm_start_time = time.perf_counter()
-        fpga_controller.send(arduino_transaction_module.readfirst)
-        total_data = np.append(total_data, count_read_coincidance(fpga_controller))
+        total_data = np.append(total_data, coincidance_count)
         list_communication_time.append(time.perf_counter() - comm_start_time)
-        print('.', end='')
+    print('.', end='')
 
     print('done')
     
@@ -184,8 +167,7 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
         plt.show()
         plt.pause(0.1)
 
-    print('experiment and aquisition end, disconnect Arduino and DMD', end='')
-    fpga_controller.__exit__()
+    print('experiment and aquisition end, disconnect FPGA and DMD', end='')
     dmd.__exit__()
     print('...done')
     if _name_file is not None:
@@ -246,7 +228,12 @@ def image_exp_data(total_data):
     return np.transpose(imarr.reshape((length_pattern, length_pattern)))
 
 
+class FtdiController_mock(FtdiController):
+    def __init__(self):
+        pass
 
+    def write(self, data, length):
+        return [0]*length
 
 # Example usage
 if __name__ == '__main__':
