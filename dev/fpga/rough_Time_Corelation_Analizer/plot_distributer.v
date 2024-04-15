@@ -12,6 +12,7 @@ module plot_distributer(
 parameter address_0 = 7'd128;
 reg [3:0] count = 0;
 
+/*
 always @(posedge clk) begin
 	if (Memory_add == 1'b1) begin
 		count <= count + 1;
@@ -21,6 +22,7 @@ always @(posedge clk) begin
 		end
 	end
 end
+*/
 
 always @(posedge data_arrived) begin
 	if(START == 2'b00 && END == 2'b11 && INTERVAL == 7'b0000000) begin
