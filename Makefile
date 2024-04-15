@@ -14,3 +14,11 @@ wave:## Run timing test must specify uut
 	@echo "Running vvp"
 	@vvp test
 	@gtkwave `grep -oE '\$dumpfile\(\".+?\"\)' ./dev/fpga/verilog_spi/tb_$(uut) | sed 's/\$dumpfile(\"//g' | sed 's/")//g'`
+
+
+wave_ccu:## Run timing test must specify uut
+	@echo "Running timing test"
+	@iverilog -o test ./dev/fpga/rough_Time_Corelation_Analizer/tb_$(uut)  ./dev/fpga/rough_Time_Corelation_Analizer/$(uut)
+	@echo "Running vvp"
+	@vvp test
+	@gtkwave `grep -oE '\$dumpfile\(\".+?\"\)' ./dev/fpga/rough_Time_Corelation_Analizer/tb_$(uut) | sed 's/\$dumpfile(\"//g' | sed 's/")//g'`
