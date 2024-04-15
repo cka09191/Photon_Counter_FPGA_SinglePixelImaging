@@ -19,14 +19,13 @@
 
 // for SPI MODE 3
 module usb_test( input wire clk,  
-                 input wire [15:0] rx,
+                 input wire [8191:0] rx,
 					  output reg [0:0] LED = 0,
-					  output reg [15:0] tx = 0
+					  output reg [8191:0] tx = 0
                   ); // PLL clock  locked
 								 
  
 	always @(posedge clk)
-	   if (rx==1'b1) begin LED[0] <= 1;  tx <= rx;  end
-	   else if(rx==1'b0) begin LED[0] <= 0; tx <= rx; end
+	   tx<=rx;
 			
 endmodule

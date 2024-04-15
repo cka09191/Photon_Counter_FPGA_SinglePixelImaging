@@ -23,7 +23,7 @@ applicable agreement for further details.
 	(input)
 	(rect 384 216 552 232)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "SCLK" (rect 5 0 34 12)(font "Arial" ))
+	(text "SCLK" (rect 5 0 33 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -34,12 +34,13 @@ applicable agreement for further details.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+	(annotation_block (location)(rect 328 232 384 248))
 )
 (pin
 	(input)
 	(rect 328 240 496 256)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "MOSI" (rect 5 0 33 12)(font "Arial" ))
+	(text "MOSI" (rect 5 0 32 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -50,12 +51,13 @@ applicable agreement for further details.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+	(annotation_block (location)(rect 272 256 328 272))
 )
 (pin
 	(input)
 	(rect 304 296 472 312)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "SS" (rect 5 0 20 12)(font "Arial" ))
+	(text "SS" (rect 5 0 19 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -66,12 +68,13 @@ applicable agreement for further details.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+	(annotation_block (location)(rect 248 312 304 328))
 )
 (pin
 	(input)
 	(rect 104 96 272 112)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "clk" (rect 5 0 20 12)(font "Arial" ))
+	(text "clk" (rect 5 0 19 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -82,6 +85,7 @@ applicable agreement for further details.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+	(annotation_block (location)(rect 48 112 104 128))
 )
 (pin
 	(output)
@@ -98,6 +102,7 @@ applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
+	(annotation_block (location)(rect 1088 216 1144 232))
 )
 (pin
 	(output)
@@ -114,6 +119,7 @@ applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
+	(annotation_block (location)(rect 984 112 1040 128))
 )
 (symbol
 	(rect 272 40 512 192)
@@ -164,7 +170,43 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 616 184 776 328)
+	(rect 616 72 800 152)
+	(text "usb_test" (rect 5 0 47 12)(font "Arial" ))
+	(text "inst2" (rect 8 64 31 76)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "rx[8191..0]" (rect 0 0 53 12)(font "Arial" ))
+		(text "rx[8191..0]" (rect 21 43 74 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 184 32)
+		(output)
+		(text "LED[0..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "LED[0..0]" (rect 124 27 163 39)(font "Arial" ))
+		(line (pt 184 32)(pt 168 32)(line_width 3))
+	)
+	(port
+		(pt 184 48)
+		(output)
+		(text "tx[8191..0]" (rect 0 0 53 12)(font "Arial" ))
+		(text "tx[8191..0]" (rect 119 43 163 55)(font "Arial" ))
+		(line (pt 184 48)(pt 168 48)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 168 64))
+	)
+)
+(symbol
+	(rect 616 184 800 328)
 	(text "SPI" (rect 5 0 22 12)(font "Arial" ))
 	(text "inst1" (rect 8 128 31 140)(font "Arial" ))
 	(port
@@ -198,62 +240,26 @@ applicable agreement for further details.
 	(port
 		(pt 0 96)
 		(input)
-		(text "tx[15..0]" (rect 0 0 41 12)(font "Arial" ))
-		(text "tx[15..0]" (rect 21 91 62 103)(font "Arial" ))
+		(text "tx[8191..0]" (rect 0 0 53 12)(font "Arial" ))
+		(text "tx[8191..0]" (rect 21 91 74 103)(font "Arial" ))
 		(line (pt 0 96)(pt 16 96)(line_width 3))
 	)
 	(port
-		(pt 160 32)
+		(pt 184 32)
 		(output)
 		(text "MISO" (rect 0 0 27 12)(font "Arial" ))
-		(text "MISO" (rect 117 27 144 39)(font "Arial" ))
-		(line (pt 160 32)(pt 144 32))
+		(text "MISO" (rect 141 27 163 39)(font "Arial" ))
+		(line (pt 184 32)(pt 168 32))
 	)
 	(port
-		(pt 160 48)
+		(pt 184 48)
 		(output)
-		(text "rx[15..0]" (rect 0 0 41 12)(font "Arial" ))
-		(text "rx[15..0]" (rect 105 43 146 55)(font "Arial" ))
-		(line (pt 160 48)(pt 144 48)(line_width 3))
+		(text "rx[8191..0]" (rect 0 0 53 12)(font "Arial" ))
+		(text "rx[8191..0]" (rect 119 43 163 55)(font "Arial" ))
+		(line (pt 184 48)(pt 168 48)(line_width 3))
 	)
 	(drawing
-		(rectangle (rect 16 16 144 128))
-	)
-)
-(symbol
-	(rect 616 72 792 152)
-	(text "usb_test" (rect 5 0 47 12)(font "Arial" ))
-	(text "inst2" (rect 8 64 31 76)(font "Arial" ))
-	(port
-		(pt 0 32)
-		(input)
-		(text "clk" (rect 0 0 14 12)(font "Arial" ))
-		(text "clk" (rect 21 27 35 39)(font "Arial" ))
-		(line (pt 0 32)(pt 16 32))
-	)
-	(port
-		(pt 0 48)
-		(input)
-		(text "rx[15..0]" (rect 0 0 41 12)(font "Arial" ))
-		(text "rx[15..0]" (rect 21 43 62 55)(font "Arial" ))
-		(line (pt 0 48)(pt 16 48)(line_width 3))
-	)
-	(port
-		(pt 176 32)
-		(output)
-		(text "LED[0..0]" (rect 0 0 47 12)(font "Arial" ))
-		(text "LED[0..0]" (rect 116 27 163 39)(font "Arial" ))
-		(line (pt 176 32)(pt 160 32)(line_width 3))
-	)
-	(port
-		(pt 176 48)
-		(output)
-		(text "tx[15..0]" (rect 0 0 41 12)(font "Arial" ))
-		(text "tx[15..0]" (rect 121 43 162 55)(font "Arial" ))
-		(line (pt 176 48)(pt 160 48)(line_width 3))
-	)
-	(drawing
-		(rectangle (rect 16 16 160 64))
+		(rectangle (rect 16 16 168 128))
 	)
 )
 (connector
@@ -263,27 +269,6 @@ applicable agreement for further details.
 (connector
 	(pt 568 216)
 	(pt 616 216)
-)
-(connector
-	(pt 512 104)
-	(pt 568 104)
-)
-(connector
-	(pt 568 104)
-	(pt 616 104)
-)
-(connector
-	(pt 792 104)
-	(pt 808 104)
-	(bus)
-)
-(connector
-	(pt 776 216)
-	(pt 776 208)
-)
-(connector
-	(pt 776 208)
-	(pt 912 208)
 )
 (connector
 	(pt 616 232)
@@ -320,21 +305,6 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 592 168)
-	(pt 800 168)
-	(bus)
-)
-(connector
-	(pt 800 168)
-	(pt 800 232)
-	(bus)
-)
-(connector
-	(pt 800 232)
-	(pt 776 232)
-	(bus)
-)
-(connector
 	(pt 616 280)
 	(pt 576 280)
 	(bus)
@@ -345,18 +315,57 @@ applicable agreement for further details.
 	(bus)
 )
 (connector
+	(pt 856 168)
+	(pt 856 232)
+	(bus)
+)
+(connector
+	(pt 592 168)
+	(pt 856 168)
+	(bus)
+)
+(connector
 	(pt 576 352)
-	(pt 824 352)
+	(pt 872 352)
 	(bus)
 )
 (connector
-	(pt 824 352)
-	(pt 824 120)
+	(pt 872 120)
+	(pt 872 352)
 	(bus)
 )
 (connector
-	(pt 824 120)
-	(pt 792 120)
+	(pt 896 216)
+	(pt 896 208)
+)
+(connector
+	(pt 896 208)
+	(pt 912 208)
+)
+(connector
+	(pt 512 104)
+	(pt 568 104)
+)
+(connector
+	(pt 568 104)
+	(pt 616 104)
+)
+(connector
+	(pt 800 120)
+	(pt 872 120)
 	(bus)
+)
+(connector
+	(pt 800 104)
+	(pt 808 104)
+)
+(connector
+	(pt 800 232)
+	(pt 856 232)
+	(bus)
+)
+(connector
+	(pt 800 216)
+	(pt 896 216)
 )
 (junction (pt 568 104))

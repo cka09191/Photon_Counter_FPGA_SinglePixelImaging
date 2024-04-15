@@ -1,0 +1,4 @@
+DECLARE_VHDL_COMPONENT=sdram_phy_alt_mem_phy_pll
+DECLARE_VHDL_COMPONENT=sdram_phy_alt_mem_phy_seq_wrapper
+DECLARE_VHDL_COMPONENT=sdram_phy_alt_mem_phy_seq
+DECLARE_VHDL_COMPONENT=sdram_phy_alt_mem_phy_delay
