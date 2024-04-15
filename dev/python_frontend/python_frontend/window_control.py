@@ -10,9 +10,8 @@ import threading
 from tkinter import Entry, Text, Tk, Listbox, filedialog
 from tkinter.ttk import Frame, Label, Button
 
-from  python_frontend.experiment import experiment
+from  python_frontend.experiment_coincidance import experiment
 from python_frontend.window_image import window_image
-
 
 class window_control:
     def __init__(self,geometry="450x700"):

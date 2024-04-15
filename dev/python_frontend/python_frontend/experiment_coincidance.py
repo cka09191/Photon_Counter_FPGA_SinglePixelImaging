@@ -44,7 +44,8 @@ def _hadamard_image_data(_pixel: int, _reversed=False):
 
     if _pixel*_ not in image_data:
         hadamard_array = hadamard(_pixel)*_
-    return hadamard_array
+    size = int(np.sqrt(_pixel))
+    return np.reshape(np.array(hadamard_array, dtype=np.uint8), (_pixel,size,size))
 
 
 def count_read_coincidance(ftdi: FtdiController, reset=False):
@@ -105,7 +106,7 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
     print('...done')
 
     print('fgpa initializing', end='')
-    fpga_controller = FtdiController()
+    fpga_controller = FtdiController_mock()
     print('...done')
 
     print('Pattern and key generating', end='')
@@ -114,7 +115,8 @@ def experiment(_pixel: int, _picture_time: int, _name_file: str, _size_im=150, _
     length_pattern = int(np.sqrt(_pixel))
 
     # hadamard_image_data_set is a set of hadamard images in two polarities
-    hadamard_image_data_set = np.zeros((_pixel*2, 768, 1024),np.uint8)
+    _size= int(np.sqrt(_pixel))
+    hadamard_image_data_set = np.zeros((_pixel*2, _size, _size),np.uint8)
     hadamard_image_data_set[0::2,:,:] = _hadamard_image_data(_pixel, )
     hadamard_image_data_set[1::2,:,:] = _hadamard_image_data(_pixel, True)
     
