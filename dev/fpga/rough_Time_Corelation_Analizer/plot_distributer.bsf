@@ -33,22 +33,22 @@ applicable agreement for further details.
 	(port
 		(pt 0 48)
 		(input)
-		(text "START" (rect 0 0 34 12)(font "Arial" ))
-		(text "START" (rect 21 43 55 55)(font "Arial" ))
-		(line (pt 0 48)(pt 16 48)(line_width 1))
+		(text "START[1..0]" (rect 0 0 53 12)(font "Arial" ))
+		(text "START[1..0]" (rect 21 43 74 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
 	)
 	(port
 		(pt 0 64)
 		(input)
-		(text "END" (rect 0 0 21 12)(font "Arial" ))
-		(text "END" (rect 21 59 42 71)(font "Arial" ))
-		(line (pt 0 64)(pt 16 64)(line_width 1))
+		(text "END[1..0]" (rect 0 0 40 12)(font "Arial" ))
+		(text "END[1..0]" (rect 21 59 61 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
 	)
 	(port
 		(pt 0 80)
 		(input)
-		(text "INTERVAL[5..0]" (rect 0 0 73 12)(font "Arial" ))
-		(text "INTERVAL[5..0]" (rect 21 75 94 87)(font "Arial" ))
+		(text "INTERVAL[6..0]" (rect 0 0 73 12)(font "Arial" ))
+		(text "INTERVAL[6..0]" (rect 21 75 94 87)(font "Arial" ))
 		(line (pt 0 80)(pt 16 80)(line_width 3))
 	)
 	(port
@@ -61,8 +61,8 @@ applicable agreement for further details.
 	(port
 		(pt 232 32)
 		(output)
-		(text "Addr[6..0]" (rect 0 0 41 12)(font "Arial" ))
-		(text "Addr[6..0]" (rect 170 27 211 39)(font "Arial" ))
+		(text "Addr[7..0]" (rect 0 0 41 12)(font "Arial" ))
+		(text "Addr[7..0]" (rect 170 27 211 39)(font "Arial" ))
 		(line (pt 232 32)(pt 216 32)(line_width 3))
 	)
 	(port
@@ -74,9 +74,9 @@ applicable agreement for further details.
 	)
 	(parameter
 		"address_0"
-		"128"
+		"0000000"
 		""
-		(type "PARAMETER_SIGNED_DEC")	)
+		(type "PARAMETER_UNSIGNED_BIN")	)
 	(drawing
 		(rectangle (rect 16 16 216 128)(line_width 1))
 	)

@@ -35,5 +35,5 @@ always @(posedge data_arrived) begin
 		Addr <= address_0 - INTERVAL;
 		Memory_add <= 1'b1;
 	end
-
+end
 endmodule

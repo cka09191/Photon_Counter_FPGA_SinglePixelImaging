@@ -13,11 +13,13 @@ initial begin
 	pulse <= 0;
 end
 
+/*
 always @(posedge channel) begin
     if(channel) begin
         activate <= 1;
     end
 end
+*/
 
 always @(posedge clk) begin
 	if(activate) begin
