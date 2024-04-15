@@ -3,6 +3,7 @@ module plot_distributer(
 	input wire START,
 	input wire END,
 	input wire [5:0] INTERVAL,
+	input wire data_arrived,
 	output reg [6:0] Addr
 );
 

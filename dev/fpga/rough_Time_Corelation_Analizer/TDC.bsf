@@ -65,6 +65,13 @@ applicable agreement for further details.
 		(text "INTERVAL[5..0]" (rect 106 59 179 71)(font "Arial" ))
 		(line (pt 200 64)(pt 184 64)(line_width 3))
 	)
+	(port
+		(pt 200 80)
+		(output)
+		(text "data_arrived" (rect 0 0 50 12)(font "Arial" ))
+		(text "data_arrived" (rect 129 75 179 87)(font "Arial" ))
+		(line (pt 200 80)(pt 184 80)(line_width 1))
+	)
 	(drawing
 		(rectangle (rect 16 16 184 96)(line_width 1))
 	)

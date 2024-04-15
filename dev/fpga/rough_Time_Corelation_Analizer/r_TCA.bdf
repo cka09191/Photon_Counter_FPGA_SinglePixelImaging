@@ -403,14 +403,21 @@ applicable agreement for further details.
 		(text "INTERVAL[5..0]" (rect 113 59 179 71)(font "Arial" ))
 		(line (pt 200 64)(pt 184 64)(line_width 3))
 	)
+	(port
+		(pt 200 80)
+		(output)
+		(text "data_arrived" (rect 0 0 61 12)(font "Arial" ))
+		(text "data_arrived" (rect 128 75 179 87)(font "Arial" ))
+		(line (pt 200 80)(pt 184 80))
+	)
 	(drawing
 		(rectangle (rect 16 16 184 96))
 	)
 )
 (symbol
-	(rect 1088 80 1304 192)
+	(rect 1088 80 1304 224)
 	(text "plot_distributer" (rect 5 0 76 12)(font "Arial" ))
-	(text "inst3" (rect 8 96 31 108)(font "Arial" ))
+	(text "inst3" (rect 8 128 31 140)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -440,6 +447,13 @@ applicable agreement for further details.
 		(line (pt 0 80)(pt 16 80)(line_width 3))
 	)
 	(port
+		(pt 0 96)
+		(input)
+		(text "data_arrived" (rect 0 0 61 12)(font "Arial" ))
+		(text "data_arrived" (rect 21 91 82 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96))
+	)
+	(port
 		(pt 216 32)
 		(output)
 		(text "Addr[6..0]" (rect 0 0 48 12)(font "Arial" ))
@@ -447,7 +461,7 @@ applicable agreement for further details.
 		(line (pt 216 32)(pt 200 32)(line_width 3))
 	)
 	(drawing
-		(rectangle (rect 16 16 200 96))
+		(rectangle (rect 16 16 200 128))
 	)
 )
 (connector
@@ -578,9 +592,13 @@ applicable agreement for further details.
 	(pt 1040 144)
 )
 (connector
-	(pt 1088 160)
 	(pt 1040 160)
+	(pt 1088 160)
 	(bus)
+)
+(connector
+	(pt 1040 176)
+	(pt 1088 176)
 )
 (junction (pt 792 224))
 (rectangle (rect 336 -184 856 32))

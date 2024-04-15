@@ -4,7 +4,8 @@ module TDC(
 	input wire pulse2,
 	output reg START,
 	output reg END,
-	output reg [5:0] INTERVAL
+	output reg [5:0] INTERVAL,
+	output reg data_arrived
 );
 
 endmodule
