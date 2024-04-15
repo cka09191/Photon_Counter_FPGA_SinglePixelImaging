@@ -31,7 +31,7 @@ module TDC(
 
 
 reg [6:0] count;
-
+reg data_arrived_internal;
 wire pulse = pulse1 | pulse2;
 
 initial
@@ -41,41 +41,40 @@ begin
 	END_signal <= 2'b00;
 	INTERVAL = 0;
 	data_arrived = 0;
+	data_arrived_internal=0;
 end
 
 always @(posedge pulse) begin
 	if(pulse1 && pulse2) begin
-		data_arrived <= 1;
+		data_arrived_internal <= 1;
 		INTERVAL <= 0;
 		START_signal <= 2'b00;
 		END_signal <= 2'b11;
 	end
 	else begin
-		if(END_signal == 2'b00) begin
+		if(count == 7'd127) begin
 			END_signal <= {pulse1, pulse2};		
 		end
 		else begin
-			data_arrived = 1;
+			data_arrived_internal = 1;
 			INTERVAL<=count;
 			START_signal<=END_signal;
 			END_signal <= {pulse1, pulse2};
 		end
 	end
-
-	count <= 0;
 end
 
-/*always @(posedge clk) begin
+always @(posedge clk) begin
+	if (~data_arrived_internal) count<=0;
 	case(count)
 		7'd2: begin
 			data_arrived <= 0;
 			count <= count + 1;
 		end
-		7'd127: END_signal <= 2'b00;
 		default: count <= count + 1;
 	endcase
 end
-*/
+
 
 endmodule
 
