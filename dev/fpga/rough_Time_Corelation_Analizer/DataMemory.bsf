@@ -20,7 +20,7 @@ applicable agreement for further details.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 248 128)
+	(rect 16 16 312 128)
 	(text "DataMemory" (rect 5 0 59 12)(font "Arial" ))
 	(text "inst" (rect 8 96 20 108)(font "Arial" ))
 	(port
@@ -45,13 +45,26 @@ applicable agreement for further details.
 		(line (pt 0 64)(pt 16 64)(line_width 3))
 	)
 	(port
-		(pt 232 32)
+		(pt 0 80)
+		(input)
+		(text "Memory_add" (rect 0 0 55 12)(font "Arial" ))
+		(text "Memory_add" (rect 21 75 76 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 1))
+	)
+	(port
+		(pt 296 32)
 		(output)
-		(text "data_out[8191..0]" (rect 0 0 66 12)(font "Arial" ))
-		(text "data_out[8191..0]" (rect 145 27 211 39)(font "Arial" ))
-		(line (pt 232 32)(pt 216 32)(line_width 3))
+		(text "data_out[Memory_WIDTH-1..0]" (rect 0 0 129 12)(font "Arial" ))
+		(text "data_out[Memory_WIDTH-1..0]" (rect 146 27 275 39)(font "Arial" ))
+		(line (pt 296 32)(pt 280 32)(line_width 3))
 	)
+	(parameter
+		"Memory_WIDTH"
+		"8192"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
-		(rectangle (rect 16 16 216 96)(line_width 1))
+		(rectangle (rect 16 16 280 96)(line_width 1))
 	)
+	(annotation_block (parameter)(rect 312 -64 412 16))
 )

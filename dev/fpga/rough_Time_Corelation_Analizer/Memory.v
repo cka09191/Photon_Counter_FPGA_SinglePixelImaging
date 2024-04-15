@@ -9,9 +9,12 @@ module DataMemory (
 parameter Memory_WIDTH = 8192;
 
 reg [Memory_WIDTH-1:0] memory;
+reg [11:0] mem_addr;
 
 always@ (posedge clk) begin
-	memory[32*addr:32*addr+7] <= memory[32*addr:32*addr+7] + 1'b1;
+	 reg [9:0] mem_addr;
+    mem_addr = {addr, 5'b0}; // Concatenate addr with zeros for bit shifting
+	 memory[mem_addr +: 7] <= memory[mem_addr +: 7] + 1'b1; // Use part-select operator
 	if(Command == 2'b01) begin
 		data_out <= {Memory_WIDTH{1'b0}};
 	end
