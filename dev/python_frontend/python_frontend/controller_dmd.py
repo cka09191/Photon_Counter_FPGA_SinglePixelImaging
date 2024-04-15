@@ -116,7 +116,7 @@ class controller_dmd:
 
     @classmethod
     def array_set_to_imagedata(cls, array_set,
-                                _pattern_size,size_im=543,rot = 135):
+                                _pattern_size,size_im=543,rot = 0):
         # if array_set.shape[-1]>1000:
         #     manager = multiprocessing.Manager()
         #     result_dict = manager.dict()

@@ -1,0 +1,11 @@
+C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/simple_usb_counter_tb/tb_simple_usb_counter.v {1 {vlog -work work C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/simple_usb_counter_tb/tb_simple_usb_counter.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+-- Compiling module tb_counter
+
+Top level modules:
+	tb_counter
+
+} {} {}} C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/ddd.v {1 {vlog -work work C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/ddd.v
+Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+
+} {} {}}

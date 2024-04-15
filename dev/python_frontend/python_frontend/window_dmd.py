@@ -67,7 +67,7 @@ class window_dmd:
         self.root.geometry(geometry)
 
         self.DMD=None
-        self.scale_imsize = tk.Scale(self.root, from_=10, to=543, orient=tk.HORIZONTAL, resolution=10, label="Size of Image", length=200, tickinterval=200, sliderlength=20, variable=tk.IntVar(value=300), command=self.set_resolution)
+        self.scale_imsize = tk.Scale(self.root, from_=10, to=768, orient=tk.HORIZONTAL, resolution=10, label="Size of Image", length=200, tickinterval=200, sliderlength=20, variable=tk.IntVar(value=300), command=self.set_resolution)
 
         self.scale_resolution = tk.Scale(self.root, from_=4, to=512, orient=tk.HORIZONTAL, resolution=1, label="Resolution", length=200, tickinterval=100, sliderlength=20, variable=tk.IntVar(value=50), command=self.set_resolution)
 

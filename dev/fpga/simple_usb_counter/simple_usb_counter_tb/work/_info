@@ -1,0 +1,81 @@
+m255
+K3
+13
+cModel Technology
+Z0 dC:\altera\13.1
+vcontroller
+Z1 !s100 >8TMIAAiV3UZTk@6LQIgI0
+Z2 I9UOBB`N;zBoZ?5hCcfRKA1
+Z3 V6^M?F?UmlTP]8ZiHVkOQ73
+Z4 dC:\Users\CHAEGYEONGJUN\VScode\git_Photon_Counter_FPga\Photon_Counter_FPGA\dev\fpga\simple_usb_counter\simple_usb_counter_tb
+Z5 w1712641486
+Z6 8C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/controller.v
+Z7 FC:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/controller.v
+L0 18
+Z8 OV;L;10.1d;51
+r1
+31
+Z9 !s90 -reportprogress|300|-work|work|C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/controller.v|
+Z10 o-work work -O0
+Z11 !s108 1712641737.103000
+Z12 !s107 C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/controller.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vcounter_32bit
+Z13 !s100 >K;S4AE;a1B?O3cI6GTjZ2
+Z14 I8fd3U9BI<7DG0I>NOM^IQ1
+Z15 VHZ8jM_2C@SnlFUbj??=l82
+R4
+Z16 w1712640948
+Z17 8C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/counter.v
+Z18 FC:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/counter.v
+L0 1
+R8
+r1
+31
+Z19 !s90 -reportprogress|300|-work|work|C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/counter.v|
+R10
+Z20 !s108 1712641737.165000
+Z21 !s107 C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/counter.v|
+!i10b 1
+!s85 0
+!s101 -O0
+vspi_short_module
+Z22 !s100 A<]XFO]M>RI]:j;E3hoDg2
+Z23 IWcnGRl=>CiTUT2m0^PcQ:1
+Z24 VM5S4G1eEHTZFe>LTg7<5e2
+R4
+Z25 w1712639005
+Z26 8C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/SPI.v
+Z27 FC:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/SPI.v
+L0 39
+R8
+r1
+31
+Z28 !s90 -reportprogress|300|-work|work|C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/SPI.v|
+R10
+!i10b 1
+!s85 0
+Z29 !s108 1712641737.238000
+Z30 !s107 C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/SPI.v|
+!s101 -O0
+vtb_counter
+!i10b 1
+!s100 ndbfo?mU=lJDoTfP<eL:@0
+IC_9@5<liAHNCaT8QfYeE?2
+Z31 VPe>hc8P2Zj0nd^A9H2M030
+R4
+w1712641738
+Z32 8C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/simple_usb_counter_tb/tb_simple_usb_counter.v
+Z33 FC:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/simple_usb_counter_tb/tb_simple_usb_counter.v
+L0 1
+R8
+r1
+!s85 0
+31
+!s108 1712641738.413000
+!s107 C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/simple_usb_counter_tb/tb_simple_usb_counter.v|
+Z34 !s90 -reportprogress|300|-work|work|C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/simple_usb_counter/simple_usb_counter_tb/tb_simple_usb_counter.v|
+!s101 -O0
+R10

@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP4CE22F17) Path("C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/usb_test2/output_files/") File("usb_test2.sof") MfrSpec(OpMask(1));
+		Device PartName(EP4CE22F17) Path("C:/Users/CHAEGYEONGJUN/VScode/git_Photon_Counter_FPga/Photon_Counter_FPGA/dev/fpga/usb_test2/output_files/") File("usb_test2.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

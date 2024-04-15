@@ -27,6 +27,6 @@ module usb_test( input wire clk,
  
 	always @(posedge clk)
 	   if (rx==1'b1) begin LED[0] <= 1;  tx <= rx;  end
-		else if(rx==1'b0) begin LED[0] <= 0; tx <= rx; end
+	   else if(rx==1'b0) begin LED[0] <= 0; tx <= rx; end
 			
 endmodule
