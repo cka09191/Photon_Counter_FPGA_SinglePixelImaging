@@ -1,12 +1,19 @@
 module DataMemory (
     input wire clk,      // Clock signal
 	 input wire [6:0] addr,
-    output reg [8191:0] data_out, // Output data
+    output reg [Memory_WIDTH-1:0] data_out, // Output data
 	 input wire [1:0] Command
 );
 
-reg [8191:0] memory;
+parameter Memory_WIDTH = 8192;
 
+reg [Memory_WIDTH-1:0] memory;
+
+always@ (posedge clk) begin
+	if(Command == 2'b01) begin
+		data_out <= {Memory_WIDTH{1'b0}};
+	end
+end	
 
 
 endmodule

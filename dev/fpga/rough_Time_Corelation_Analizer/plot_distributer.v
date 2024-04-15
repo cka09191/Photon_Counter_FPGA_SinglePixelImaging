@@ -7,5 +7,6 @@ module plot_distributer(
 	output reg [6:0] Addr
 );
 
+parameter address_0 = 128;
 
 endmodule
