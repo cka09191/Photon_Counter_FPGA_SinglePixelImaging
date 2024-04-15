@@ -19,18 +19,18 @@
 // at 14ns, START_signal is 11, and END_signal is 01, at 10ns
 //
 // after 128ns, counting will not be continued
-
+module TDC(
 	input wire clk,
 	input wire pulse1,
 	input wire pulse2,
-	output reg START_signal[1..0],
-	output reg END_signal[1..0],
+	output reg [1:0] START_signal,
+	output reg [1:0] END_signal,
 	output reg [6:0] INTERVAL,
 	output reg data_arrived
 );
 
 
-reg [5:0] count;
+reg [6:0] count;
 
 wire pulse = pulse1 | pulse2;
 
@@ -72,6 +72,7 @@ always @(posedge clk) begin
 	case(count)
 		7'd127: END_signal <= 2'b00;
 		default: count <= count + 1;
+	endcase
 end
 
 
