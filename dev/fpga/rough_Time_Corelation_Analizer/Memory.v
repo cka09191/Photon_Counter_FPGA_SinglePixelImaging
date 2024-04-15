@@ -12,7 +12,6 @@ reg [Memory_WIDTH-1:0] memory;
 reg [11:0] mem_addr;
 
 always@ (posedge clk) begin
-	 reg [9:0] mem_addr;
     mem_addr = {addr, 5'b0}; // Concatenate addr with zeros for bit shifting
 	 memory[mem_addr +: 8] <= memory[mem_addr +: 8] + 1'b1; // Use part-select operator
 	if(Command == 2'b01) begin
