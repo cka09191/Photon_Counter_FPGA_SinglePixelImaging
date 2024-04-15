@@ -62,14 +62,17 @@ always @(posedge pulse) begin
 			END_signal[0] <= pulse1;
 			END_signal[1] <= pulse2;
 		end
-	count <= 0;
-
-		data_arrived <= 0;
 	end
+
+	count <= 0;
 end
 
 always @(posedge clk) begin
 	case(count)
+		7'd2: begin
+			data_arrived <= 0;
+			count <= count + 1;
+		end
 		7'd127: END_signal <= 2'b00;
 		default: count <= count + 1;
 	endcase
