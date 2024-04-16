@@ -31,7 +31,7 @@ module TDC(
 
 
 reg [6:0] count;
-
+reg notedge_pulse;
 wire pulse = pulse1 | pulse2;
 
 initial
@@ -39,43 +39,56 @@ begin
 	count = 0;
 	START_signal <= 2'b00;
 	END_signal <= 2'b00;
+	notedge_pulse = 0;
 	INTERVAL = 0;
 	data_arrived = 0;
 end
 
-always @(posedge pulse) begin
-	if(pulse1 && pulse2) begin
-		data_arrived <= 1;
-		INTERVAL <= 0;
-		START_signal <= 2'b00;
-		END_signal <= 2'b11;
+
+always @(posedge clk) begin
+	if(pulse) begin
+		if (~notedge_pulse) begin
+			if (pulse1 && pulse2) begin
+				INTERVAL <= 0;
+				data_arrived <= 1;
+				START_signal <= 2'b00;
+				END_signal <= 2'b11;
+				data_arrived <= 1;
+			end
+			else begin
+				if(count == 7'd127) begin
+					count <= 0;
+					END_signal <= {pulse1, pulse2};
+				end
+				else begin
+					INTERVAL<=count;
+					count <= 0;
+					START_signal<=END_signal;
+					END_signal <= {pulse1, pulse2};
+					data_arrived <= 1;
+				end
+			end
+			notedge_pulse <= 1;
+		end
+		count <= 0;
 	end
 	else begin
-		if(END_signal == 2'b00) begin
-			END_signal <= {pulse1, pulse2};		
-		end
-		else begin
-			data_arrived = 1;
-			INTERVAL<=count;
-			START_signal<=END_signal;
-			END_signal <= {pulse1, pulse2};
-		end
+		notedge_pulse <= 0;
+		case(count)
+			7'd2: begin
+				data_arrived <= 0;
+				count <= count + 1;
+			end
+			7'd127: begin
+				count <= count;
+			end
+			default: begin
+				count <= count + 1;
+			end
+		endcase
 	end
-
-	count <= 0;
 end
 
-/*always @(posedge clk) begin
-	case(count)
-		7'd2: begin
-			data_arrived <= 0;
-			count <= count + 1;
-		end
-		7'd127: END_signal <= 2'b00;
-		default: count <= count + 1;
-	endcase
-end
-*/
 
 endmodule
 

@@ -34,6 +34,7 @@ applicable agreement for further details.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+	(annotation_block (location)(rect 296 -88 352 -72))
 )
 (pin
 	(input)
@@ -67,6 +68,7 @@ applicable agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
+	(annotation_block (location)(rect 1392 -176 1448 -160))
 )
 (pin
 	(input)
@@ -83,6 +85,7 @@ applicable agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
+	(annotation_block (location)(rect 1392 -160 1448 -144))
 )
 (pin
 	(input)
@@ -99,6 +102,7 @@ applicable agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
+	(annotation_block (location)(rect 1392 -144 1448 -128))
 )
 (pin
 	(input)
@@ -132,6 +136,7 @@ applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
+	(annotation_block (location)(rect 1984 -192 2040 -176))
 )
 (symbol
 	(rect 528 -160 768 -8)
@@ -340,55 +345,6 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 1536 72 1832 184)
-	(text "DataMemory" (rect 5 0 68 12)(font "Arial" ))
-	(text "inst6" (rect 8 96 31 108)(font "Arial" ))
-	(port
-		(pt 0 32)
-		(input)
-		(text "clk" (rect 0 0 14 12)(font "Arial" ))
-		(text "clk" (rect 21 27 35 39)(font "Arial" ))
-		(line (pt 0 32)(pt 16 32))
-	)
-	(port
-		(pt 0 48)
-		(input)
-		(text "addr[7..0]" (rect 0 0 47 12)(font "Arial" ))
-		(text "addr[7..0]" (rect 21 43 68 55)(font "Arial" ))
-		(line (pt 0 48)(pt 16 48)(line_width 3))
-	)
-	(port
-		(pt 0 64)
-		(input)
-		(text "Command[1..0]" (rect 0 0 76 12)(font "Arial" ))
-		(text "Command[1..0]" (rect 21 59 97 71)(font "Arial" ))
-		(line (pt 0 64)(pt 16 64)(line_width 3))
-	)
-	(port
-		(pt 0 80)
-		(input)
-		(text "Memory_add" (rect 0 0 63 12)(font "Arial" ))
-		(text "Memory_add" (rect 21 75 84 87)(font "Arial" ))
-		(line (pt 0 80)(pt 16 80))
-	)
-	(port
-		(pt 296 32)
-		(output)
-		(text "data_out[Memory_WIDTH-1..0]" (rect 0 0 154 12)(font "Arial" ))
-		(text "data_out[Memory_WIDTH-1..0]" (rect 145 27 275 39)(font "Arial" ))
-		(line (pt 296 32)(pt 280 32)(line_width 3))
-	)
-	(parameter
-		"Memory_WIDTH"
-		"8192"
-		""
-		(type "PARAMETER_SIGNED_DEC")	)
-	(drawing
-		(rectangle (rect 16 16 280 96))
-	)
-	(annotation_block (parameter)(rect 1320 0 1536 32))
-)
-(symbol
 	(rect 840 96 1048 208)
 	(text "TDC" (rect 5 0 27 12)(font "Arial" ))
 	(text "inst1" (rect 8 96 31 108)(font "Arial" ))
@@ -507,6 +463,55 @@ applicable agreement for further details.
 		(rectangle (rect 16 16 216 128))
 	)
 	(annotation_block (parameter)(rect 1088 0 1272 32))
+)
+(symbol
+	(rect 1536 72 1832 184)
+	(text "DataMemory" (rect 5 0 68 12)(font "Arial" ))
+	(text "inst6" (rect 8 96 31 108)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "addr[7..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "addr[7..0]" (rect 21 43 68 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "Command[1..0]" (rect 0 0 76 12)(font "Arial" ))
+		(text "Command[1..0]" (rect 21 59 97 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "Memory_add" (rect 0 0 63 12)(font "Arial" ))
+		(text "Memory_add" (rect 21 75 84 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80))
+	)
+	(port
+		(pt 296 32)
+		(output)
+		(text "data_out[Memory_WIDTH-1..0]" (rect 0 0 154 12)(font "Arial" ))
+		(text "data_out[Memory_WIDTH-1..0]" (rect 145 27 275 39)(font "Arial" ))
+		(line (pt 296 32)(pt 280 32)(line_width 3))
+	)
+	(parameter
+		"Memory_WIDTH"
+		"8192"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 280 96))
+	)
+	(annotation_block (parameter)(rect 1320 0 1536 32))
 )
 (connector
 	(pt 760 128)

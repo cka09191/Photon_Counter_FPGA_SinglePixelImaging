@@ -1,15 +1,16 @@
 `timescale 1ns / 1ps
 
-module tb_TDC;
-
-  // Parameters
-  reg pulse1;
-  reg pulse2;
-  reg clk;
-  wire [1:0] START_signal;
-  wire [1:0] END_signal;
-  wire [6:0] INTERVAL;
-  wire data_arrived;
+module tb_plot_distributer;
+    wire [6:0] INTERVAL;
+    wire data_arrived;
+    wire [7:0] Addr;
+    wire Memory_add;
+      // Parameters
+    reg pulse1;
+    reg pulse2;
+    reg clk;
+    wire [1:0] START_signal;
+    wire [1:0] END_signal;
 
   // Instantiate the TDC module
   TDC u1 (
@@ -21,6 +22,16 @@ module tb_TDC;
     .INTERVAL(INTERVAL),
     .data_arrived(data_arrived)
   );
+    // Instantiate the Unit Under Test (UUT)
+plot_distributer u2 (
+    .clk(clk),
+    .START(START_signal),
+    .END(END_signal),
+    .INTERVAL(INTERVAL),
+    .data_arrived(data_arrived),
+    .Addr(Addr),
+    .Memory_add(Memory_add)
+);
 
   // Clock generator
   always begin
@@ -29,8 +40,11 @@ module tb_TDC;
 
   // Test sequence
   initial begin
-    $dumpfile("tb_TDC.vcd");
-    $dumpvars(0, tb_TDC);
+    $dumpfile("tb_plot_distributer.vcd");
+    $dumpvars(0, tb_plot_distributer);
+    $dumpvars(1, u2);
+
+    // Initialize Inputs
     clk = 0;
     pulse1 = 0;
     pulse2 = 0;
@@ -59,3 +73,4 @@ module tb_TDC;
   end
 
 endmodule
+
