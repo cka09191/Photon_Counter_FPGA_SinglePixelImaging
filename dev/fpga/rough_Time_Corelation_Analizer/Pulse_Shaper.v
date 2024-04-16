@@ -9,7 +9,7 @@ reg activate;
 
 initial begin
     activate = 0;
-    count = 8'h00;
+    count = 8'd127;
 	pulse <= 0;
 end
 
