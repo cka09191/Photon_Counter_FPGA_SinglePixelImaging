@@ -61,4 +61,11 @@ set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_RO
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name VERILOG_FILE Command.v
 set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_location_assignment PIN_A2 -to channel1
+set_location_assignment PIN_B3 -to channel2
+set_location_assignment PIN_B4 -to MISO
+set_location_assignment PIN_A3 -to MOSI
+set_location_assignment PIN_B5 -to SCLK
+set_location_assignment PIN_C3 -to SS
+set_location_assignment PIN_R8 -to clk_500Mhz
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
