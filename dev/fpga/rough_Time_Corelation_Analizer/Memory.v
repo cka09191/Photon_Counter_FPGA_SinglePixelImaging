@@ -9,7 +9,7 @@ module DataMemory (
 parameter Memory_WIDTH = 8192;
 
 reg [Memory_WIDTH-1:0] memory;
-reg [11:0] mem_addr;
+reg [12:0] mem_addr;
 
 
 always@ (posedge clk) begin
