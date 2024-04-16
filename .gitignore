@@ -34,7 +34,6 @@ timing
 *.jdi
 *.pin
 *.pof
-*.sof
 *.done
 *.sld
 *_generation_script*
