@@ -29,8 +29,12 @@ module tb_Pulse_Shaper;
         // Apply test vectors
         #10 channel = 1; // Trigger pulse
         #20 channel = 0; // Stop pulse
-        #500 channel = 1; // Trigger pulse again
-        #1 channel = 0; // Stop pulse again
+        #30 channel = 1; // Trigger pulse again
+        #2 channel = 0; // Stop pulse again
+        #50 channel = 1; // Trigger pulse again
+        #2 channel = 0; // Stop pulse again
+        #400 channel = 1; // Trigger pulse again
+        #2 channel = 0; // Stop pulse again
         #1 channel = 1; // Trigger pulse again
         #2 channel = 0; // Stop pulse again
         #1 channel = 1; // Trigger pulse again

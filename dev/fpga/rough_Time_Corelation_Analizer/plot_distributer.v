@@ -9,7 +9,7 @@ module plot_distributer(
 	output reg Memory_add
 );
 
-parameter address_0 = 7'd128;
+parameter address_0 = 128;
 reg [3:0] count = 0;
 
 reg add_internal = 0;
