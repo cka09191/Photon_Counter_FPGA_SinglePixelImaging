@@ -112,11 +112,11 @@ task exchange_byte ( input [15:0] mosiData,
 								output [15:0] misoData );
 		integer jj;
 		begin
-		  
+		  SCLK=1'b1;
 			for (jj = 0; jj < 16; jj = jj + 1 )
 				begin
-					#(T/2); SCLK=1'b0; MOSI = mosiData[15 - jj];  // drive on falling edge
-					#(T/2); SCLK=1'b1; misoData = { misoData[14:0], MISO };  // sample in rising
+					#(T/2); SCLK=1'b0; misoData = { misoData[14:0], MISO };  // drive on falling edge
+					#(T/2); SCLK=1'b1; MOSI = mosiData[15 - jj];  // sample in rising
 				end
 		end
 	endtask

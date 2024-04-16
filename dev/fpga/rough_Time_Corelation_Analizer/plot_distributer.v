@@ -14,6 +14,11 @@ reg [3:0] count = 0;
 
 reg add_internal = 0;
 
+initial begin 
+	Addr = 0;
+	Memory_add = 0;
+end
+
 always @(posedge clk) begin
 	if (add_internal == 1'b1) begin
 		if(count == 5) begin

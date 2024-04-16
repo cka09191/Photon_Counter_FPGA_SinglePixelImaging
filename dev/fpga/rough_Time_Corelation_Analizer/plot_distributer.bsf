@@ -74,9 +74,9 @@ applicable agreement for further details.
 	)
 	(parameter
 		"address_0"
-		"0000000"
+		"128"
 		""
-		(type "PARAMETER_UNSIGNED_BIN")	)
+		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
 		(rectangle (rect 16 16 216 128)(line_width 1))
 	)
