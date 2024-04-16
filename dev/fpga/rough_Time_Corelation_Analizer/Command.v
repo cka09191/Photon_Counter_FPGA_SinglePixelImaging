@@ -5,10 +5,10 @@ module Command(
 	input wire rxValid
 );
 
-always@ (posedge rxValid) begin
-	if (rx == 8192'hFF) begin
-		Command <= 2'b01;
-	end
+always@ (posedge clk) begin
+	if(rxValid) begin
+	   if (rx == 8192'hFF) Command <= 2'b01;
+	end else Command <= 2'b00;
 end
 
 endmodule
