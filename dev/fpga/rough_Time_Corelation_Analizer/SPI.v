@@ -66,21 +66,21 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 
 	// current state logic
 
-	reg [13:0] state = 14'bxx_xxxx_xxxx_xxxx; // state corresponds to bit count
+	reg [12:0] state = 13'bx_xxxx_xxxx_xxxx; // state corresponds to bit count
 	
 	always @(posedge sysClk)
 		if ( SS_active )
 			begin
 				if ( SS_falling )   // start of 1st byte
-					state <= 14'd00_0000_0000_0000;
+					state <= 13'd0_0000_0000_0000;
 				if ( SCLK_rising )  // input bit available
-					state <= state + 14'd1;
+					state <= state + 13'd1;
 			end
 
 	// input/output logic
 	
 	assign rx      = {buffer[8190:0], MOSI_sync};       // bits received so far
-	assign rxValid = (state == 14'b11_1111_1111_1111) && SCLK_rising; // short received is valid
+	assign rxValid = (state == 13'b1_1111_1111_1111) && SCLK_rising; // short received is valid
 
 	reg MISO_r = 1'bx;	
 	assign MISO = SS_active ? MISO_r : 1'bz;
@@ -90,11 +90,11 @@ module spi_short_module( input wire sysClk,      // internal FPGA clock
 			begin
 			
 				if( SCLK_rising )         // INPUT on rising SPI clock edge
-					if( state != 14'b11_1111_1111_1111 ) 
+					if( state != 13'b1_1111_1111_1111 ) 
 						buffer <= rx;
 								
 				if( SCLK_falling)         // OUTPUT on falling SPI clock edge
-					if ( state == 14'b00_0000_0000_0000 )
+					if ( state == 13'b0_0000_0000_0000 )
 						begin 
 							MISO_r <= tx[8191];    //   start by sending the MSb
 							buffer <= tx;       //   remaining bits are send from buffer

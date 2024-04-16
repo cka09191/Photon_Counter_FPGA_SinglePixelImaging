@@ -25,7 +25,7 @@ wave_ccu:## Run timing test must specify uut
 
 wave_ccu2:## Run timing test must specify uut
 	@echo "Running timing test"
-	@iverilog -o test ./dev/fpga/rough_Time_Corelation_Analizer/tb_$(uut) ./dev/fpga/rough_Time_Corelation_Analizer/$(uut2)  ./dev/fpga/rough_Time_Corelation_Analizer/$(uut)
+	@iverilog -o test ./dev/fpga/rough_Time_Corelation_Analizer/$(uut) ./dev/fpga/rough_Time_Corelation_Analizer/$(uut2) ./dev/fpga/rough_Time_Corelation_Analizer/$(uut3) ./dev/fpga/rough_Time_Corelation_Analizer/$(uut4) ./dev/fpga/rough_Time_Corelation_Analizer/$(uut5)  ./dev/fpga/rough_Time_Corelation_Analizer/$(uut1)
 	@echo "Running vvp"
 	@vvp test
 	@gtkwave `grep -oE '\$dumpfile\(\".+?\"\)' ./dev/fpga/rough_Time_Corelation_Analizer/tb_$(uut) | sed 's/\$dumpfile(\"//g' | sed 's/")//g'`
