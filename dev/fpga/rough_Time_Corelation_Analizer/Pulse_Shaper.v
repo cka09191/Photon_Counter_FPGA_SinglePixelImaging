@@ -15,7 +15,6 @@ end
 
 
 
-
 always @(posedge clk) begin
 	if(activate) begin
 		count[7:0] = count + 1;
