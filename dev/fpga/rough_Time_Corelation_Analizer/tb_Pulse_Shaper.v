@@ -32,7 +32,7 @@ module tb_Pulse_Shaper;
         #500 channel = 1; // Trigger pulse again
         #1 channel = 0; // Stop pulse again
         #1 channel = 1; // Trigger pulse again
-        #1 channel = 0; // Stop pulse again
+        #2 channel = 0; // Stop pulse again
         #1 channel = 1; // Trigger pulse again
         #1 channel = 0; // Stop pulse again
         #1 channel = 1; // Trigger pulse again

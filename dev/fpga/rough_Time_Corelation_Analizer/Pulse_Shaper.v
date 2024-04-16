@@ -17,19 +17,22 @@ end
 
 always @(posedge clk) begin
 	if(activate) begin
-		count[7:0] = count + 1;
 		case(count)
-			8'd0: pulse <= 1;
 			8'd30: begin
-				pulse <= 0;
-				if(~channel) activate = 0;
+				activate = 0;
 				count = 8'h00;
 			end
-			default: pulse <= 0;
+			default: begin
+				pulse <= 0;
+				count <= count + 1;
+			end
 		endcase
 	end
 	else begin
-		if(channel) activate=1; 
+		if(channel) begin 
+			activate=1;
+			pulse <= 1;
+		end
 	end
 end
 
