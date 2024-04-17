@@ -25,12 +25,12 @@ module TDC(
 	input wire pulse2,
 	output reg [1:0] START_signal,
 	output reg [1:0] END_signal,
-	output reg [6:0] INTERVAL,
+	output reg [5:0] INTERVAL,
 	output reg data_arrived
 );
 
 
-reg [6:0] count;
+reg [5:0] count;
 reg notedge_pulse;
 wire pulse = pulse1 | pulse2;
 
@@ -56,7 +56,7 @@ always @(posedge clk) begin
 				data_arrived <= 1;
 			end
 			else begin
-				if(count == 7'd127) begin
+				if(count == 6'd63) begin
 					count <= 0;
 					END_signal <= {pulse1, pulse2};
 				end
@@ -75,11 +75,11 @@ always @(posedge clk) begin
 	else begin
 		notedge_pulse <= 0;
 		case(count)
-			7'd2: begin
+			6'd2: begin
 				data_arrived <= 0;
 				count <= count + 1;
 			end
-			7'd127: begin
+			6'd63: begin
 				count <= count;
 			end
 			default: begin

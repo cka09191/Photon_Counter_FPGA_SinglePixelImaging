@@ -61,8 +61,8 @@ applicable agreement for further details.
 	(port
 		(pt 208 64)
 		(output)
-		(text "INTERVAL[6..0]" (rect 0 0 73 12)(font "Arial" ))
-		(text "INTERVAL[6..0]" (rect 114 59 187 71)(font "Arial" ))
+		(text "INTERVAL[5..0]" (rect 0 0 73 12)(font "Arial" ))
+		(text "INTERVAL[5..0]" (rect 114 59 187 71)(font "Arial" ))
 		(line (pt 208 64)(pt 192 64)(line_width 3))
 	)
 	(port
