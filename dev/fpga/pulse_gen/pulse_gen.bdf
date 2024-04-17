@@ -23,7 +23,7 @@ applicable agreement for further details.
 	(input)
 	(rect 472 128 640 144)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "switch" (rect 5 0 36 12)(font "Arial" ))
+	(text "switch" (rect 5 0 35 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -40,7 +40,7 @@ applicable agreement for further details.
 	(input)
 	(rect 64 152 232 168)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "clk50Mhz" (rect 5 0 50 12)(font "Arial" ))
+	(text "clk50Mhz" (rect 5 0 49 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -116,14 +116,14 @@ applicable agreement for further details.
 		(pt 160 32)
 		(output)
 		(text "pulse1" (rect 0 0 31 12)(font "Arial" ))
-		(text "pulse1" (rect 113 27 139 39)(font "Arial" ))
+		(text "pulse1" (rect 113 27 144 39)(font "Arial" ))
 		(line (pt 160 32)(pt 144 32))
 	)
 	(port
 		(pt 160 48)
 		(output)
 		(text "pulse2" (rect 0 0 31 12)(font "Arial" ))
-		(text "pulse2" (rect 113 43 139 55)(font "Arial" ))
+		(text "pulse2" (rect 113 43 144 55)(font "Arial" ))
 		(line (pt 160 48)(pt 144 48))
 	)
 	(parameter
@@ -158,7 +158,7 @@ applicable agreement for further details.
 		(pt 160 32)
 		(output)
 		(text "cnt[2..0]" (rect 0 0 41 12)(font "Arial" ))
-		(text "cnt[2..0]" (rect 105 27 139 39)(font "Arial" ))
+		(text "cnt[2..0]" (rect 105 27 146 39)(font "Arial" ))
 		(line (pt 160 32)(pt 144 32)(line_width 3))
 	)
 	(drawing
@@ -197,7 +197,7 @@ applicable agreement for further details.
 		(text "Ph (dg)" (rect 98 93 133 105)(font "Arial" ))
 		(text "DC (%)" (rect 132 93 168 105)(font "Arial" ))
 		(text "c0" (rect 54 107 65 119)(font "Arial" ))
-		(text "4/1" (rect 77 107 92 119)(font "Arial" ))
+		(text "5/1" (rect 77 107 92 119)(font "Arial" ))
 		(text "0.00" (rect 104 107 125 119)(font "Arial" ))
 		(text "50.00" (rect 136 107 163 119)(font "Arial" ))
 		(text "c1" (rect 54 121 65 133)(font "Arial" ))
