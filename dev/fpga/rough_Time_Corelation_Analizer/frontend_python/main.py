@@ -49,18 +49,25 @@ class window_control:
 def thread_count(time_bin, file_path, thread_event_stop):
     controller = ftdi_controller()
     while(not thread_event_stop.is_set()):
-        count = controller.write(bytes([0x00]*512+[0xFF]*512),1024)
+        count = controller.write([0x00]*511+[0x00],512)
         str_bins = ""
-        for i in range(0, 1024, 4):
-            bin_int = int.from_bytes(count[i:i+4], "big")
+        bins = []
+        for i in range(0, count.__len__(), 4):
+            bin_int = int.from_bytes(count[i:i+4], "big", signed=False)
+            bins.append(bin_int)
             str_bins += str(bin_int) + ", "
         str_bins= str_bins.removesuffix(", ")
         print("thisiscount")
         print(str_bins)
         file = open(file_path, "w", encoding="utf-8")
         file.write(str_bins)
-        
-        time.sleep(time_bin/1000)
+        #show plot in 1 sec
+        plt.plot(range(0, bins.__len__()), bins)
+        # count = controller.write([0x00]*511+[0xFF],512)
+        plt.show(block=False)
+        plt.pause(time_bin/1000)
+        plt.close()
+        file.close()
 
 
 

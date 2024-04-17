@@ -18,7 +18,7 @@ end
 always @(posedge clk) begin
 	if(activate) begin
 		case(count)
-			8'd30: begin
+			8'd20: begin
 				activate = 0;
 				count = 8'h00;
 			end
