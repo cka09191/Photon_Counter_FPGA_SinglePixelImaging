@@ -5,7 +5,7 @@ module controller(
 );
 
 reg check = 0;
-
+re
 always@ (posedge clk) begin
 	
 	if(button==1 && check==0) begin

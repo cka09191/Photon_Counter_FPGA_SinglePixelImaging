@@ -1,12 +1,13 @@
 module pulse(
 	input wire clk400Mhz,
 	input wire clk1Mhz,
-	input wire [1:0] cnt,
 	output reg pulse
 );
 
 reg [2:0] count; // 8 bit counter for dead time:60ns, pulse width:2ns
 reg Up_pulse;
+
+
 
 initial begin
     Up_pulse = 0;
