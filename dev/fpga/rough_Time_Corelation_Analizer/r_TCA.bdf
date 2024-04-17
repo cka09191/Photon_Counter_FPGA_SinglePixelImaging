@@ -34,7 +34,6 @@ applicable agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect 296 -88 352 -72))
 )
 (pin
 	(input)
@@ -51,7 +50,6 @@ applicable agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect 376 248 432 264))
 )
 (pin
 	(input)
@@ -68,7 +66,6 @@ applicable agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect 1392 -176 1448 -160))
 )
 (pin
 	(input)
@@ -85,7 +82,6 @@ applicable agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect 1392 -160 1448 -144))
 )
 (pin
 	(input)
@@ -102,7 +98,6 @@ applicable agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect 1392 -144 1448 -128))
 )
 (pin
 	(input)
@@ -119,7 +114,6 @@ applicable agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect 376 152 432 168))
 )
 (pin
 	(output)
@@ -136,7 +130,6 @@ applicable agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 1984 -192 2040 -176))
 )
 (symbol
 	(rect 840 88 1048 200)
@@ -180,8 +173,8 @@ applicable agreement for further details.
 	(port
 		(pt 208 64)
 		(output)
-		(text "INTERVAL[6..0]" (rect 0 0 79 12)(font "Arial" ))
-		(text "INTERVAL[6..0]" (rect 121 59 187 71)(font "Arial" ))
+		(text "INTERVAL[5..0]" (rect 0 0 79 12)(font "Arial" ))
+		(text "INTERVAL[5..0]" (rect 121 59 187 71)(font "Arial" ))
 		(line (pt 208 64)(pt 192 64)(line_width 3))
 	)
 	(port
@@ -196,7 +189,7 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 1616 -72 1816 40)
+	(rect 1616 -72 1824 40)
 	(text "Command" (rect 5 0 55 12)(font "Arial" ))
 	(text "inst7" (rect 8 96 31 108)(font "Arial" ))
 	(port
@@ -209,8 +202,8 @@ applicable agreement for further details.
 	(port
 		(pt 0 48)
 		(input)
-		(text "rx[8191..0]" (rect 0 0 53 12)(font "Arial" ))
-		(text "rx[8191..0]" (rect 21 43 74 55)(font "Arial" ))
+		(text "rx[4095..0]" (rect 0 0 53 12)(font "Arial" ))
+		(text "rx[4095..0]" (rect 21 43 74 55)(font "Arial" ))
 		(line (pt 0 48)(pt 16 48)(line_width 3))
 	)
 	(port
@@ -221,14 +214,14 @@ applicable agreement for further details.
 		(line (pt 0 64)(pt 16 64))
 	)
 	(port
-		(pt 200 32)
+		(pt 208 32)
 		(output)
 		(text "Command[1..0]" (rect 0 0 76 12)(font "Arial" ))
-		(text "Command[1..0]" (rect 115 27 179 39)(font "Arial" ))
-		(line (pt 200 32)(pt 184 32)(line_width 3))
+		(text "Command[1..0]" (rect 123 27 187 39)(font "Arial" ))
+		(line (pt 208 32)(pt 192 32)(line_width 3))
 	)
 	(drawing
-		(rectangle (rect 16 16 184 96))
+		(rectangle (rect 16 16 192 96))
 	)
 )
 (symbol
@@ -266,8 +259,8 @@ applicable agreement for further details.
 	(port
 		(pt 0 96)
 		(input)
-		(text "tx[8191..0]" (rect 0 0 53 12)(font "Arial" ))
-		(text "tx[8191..0]" (rect 21 91 74 103)(font "Arial" ))
+		(text "tx[4095..0]" (rect 0 0 53 12)(font "Arial" ))
+		(text "tx[4095..0]" (rect 21 91 74 103)(font "Arial" ))
 		(line (pt 0 96)(pt 16 96)(line_width 3))
 	)
 	(port
@@ -280,8 +273,8 @@ applicable agreement for further details.
 	(port
 		(pt 184 48)
 		(output)
-		(text "rx[8191..0]" (rect 0 0 53 12)(font "Arial" ))
-		(text "rx[8191..0]" (rect 119 43 163 55)(font "Arial" ))
+		(text "rx[4095..0]" (rect 0 0 53 12)(font "Arial" ))
+		(text "rx[4095..0]" (rect 119 43 163 55)(font "Arial" ))
 		(line (pt 184 48)(pt 168 48)(line_width 3))
 	)
 	(port
@@ -323,8 +316,8 @@ applicable agreement for further details.
 	(port
 		(pt 0 80)
 		(input)
-		(text "INTERVAL[6..0]" (rect 0 0 79 12)(font "Arial" ))
-		(text "INTERVAL[6..0]" (rect 21 75 100 87)(font "Arial" ))
+		(text "INTERVAL[5..0]" (rect 0 0 79 12)(font "Arial" ))
+		(text "INTERVAL[5..0]" (rect 21 75 100 87)(font "Arial" ))
 		(line (pt 0 80)(pt 16 80)(line_width 3))
 	)
 	(port
@@ -337,8 +330,8 @@ applicable agreement for further details.
 	(port
 		(pt 232 32)
 		(output)
-		(text "Addr[7..0]" (rect 0 0 48 12)(font "Arial" ))
-		(text "Addr[7..0]" (rect 171 27 211 39)(font "Arial" ))
+		(text "Addr[6..0]" (rect 0 0 48 12)(font "Arial" ))
+		(text "Addr[6..0]" (rect 171 27 211 39)(font "Arial" ))
 		(line (pt 232 32)(pt 216 32)(line_width 3))
 	)
 	(port
@@ -490,8 +483,8 @@ applicable agreement for further details.
 	(port
 		(pt 0 48)
 		(input)
-		(text "addr[7..0]" (rect 0 0 47 12)(font "Arial" ))
-		(text "addr[7..0]" (rect 21 43 68 55)(font "Arial" ))
+		(text "addr[6..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "addr[6..0]" (rect 21 43 68 55)(font "Arial" ))
 		(line (pt 0 48)(pt 16 48)(line_width 3))
 	)
 	(port
@@ -511,8 +504,8 @@ applicable agreement for further details.
 	(port
 		(pt 232 32)
 		(output)
-		(text "data_out[8191..0]" (rect 0 0 86 12)(font "Arial" ))
-		(text "data_out[8191..0]" (rect 139 27 211 39)(font "Arial" ))
+		(text "data_out[4095..0]" (rect 0 0 86 12)(font "Arial" ))
+		(text "data_out[4095..0]" (rect 139 27 211 39)(font "Arial" ))
 		(line (pt 232 32)(pt 216 32)(line_width 3))
 	)
 	(parameter
@@ -569,12 +562,6 @@ applicable agreement for further details.
 	(text "clk500" (rect 1056 88 1087 100)(font "Arial" ))
 	(pt 1088 112)
 	(pt 1064 112)
-)
-(connector
-	(text "command[1..0]" (rect 1816 -56 1890 -44)(font "Arial" ))
-	(pt 1816 -40)
-	(pt 1832 -40)
-	(bus)
 )
 (connector
 	(text "clk500" (rect 1568 -56 1599 -44)(font "Arial" ))
@@ -732,7 +719,19 @@ applicable agreement for further details.
 	(pt 1624 -200)
 	(pt 1584 -200)
 )
+(connector
+	(pt 1816 -40)
+	(pt 1824 -40)
+	(bus)
+)
+(connector
+	(text "command[1..0]" (rect 1816 -56 1890 -44)(font "Arial" ))
+	(pt 1824 -40)
+	(pt 1832 -40)
+	(bus)
+)
 (junction (pt 792 224))
+(junction (pt 1824 -40))
 (rectangle (rect 336 -184 856 32))
 (rectangle (rect 392 80 800 304))
 (rectangle (rect 1448 -256 1944 40))

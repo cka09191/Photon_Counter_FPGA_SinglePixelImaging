@@ -5,7 +5,7 @@ module pulse_generator(
     output reg pulse1,
     output reg pulse2
 );
-wire [7:0] delay = {5'b0,cnt[2:0]};
+wire [7:0] delay = {cnt[2:0],5'b0};
 parameter pulse_size = 4;
 reg [7:0] counter1=0;
 reg [7:0] counter2=0;
