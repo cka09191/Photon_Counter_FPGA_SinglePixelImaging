@@ -54,8 +54,8 @@ applicable agreement for further details.
 	(port
 		(pt 0 96)
 		(input)
-		(text "tx[8191..0]" (rect 0 0 38 12)(font "Arial" ))
-		(text "tx[8191..0]" (rect 21 91 59 103)(font "Arial" ))
+		(text "tx[4095..0]" (rect 0 0 42 12)(font "Arial" ))
+		(text "tx[4095..0]" (rect 21 91 63 103)(font "Arial" ))
 		(line (pt 0 96)(pt 16 96)(line_width 3))
 	)
 	(port
@@ -68,8 +68,8 @@ applicable agreement for further details.
 	(port
 		(pt 184 48)
 		(output)
-		(text "rx[8191..0]" (rect 0 0 40 12)(font "Arial" ))
-		(text "rx[8191..0]" (rect 123 43 163 55)(font "Arial" ))
+		(text "rx[4095..0]" (rect 0 0 43 12)(font "Arial" ))
+		(text "rx[4095..0]" (rect 120 43 163 55)(font "Arial" ))
 		(line (pt 184 48)(pt 168 48)(line_width 3))
 	)
 	(port

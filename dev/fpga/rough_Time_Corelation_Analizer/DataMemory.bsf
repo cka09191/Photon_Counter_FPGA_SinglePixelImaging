@@ -33,8 +33,8 @@ applicable agreement for further details.
 	(port
 		(pt 0 48)
 		(input)
-		(text "addr[7..0]" (rect 0 0 37 12)(font "Arial" ))
-		(text "addr[7..0]" (rect 21 43 58 55)(font "Arial" ))
+		(text "addr[6..0]" (rect 0 0 37 12)(font "Arial" ))
+		(text "addr[6..0]" (rect 21 43 58 55)(font "Arial" ))
 		(line (pt 0 48)(pt 16 48)(line_width 3))
 	)
 	(port
@@ -54,13 +54,13 @@ applicable agreement for further details.
 	(port
 		(pt 232 32)
 		(output)
-		(text "data_out[8191..0]" (rect 0 0 66 12)(font "Arial" ))
-		(text "data_out[8191..0]" (rect 145 27 211 39)(font "Arial" ))
+		(text "data_out[4095..0]" (rect 0 0 69 12)(font "Arial" ))
+		(text "data_out[4095..0]" (rect 142 27 211 39)(font "Arial" ))
 		(line (pt 232 32)(pt 216 32)(line_width 3))
 	)
 	(parameter
 		"Memory_WIDTH"
-		"8192"
+		"4096"
 		""
 		(type "PARAMETER_SIGNED_DEC")	)
 	(drawing
