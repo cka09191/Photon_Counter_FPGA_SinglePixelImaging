@@ -1,7 +1,7 @@
 module controller(
 	input wire clk,
 	input wire button,
-	output reg [1:0] cnt
+	output reg [2:0] cnt
 );
 
 reg check = 0;
@@ -15,7 +15,7 @@ always@ (posedge clk) begin
 		check <= 0;
 	end
 	
-	if(cnt > 3'b11) cnt <= 0; 
+	if(cnt > 3'b111) cnt <= 0; 
 	
 end
 

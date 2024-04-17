@@ -1,6 +1,6 @@
 module delay(
 	input wire clk,
-	input wire [1:0] cnt,
+	input wire [2:0] cnt,
 	input wire pulse,
 	output reg pulse2
 );
@@ -16,3 +16,4 @@ always@ (posedge clk) begin
 		cnt <= cnt + 1;
 	end
 end
+endmodule
