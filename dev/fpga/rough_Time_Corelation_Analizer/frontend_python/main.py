@@ -15,7 +15,7 @@ class window_control:
         self.button.pack()
         self.label = Label(self.window, text="File Path:")
         self.entry = Entry(self.window)
-        self.entry.insert(0,"C:/Users/CHAEGYEONGJUN/Desktop/rr.txt")
+        self.entry.insert(0,"C:/Photon_Counter_FPGA/Photon_Counter_FPGA/dev/fpga/rough_Time_Corelation_Analizer/frontend_python/my.txt.txt")
         self.entry.pack()
         self.label2 = Label(self.window, text="Count bin(ms):")
         self.entry2 = Entry(self.window)
@@ -49,7 +49,7 @@ class window_control:
 def thread_count(time_bin, file_path, thread_event_stop):
     controller = ftdi_controller()
     while(not thread_event_stop.is_set()):
-        count = controller.write(bytes([0x00]*1023+[0xFF]),1024)
+        count = controller.write(bytes([0x00]*512+[0xFF]*512),1024)
         str_bins = ""
         for i in range(0, 1024, 4):
             bin_int = int.from_bytes(count[i:i+4], "big")
