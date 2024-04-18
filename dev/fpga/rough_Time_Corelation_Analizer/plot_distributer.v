@@ -36,12 +36,12 @@ always @(posedge clk) begin
 			count<=0;
 		end
 		else if(START == 2'b01 && END == 2'b10) begin
-			Addr <= address_0 + INTERVAL;
+			Addr <= address_0 - INTERVAL;
 			Memory_add <= 1'b1;
 			count<=0;
 		end
 		else if(START == 2'b10 && END == 2'b01) begin
-			Addr <= address_0 - INTERVAL;
+			Addr <= address_0 + INTERVAL;
 			Memory_add <= 1'b1;
 			count<=0;
 		end

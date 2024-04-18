@@ -18,13 +18,17 @@ end
 always @(posedge clk) begin
 	if(activate) begin
 		case(count)
+			8'd10: begin
+				count<= count+1;
+				pulse<=0;
+			end
 			8'd30: begin
 				activate = 0;
 				count = 8'h00;
 			end
 			default: begin
-				pulse <= 0;
 				count <= count + 1;
+				pulse <= pulse;
 			end
 		endcase
 	end

@@ -49,15 +49,17 @@ always @(posedge clk) begin
 	if(pulse) begin
 		if (~notedge_pulse) begin
 			if (pulse1 && pulse2) begin
-				INTERVAL <= 0;
+				count <= 0;
+				INTERVAL <= count;
 				data_arrived <= 1;
 				START_signal <= 2'b00;
 				END_signal <= 2'b11;
-				data_arrived <= 1;
 			end
 			else begin
 				if(count == 6'd63) begin
 					count <= 0;
+					INTERVAL <= count;
+					data_arrived <= 1;
 					END_signal <= {pulse1, pulse2};
 				end
 				else begin
@@ -70,7 +72,6 @@ always @(posedge clk) begin
 			end
 			notedge_pulse <= 1;
 		end
-		count <= 0;
 	end
 	else begin
 		notedge_pulse <= 0;
