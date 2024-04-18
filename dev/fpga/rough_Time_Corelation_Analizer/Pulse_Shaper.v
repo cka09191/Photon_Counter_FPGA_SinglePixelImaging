@@ -18,11 +18,15 @@ end
 always @(posedge clk) begin
 	if(activate) begin
 		case(count)
+<<<<<<< HEAD
 			8'd10: begin
 				count<= count+1;
 				pulse<=0;
 			end
 			8'd30: begin
+=======
+			8'd20: begin
+>>>>>>> 512b425b67d8c3ff3cd7d3016c1330d3e7d46c6c
 				activate = 0;
 				count = 8'h00;
 			end

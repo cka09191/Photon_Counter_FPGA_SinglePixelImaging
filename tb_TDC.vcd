@@ -1,5 +1,5 @@
 $date
-	Tue Apr 16 10:11:18 2024
+	Wed Apr 17 16:14:15 2024
 $end
 $version
 	Icarus Verilog
@@ -21,9 +21,9 @@ $var wire 1 ( pulse $end
 $var wire 1 & pulse1 $end
 $var wire 1 ' pulse2 $end
 $var reg 2 ) END_signal [1:0] $end
-$var reg 7 * INTERVAL [6:0] $end
+$var reg 6 * INTERVAL [5:0] $end
 $var reg 2 + START_signal [1:0] $end
-$var reg 7 , count [6:0] $end
+$var reg 6 , count [5:0] $end
 $var reg 1 ! data_arrived $end
 $var reg 1 - notedge_pulse $end
 $upscope $end

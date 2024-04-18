@@ -55,9 +55,9 @@ applicable agreement for further details.
 )
 (pin
 	(input)
-	(rect 1448 -192 1624 -176)
+	(rect 408 136 584 152)
 	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
-	(text "SCLK" (rect 9 0 37 12)(font "Arial" ))
+	(text "channel1" (rect 9 0 52 12)(font "Arial" ))
 	(pt 176 8)
 	(drawing
 		(line (pt 92 12)(pt 117 12))
@@ -71,11 +71,11 @@ applicable agreement for further details.
 	(annotation_block (location)(rect 1392 -176 1448 -160))
 )
 (pin
-	(input)
-	(rect 1448 -176 1624 -160)
-	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
-	(text "MOSI" (rect 9 0 36 12)(font "Arial" ))
-	(pt 176 8)
+	(output)
+	(rect 1112 328 1288 344)
+	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
+	(text "probe1" (rect 90 0 123 12)(font "Arial" ))
+	(pt 0 8)
 	(drawing
 		(line (pt 92 12)(pt 117 12))
 		(line (pt 92 4)(pt 117 4))
@@ -123,9 +123,13 @@ applicable agreement for further details.
 )
 (pin
 	(output)
+<<<<<<< HEAD
 	(rect 1784 -208 1960 -192)
+=======
+	(rect 1112 280 1288 296)
+>>>>>>> 512b425b67d8c3ff3cd7d3016c1330d3e7d46c6c
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
-	(text "MISO" (rect 90 0 117 12)(font "Arial" ))
+	(text "probe2" (rect 90 0 123 12)(font "Arial" ))
 	(pt 0 8)
 	(drawing
 		(line (pt 0 8)(pt 52 8))
@@ -214,8 +218,13 @@ applicable agreement for further details.
 	(port
 		(pt 208 64)
 		(output)
+<<<<<<< HEAD
 		(text "INTERVAL[5..0]" (rect 0 0 79 12)(font "Arial" ))
 		(text "INTERVAL[5..0]" (rect 121 59 200 71)(font "Arial" ))
+=======
+		(text "INTERVAL[6..0]" (rect 0 0 79 12)(font "Arial" ))
+		(text "INTERVAL[6..0]" (rect 121 59 187 71)(font "Arial" ))
+>>>>>>> 512b425b67d8c3ff3cd7d3016c1330d3e7d46c6c
 		(line (pt 208 64)(pt 192 64)(line_width 3))
 	)
 	(port
@@ -557,7 +566,187 @@ applicable agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 216 128))
 	)
+<<<<<<< HEAD
 	(annotation_block (parameter)(rect 1088 0 1270 28))
+=======
+	(annotation_block (parameter)(rect 1088 0 1272 32))
+)
+(symbol
+	(rect 608 96 760 176)
+	(text "Pulse_Shaper" (rect 5 0 72 12)(font "Arial" ))
+	(text "inst2" (rect 8 64 31 76)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "channel" (rect 0 0 37 12)(font "Arial" ))
+		(text "channel" (rect 21 43 58 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 152 32)
+		(output)
+		(text "pulse" (rect 0 0 25 12)(font "Arial" ))
+		(text "pulse" (rect 110 27 131 39)(font "Arial" ))
+		(line (pt 152 32)(pt 136 32))
+	)
+	(drawing
+		(rectangle (rect 16 16 136 64))
+	)
+)
+(symbol
+	(rect 608 192 760 272)
+	(text "Pulse_Shaper" (rect 5 0 72 12)(font "Arial" ))
+	(text "inst5" (rect 8 64 31 76)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "channel" (rect 0 0 37 12)(font "Arial" ))
+		(text "channel" (rect 21 43 58 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 152 32)
+		(output)
+		(text "pulse" (rect 0 0 25 12)(font "Arial" ))
+		(text "pulse" (rect 110 27 131 39)(font "Arial" ))
+		(line (pt 152 32)(pt 136 32))
+	)
+	(drawing
+		(rectangle (rect 16 16 136 64))
+	)
+)
+(symbol
+	(rect 528 -160 768 8)
+	(text "pll" (rect 114 0 129 16)(font "Arial" (font_size 10)))
+	(text "inst" (rect 8 152 25 164)(font "Arial" ))
+	(port
+		(pt 0 64)
+		(input)
+		(text "inclk0" (rect 0 0 31 14)(font "Arial" (font_size 8)))
+		(text "inclk0" (rect 4 50 35 64)(font "Arial" (font_size 8)))
+		(line (pt 0 64)(pt 40 64))
+	)
+	(port
+		(pt 240 64)
+		(output)
+		(text "c0" (rect 0 0 14 14)(font "Arial" (font_size 8)))
+		(text "c0" (rect 224 50 238 64)(font "Arial" (font_size 8)))
+	)
+	(port
+		(pt 240 80)
+		(output)
+		(text "c1" (rect 0 0 14 14)(font "Arial" (font_size 8)))
+		(text "c1" (rect 224 66 238 80)(font "Arial" (font_size 8)))
+	)
+	(drawing
+		(text "Cyclone IV E" (rect 164 152 230 164)(font "Arial" ))
+		(text "inclk0 frequency: 50.000 MHz" (rect 50 59 197 71)(font "Arial" ))
+		(text "Operation Mode: Normal" (rect 50 72 169 84)(font "Arial" ))
+		(text "Clk " (rect 51 93 71 105)(font "Arial" ))
+		(text "Ratio" (rect 72 93 97 105)(font "Arial" ))
+		(text "Ph (dg)" (rect 98 93 133 105)(font "Arial" ))
+		(text "DC (%)" (rect 132 93 168 105)(font "Arial" ))
+		(text "c0" (rect 54 107 65 119)(font "Arial" ))
+		(text "10/1" (rect 74 107 95 119)(font "Arial" ))
+		(text "0.00" (rect 104 107 125 119)(font "Arial" ))
+		(text "50.00" (rect 136 107 163 119)(font "Arial" ))
+		(text "c1" (rect 54 121 65 133)(font "Arial" ))
+		(text "1/1" (rect 77 121 92 133)(font "Arial" ))
+		(text "0.00" (rect 104 121 125 133)(font "Arial" ))
+		(text "50.00" (rect 136 121 163 133)(font "Arial" ))
+		(line (pt 0 0)(pt 241 0))
+		(line (pt 241 0)(pt 241 169))
+		(line (pt 0 169)(pt 241 169))
+		(line (pt 0 0)(pt 0 169))
+		(line (pt 48 91)(pt 164 91))
+		(line (pt 48 104)(pt 164 104))
+		(line (pt 48 118)(pt 164 118))
+		(line (pt 48 132)(pt 164 132))
+		(line (pt 48 91)(pt 48 132))
+		(line (pt 69 91)(pt 69 132)(line_width 3))
+		(line (pt 95 91)(pt 95 132)(line_width 3))
+		(line (pt 129 91)(pt 129 132)(line_width 3))
+		(line (pt 163 91)(pt 163 132))
+		(line (pt 40 48)(pt 207 48))
+		(line (pt 207 48)(pt 207 151))
+		(line (pt 40 151)(pt 207 151))
+		(line (pt 40 48)(pt 40 151))
+		(line (pt 239 64)(pt 207 64))
+		(line (pt 239 80)(pt 207 80))
+	)
+)
+(symbol
+	(rect 1536 72 1768 184)
+	(text "DataMemory" (rect 5 0 68 12)(font "Arial" ))
+	(text "inst6" (rect 8 96 31 108)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 27 35 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "addr[6..0]" (rect 0 0 47 12)(font "Arial" ))
+		(text "addr[6..0]" (rect 21 43 68 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "Command[1..0]" (rect 0 0 76 12)(font "Arial" ))
+		(text "Command[1..0]" (rect 21 59 97 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "Memory_add" (rect 0 0 63 12)(font "Arial" ))
+		(text "Memory_add" (rect 21 75 84 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80))
+	)
+	(port
+		(pt 232 32)
+		(output)
+		(text "data_out[4095..0]" (rect 0 0 86 12)(font "Arial" ))
+		(text "data_out[4095..0]" (rect 139 27 211 39)(font "Arial" ))
+		(line (pt 232 32)(pt 216 32)(line_width 3))
+	)
+	(parameter
+		"Memory_WIDTH"
+		"8192"
+		""
+		(type "PARAMETER_SIGNED_DEC")	)
+	(drawing
+		(rectangle (rect 16 16 216 96))
+	)
+	(annotation_block (parameter)(rect 1320 0 1536 32))
+)
+(connector
+	(pt 760 128)
+	(pt 792 128)
+)
+(connector
+	(text "clk500" (rect 568 112 599 124)(font "Arial" ))
+	(pt 608 128)
+	(pt 584 128)
+>>>>>>> 512b425b67d8c3ff3cd7d3016c1330d3e7d46c6c
 )
 (connector
 	(text "clk500" (rect 568 208 599 220)(font "Arial" ))
@@ -664,6 +853,32 @@ applicable agreement for further details.
 	(pt 1048 168)
 )
 (connector
+<<<<<<< HEAD
+=======
+	(pt 792 152)
+	(pt 792 224)
+)
+(connector
+	(pt 1320 112)
+	(pt 1496 112)
+	(bus)
+)
+(connector
+	(pt 584 144)
+	(pt 608 144)
+)
+(connector
+	(pt 792 224)
+	(pt 760 224)
+)
+(connector
+	(text "dataout[8191..0]" (rect 1792 80 1872 92)(font "Arial" ))
+	(pt 1784 104)
+	(pt 1768 104)
+	(bus)
+)
+(connector
+>>>>>>> 512b425b67d8c3ff3cd7d3016c1330d3e7d46c6c
 	(text "clk50" (rect 778 -96 803 -84)(font "Arial" ))
 	(pt 768 -80)
 	(pt 792 -80)
@@ -807,5 +1022,4 @@ applicable agreement for further details.
 (junction (pt 768 128))
 (rectangle (rect 336 -184 856 32))
 (rectangle (rect 392 80 800 304))
-(rectangle (rect 1448 -256 1944 40))
 (rectangle (rect 1448 48 1944 208))
